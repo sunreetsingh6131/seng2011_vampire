@@ -1,6 +1,10 @@
 #!usr/bin/python3
 
+from flask import Flask, render_template
 import json
+
+app = Flask(__name__)
+
 
 def sizeOfList():
     with open('data.json') as f:
@@ -55,6 +59,28 @@ def readJson():
     print(size)
 
 
-#readJson()
-#deleteBloodSample(3)
-#addBloodSample("Harry", "harryisonline@gmail.com", 'O', "general", "12/12/19", "29/10/19", "ABC Pathology ltd.")
+
+# @app.route('/')
+# def index():
+#   return render_template('template.html')
+
+# @app.route('/my-link/')
+# def my_link():
+#   print 'I got clicked!'
+#
+#   return 'Click.'
+#
+# HTML for flask
+#
+#  <!doctype html>
+# <title>Test</title>
+# <meta charset=utf-8>
+#
+# <a href="/my-link/">Click me</a>
+
+
+
+
+
+if __name__ == '__main__':
+  app.run(debug=True)

@@ -4,42 +4,30 @@
 
 <script>
 
-    $(function() {
+$.ajax({
+    url: 'data.json', // returns "[1,2,3,4,5,6]"
+    dataType: 'json', // jQuery will parse the response as JSON
+    success: function (outputfromserver) {
+        // outputfromserver is an array in this case
+        // just access it like one
 
+        alert(outputfromserver[1].id); // alert the 0th value
 
-   var people = [];
-
-   $.getJSON('data.json', function(data) {
-       $.each(data[0].id, function(i, f) {
-          var tblRow = "<tr>" + "<td>" + f.name + "</td>" +
-           "<td>" + f.lastName + "</td>" + "<td>" + f.job + "</td>" + "<td>" + f.roll + "</td>" + "</tr>"
-           $(tblRow).appendTo("#userdata tbody");
-     });
-
-   });
-
+        // let's iterate through the returned values
+        // for loops are good for that, $.each() is fine too
+        // but unnecessary here
+        for (var i = 0; i < outputfromserver.length; i++) {
+            // outputfromserver[i] can be used to get each value
+        }
+    }
 });
+
 </script>
 </head>
 
 <body>
 
-<div class="wrapper">
-<div class="profile">
-   <table id= "userdata" border="2">
-  <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email Address</th>
-            <th>City</th>
-        </thead>
-      <tbody>
-
-       </tbody>
-   </table>
-
-</div>
-</div>
 
 </body>
 </html>
+
