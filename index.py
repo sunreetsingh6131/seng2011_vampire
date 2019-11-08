@@ -1,11 +1,23 @@
 #!usr/bin/python3
 
-from flask import Flask, render_template
+from flask import Flask, render_template,request, Response, jsonify
+from flask_restplus import Api, Resource , fields, Namespace
+from bottle import HTTPResponse
+from flask_cors import CORS
+from flask_api import status
+#import logging
+#import json, os, time, decimal, re, subprocess,random,string
 import json
 
 app = Flask(__name__)
+CORS(app)
+api = Api(app)
 
 
+@api.response(404, 'database not found.')
+@api.response(400, 'Invalid inputs.')
+
+# size of data
 def sizeOfList():
     with open('data.json') as f:
       data = json.load(f)
@@ -26,7 +38,6 @@ def addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, patholo
 
     newInput['id'] = (sizeOfList() + 1)
     newInput['data'] = data
-
 
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
@@ -54,21 +65,72 @@ def readJson():
     with open('data.json') as f:
         data = json.load(f)
 
-    print(json.dumps(data, indent=4))
-    size = sizeOfList()
-    print(size)
+    # make it return json object for other methods to use
+    d = json.dumps(data, indent=4)
+    print(d)
+    return d
+    # size = sizeOfList()
+    # print(size)
+
+
+#log = logging.getLogger(__name__)
+ns = api.namespace('vampire', description='Returns the blood sample data')
+@api.route('/show', methods=['GET'])
+
+class show(Resource):
+    @api.response(200, 'has data')
+    def get(self):
+        result = readJson()
+        return result , status.HTTP_200_OK
+
+# sort by Quantity
+# def sortListByQuantity(ArrayList<int> samples):
+#     return samples.sort(reverse = true)
+
+# sort by blood group
+# def sortListByGroup(ArrayList<Char> samples):
+#     return samples.sort();
 
 
 
-# @app.route('/')
+
+
+# for sorting attributes of sample
+# json_obj = {
+#   "text": "hello world",
+#   "predictions":
+#    [
+#      {"class": "Class 1", "percentage": 4.63},
+#      {"class": "Class 2", "percentage": 74.68},
+#      {"class": "Class 3", "percentage": 9.38},
+#      {"class": "Class 4", "percentage": 5.78},
+#      {"class": "Class 5", "percentage": 5.53}
+#    ]
+# }
+#
+# sorted_obj = dict(json_obj)
+# sorted_obj['predictions'] = sorted(json_obj['predictions'], key=lambda x : x['percentage'], reverse=True)
+
+
+# try...except to handle the KeyError, then use this as the key argument
+# def extract_time(json):
+#     try:
+#         return int(json['page']['update_time'])
+#     except KeyError:
+#         return 0
+#
+# # lines.sort() is more efficient than lines = lines.sorted()
+# lines.sort(key=extract_time, reverse=True)
+
+
+
+
+# @bookings.route( '/get_customer', methods=[ 'POST' ] )
+# @app.route('/', methods=[ 'POST' ] )
 # def index():
 #   return render_template('template.html')
 
-# @app.route('/my-link/')
-# def my_link():
-#   print 'I got clicked!'
-#
-#   return 'Click.'
+
 #
 # HTML for flask
 #

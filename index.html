@@ -4,30 +4,47 @@
 
 <script>
 
-$.ajax({
-    url: 'data.json', // returns "[1,2,3,4,5,6]"
-    dataType: 'json', // jQuery will parse the response as JSON
-    success: function (outputfromserver) {
-        // outputfromserver is an array in this case
-        // just access it like one
-
-        alert(outputfromserver[1].id); // alert the 0th value
-
-        // let's iterate through the returned values
-        // for loops are good for that, $.each() is fine too
-        // but unnecessary here
-        for (var i = 0; i < outputfromserver.length; i++) {
-            // outputfromserver[i] can be used to get each value
-        }
-    }
-});
+  function init(){
+    initShow();
+  }
+  function initShow(){
+      fetch('http://127.0.0.1:5000/show', {
+          method: 'GET',
+          dataType: 'json',
+          crossdomain: 'true',
+          headers: {
+              'Access-Control-Allow-Methods': 'GET',
+              'Accept': 'application/json',
+          }
+      })
+      .then((resp) => resp.json())
+      .then(function(data) {
+          console.log(data);
+      })
+  }
+// $.ajax({
+//     url: 'data.json', // returns "[1,2,3,4,5,6]"
+//     dataType: 'json', // jQuery will parse the response as JSON
+//     success: function (outputfromserver) {
+//         // outputfromserver is an array in this case
+//         // just access it like one
+//
+//         alert(outputfromserver[1].id); // alert the 0th value
+//
+//         // let's iterate through the returned values
+//         // for loops are good for that, $.each() is fine too
+//         // but unnecessary here
+//         for (var i = 0; i < outputfromserver.length; i++) {
+//             // outputfromserver[i] can be used to get each value
+//         }
+//     }
+// });
 
 </script>
 </head>
 
-<body>
-
-
+<body onload="init()">
+  <div id="start_div"></div>
 </body>
-</html>
 
+</html>
