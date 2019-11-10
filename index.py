@@ -108,17 +108,41 @@ def sort_by_date(data):
                 data[j], data[j + 1] = data[j + 1], data[j]
     return data  
 
-def filterByType(data, btype) :
+def filterByGroup(data, bgroup) :
     
     new = []
 
     for i in range (0, len(data)):
         for key, value in data[i].items():
 
-            if (key == "blood_group" and value == btype):
+            if (key == "blood_group" and value == bgroup):
                 new.append(data[i])
     return new
 
+def search (data, bgroup, btype,  quantity) :
+
+    result = []
+    j = 0;
+    sorted_data = sort_by_date(data)
+
+    for i in range (0, len(sorted_data)):
+
+        check = 0;
+        for key, value in data[i].items():
+
+            if (key == "blood_group" and value == bgroup):
+                j= j +1 
+                result.append(data[i])
+            if (key == "blood_type" and value == btype):
+                check = 1
+        
+        if (check == 0):
+            result.remove(data[i])
+               
+        if (j == quantity):
+            break
+
+    return result
 
 with open('data.json', mode='r') as data:
     feeds = json.load(data)  
@@ -126,9 +150,11 @@ with open('data.json', mode='r') as data:
 sorted_data = sort_by_date(feeds)
 #print(json.dumps(sorted_data, indent=4)) 
 
-filtered_data = filterByType (feeds, "B")         
-print (json.dumps(filtered_data, indent=4))
+filtered_data = filterByGroup (feeds, "B")         
+#print (json.dumps(filtered_data, indent=4))
 
+searched = search(feeds, "B","general", 2)
+print (json.dumps(searched, indent = 4))
 
 #sort by exp date 
 #    sorted_by_date = sorted(feeds, key=lambda x: datetime.strptime(x['data']['use_by_date'], '%d/%m/%y'))
