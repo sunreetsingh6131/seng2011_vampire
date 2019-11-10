@@ -8,6 +8,8 @@ from flask_api import status
 #import logging
 #import json, os, time, decimal, re, subprocess,random,string
 import json
+import time
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -27,17 +29,17 @@ def sizeOfList():
 #add sample to json file here
 def addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology):
     newInput ={}
-    data = {}
-    data['name'] = ""+name
-    data['contact'] = ""+contact
-    data['blood_group'] = ""+bld_grp
-    data['blood_type'] = ""+bld_type
-    data['use_by_date'] = ""+usebydate
-    data['arrival_date'] = ""+arrival
-    data['pathology'] = ""+pathology
+    #data = {}
+    newInput['name'] = ""+name
+    newInput['contact'] = ""+contact
+    newInput['blood_group'] = ""+bld_grp
+    newInput['blood_type'] = ""+bld_type
+    newInput['use_by_date'] = ""+usebydate
+    newInput['arrival_date'] = ""+arrival
+    newInput['pathology'] = ""+pathology
 
     newInput['id'] = (sizeOfList() + 1)
-    newInput['data'] = data
+    #newInput['data'] = data
 
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
@@ -83,6 +85,40 @@ class show(Resource):
         result = readJson()
         return result , status.HTTP_200_OK
 
+
+# bubble sort by exp date
+def sort_by_date(data):
+
+    for i in range (0, len(data) - 1): 
+        for j in range (0 , len(data) - 1 - i):   
+            for key, value in data[j].items():
+                
+                if(key == "use_by_date"):  
+                    x = time.mktime(datetime.datetime.strptime(value, "%d/%m/%y").timetuple())
+            for key, value in data[j + 1].items():
+                if(key == "use_by_date"):    
+                    y = time.mktime(datetime.datetime.strptime(value, "%d/%m/%y").timetuple())
+                #for key in data[j]:
+                 #   x=key['data']['use_by_date']
+                #for key in data[j+1]:
+                 #   y=key['data']['use_by_date']  
+            
+            if (x > y):
+                data[j], data[j + 1] = data[j + 1], data[j]
+    return data  
+    
+
+with open('data.json', mode='r') as data:
+    feeds = json.load(data)  
+    
+sorted_data = sort_by_date(feeds)
+print(json.dumps(sorted_data, indent=4))          
+ 
+#sort by exp date 
+#    sorted_by_date = sorted(feeds, key=lambda x: datetime.strptime(x['data']['use_by_date'], '%d/%m/%y'))
+#    print(json.dumps(sorted_by_date, indent=4))
+  
+   
 # sort by Quantity
 # def sortListByQuantity(ArrayList<int> samples):
 #     return samples.sort(reverse = true)
