@@ -89,6 +89,7 @@ class show(Resource):
 # bubble sort by exp date
 def sort_by_date(data):
 
+  
     for i in range (0, len(data) - 1): 
         for j in range (0 , len(data) - 1 - i):   
             for key, value in data[j].items():
@@ -106,14 +107,29 @@ def sort_by_date(data):
             if (x > y):
                 data[j], data[j + 1] = data[j + 1], data[j]
     return data  
+
+def filterByType(data, btype) :
     
+    new = []
+
+    for i in range (0, len(data)):
+        for key, value in data[i].items():
+
+            if (key == "blood_group" and value == btype):
+                new.append(data[i])
+    return new
+
 
 with open('data.json', mode='r') as data:
     feeds = json.load(data)  
     
 sorted_data = sort_by_date(feeds)
-print(json.dumps(sorted_data, indent=4))          
- 
+#print(json.dumps(sorted_data, indent=4)) 
+
+filtered_data = filterByType (feeds, "B")         
+print (json.dumps(filtered_data, indent=4))
+
+
 #sort by exp date 
 #    sorted_by_date = sorted(feeds, key=lambda x: datetime.strptime(x['data']['use_by_date'], '%d/%m/%y'))
 #    print(json.dumps(sorted_by_date, indent=4))
