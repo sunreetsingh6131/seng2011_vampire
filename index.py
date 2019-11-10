@@ -10,6 +10,7 @@ from flask_api import status
 import json
 import time
 import datetime
+import collections
 
 app = Flask(__name__)
 CORS(app)
@@ -112,16 +113,89 @@ with open('data.json', mode='r') as data:
     feeds = json.load(data)  
     
 sorted_data = sort_by_date(feeds)
-print(json.dumps(sorted_data, indent=4))          
+#print(json.dumps(sorted_data, indent=4))          
  
 #sort by exp date 
 #    sorted_by_date = sorted(feeds, key=lambda x: datetime.strptime(x['data']['use_by_date'], '%d/%m/%y'))
 #    print(json.dumps(sorted_by_date, indent=4))
+
+
+# Counts the quantity of a blood group
+def count_quantity(blood_group):
+    
+    quantity = 0
+    #i = 0
+    with open('data.json', mode='r') as data:
+        d = json.load(data)  
+    
+    for i in range (0, len(d)):
+        for key, value in d[i].items():
+            if(key == "blood_group" and value == blood_group):
+                quantity = quantity +1
+ 
+    return quantity   
+ 
+# Arrange the blood groups to their corresponding quantities 
+
+def blood_group_quantities():
+    
+    blood_group_quantities = []    
+    
+    A = {}
+    B = {}
+    AB = {}
+    O = {}  
+    
+    A["A"] = count_quantity("A")
+    B["B"] = count_quantity("B")
+    AB["AB"] = count_quantity("AB")
+    O["O"] = count_quantity("O")  
+    
+    blood_group_quantities.append(A)
+    blood_group_quantities.append(B)
+    blood_group_quantities.append(AB)
+    blood_group_quantities.append(O)
+    
+    return (blood_group_quantities)
   
-   
+# Sort data by blood group from lowest quantity to highest quantity
+
+def sort_blood_group_by_quantity(data):
+
+    result = []
+    
+    ordered_quantity = blood_group_quantities() 
+    for i in range (0, len(ordered_quantity) - 1): 
+        for j in range (0 , len(ordered_quantity) - 1 - i):   
+            for key, value in ordered_quantity[j].items():                
+                    x = value
+            for key, value in ordered_quantity[j + 1].items():
+                    y = value 
+            if (x > y):
+                ordered_quantity[j], ordered_quantity[j + 1] = ordered_quantity[j + 1], ordered_quantity[j]       
+    
+    for item in ordered_quantity:
+        for blood_group in item:
+            for i in range (0, len(data)):  
+                for key, value in data[i].items():        
+                    if(key == 'blood_group' and value == blood_group):
+                        result.append(data[i])                
+
+    
+    return result
+
+with open('data.json', mode='r') as data:
+    d = json.load(data)    
+
+s = sort_blood_group_by_quantity(d)
+#print(json.dumps(s, indent=4))
+
+    
+
 # sort by Quantity
 # def sortListByQuantity(ArrayList<int> samples):
 #     return samples.sort(reverse = true)
+
 
 # sort by blood group
 # def sortListByGroup(ArrayList<Char> samples):
