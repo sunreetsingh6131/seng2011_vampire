@@ -4,7 +4,7 @@ from flask import Flask, render_template,request, Response, jsonify
 from flask_restplus import Api, Resource , fields, Namespace
 from bottle import HTTPResponse
 from flask_cors import CORS
-from flask_api import status
+#from flask_api import status
 #import logging
 #import json, os, time, decimal, re, subprocess,random,string
 import json
@@ -90,6 +90,7 @@ class show(Resource):
 # bubble sort by exp date
 def sort_by_date(data):
 
+  
     for i in range (0, len(data) - 1): 
         for j in range (0 , len(data) - 1 - i):   
             for key, value in data[j].items():
@@ -107,14 +108,57 @@ def sort_by_date(data):
             if (x > y):
                 data[j], data[j + 1] = data[j + 1], data[j]
     return data  
+
+def filterByGroup(data, bgroup) :
     
+    new = []
+
+    for i in range (0, len(data)):
+        for key, value in data[i].items():
+
+            if (key == "blood_group" and value == bgroup):
+                new.append(data[i])
+    return new
+
+def search (data, bgroup, btype,  quantity) :
+
+    result = []
+    #j = 0;
+    sorted_data = sort_by_date(data)
+
+    for i in range (0, len(sorted_data)):
+
+        check = 0;
+        for key, value in data[i].items():
+
+            if (key == "blood_group" and value == bgroup):
+                #j= j +1 
+                result.append(data[i])
+            if (key == "blood_type" and value == btype):
+                check = 1
+        
+        if (check == 0):
+            result.remove(data[i])
+               
+        if (len(result) == quantity):
+            break
+
+    return result
 
 with open('data.json', mode='r') as data:
     feeds = json.load(data)  
     
 sorted_data = sort_by_date(feeds)
-#print(json.dumps(sorted_data, indent=4))          
- 
+
+#print(json.dumps(sorted_data, indent=4)) 
+
+filtered_data = filterByGroup (feeds, "B")         
+#print (json.dumps(filtered_data, indent=4))
+
+searched = search(feeds, "B","general", 2)
+print (json.dumps(searched, indent = 4))
+
+
 #sort by exp date 
 #    sorted_by_date = sorted(feeds, key=lambda x: datetime.strptime(x['data']['use_by_date'], '%d/%m/%y'))
 #    print(json.dumps(sorted_by_date, indent=4))
