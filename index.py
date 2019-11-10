@@ -122,7 +122,7 @@ def filterByGroup(data, bgroup) :
 def search (data, bgroup, btype,  quantity) :
 
     result = []
-    j = 0;
+    #j = 0;
     sorted_data = sort_by_date(data)
 
     for i in range (0, len(sorted_data)):
@@ -131,7 +131,7 @@ def search (data, bgroup, btype,  quantity) :
         for key, value in data[i].items():
 
             if (key == "blood_group" and value == bgroup):
-                j= j +1 
+                #j= j +1 
                 result.append(data[i])
             if (key == "blood_type" and value == btype):
                 check = 1
@@ -139,7 +139,7 @@ def search (data, bgroup, btype,  quantity) :
         if (check == 0):
             result.remove(data[i])
                
-        if (j == quantity):
+        if (len(result) == quantity):
             break
 
     return result
