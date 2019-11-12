@@ -129,20 +129,14 @@ def sort_by_date(data):
             for key, value in data[j + 1].items():
                 if(key == "use_by_date"):    
                     y = time.mktime(datetime.datetime.strptime(value, "%d/%m/%y").timetuple())
+                #for key in data[j]:
+                 #   x=key['data']['use_by_date']
+                #for key in data[j+1]:
+                 #   y=key['data']['use_by_date']  
             
             if (x > y):
                 data[j], data[j + 1] = data[j + 1], data[j]
-    
-    return (json.dumps(data, indent=4))
-    #return data  
-
-with open('data.json', mode='r') as data:
-    feeds = json.load(data)  
-    
-sorted_data = sort_by_date(feeds)
-
-#print(sorted_data)
-
+    return data  
 
 def filterByGroup(data, bgroup) :
     
@@ -261,20 +255,12 @@ def sort_blood_group_by_quantity(data):
                         result.append(data[i])                
 
     
-    return (json.dumps(result, indent=4))
-    #return result
-    
-    
+    return result
+
 with open('data.json', mode='r') as data:
     d = json.load(data)    
 
-s=sort_blood_group_by_quantity(d)
-
-data1 = json.loads(s)
-#print(json.dumps(data1, indent=4))
-
-#for i in range (0, len(s)):
-  #  print(s[i])
+s = sort_blood_group_by_quantity(d)
 #print(json.dumps(s, indent=4))
 
 
