@@ -1,0 +1,95 @@
+import React from 'react';
+import './App.css';
+import desktopImage from './image.jpg';
+
+
+function App() {
+  const imageUrl = desktopImage;
+  return (
+	<React.Fragment>
+	<div className="App" id="App" style={{backgroundImage: `url(${imageUrl})` }}></div>
+	<div className="bg-blurr" id="bg-blurr">	
+		<div className="wrapper" id="wrapper">
+			<button className="btn1 info" id="hospital" onClick={hospitalView}>View as hospital</button>
+			<button className="btn info" id="vampire" onClick={vampireView}>View as vampire</button>
+		</div>
+        </div>
+        </React.Fragment>
+   );
+}
+
+function hospitalView(){
+	// eslint-disable-next-line
+	var app = document.getElementById('App');
+	var div = document.createElement('div');     
+	var wrap = document.getElementById('bg-blurr');
+	wrap.style.display = 'none';
+	
+	var heading =  document.createElement('h1');
+	heading.innerHTML = "Vampire P/L";
+	heading.className = "heading";
+	div.appendChild(heading);
+	
+	var requestbtn = document.createElement("BUTTON");
+        requestbtn.className = "btn2 info";
+	requestbtn.innerHTML = "Request Blood";
+	div.appendChild(requestbtn);
+
+	requestbtn.onclick = function(){
+		request();
+		console.log("bjad");
+	}
+
+	//Content table
+	var table = document.createElement("table");
+	table.id = "table";
+	var column = document.createElement("tr");	
+	var bloodGroup = document.createElement("th");
+	bloodGroup.innerHTML = "Blood Group";
+	var quantity = document.createElement("th");
+	quantity.innerHTML = "Use By date";
+	var bloodType = document.createElement("th");
+	bloodType.innerHTML = "Blood Type";
+	column.appendChild(bloodGroup);
+	column.appendChild(quantity);
+	column.appendChild(bloodType);
+	table.appendChild(column);
+	
+	var col1 = document.createElement("td");
+	col1.innerHTML = "A";
+	table.appendChild(col1);
+	var col2 = document.createElement("td");
+        col2.innerHTML = "12-11-19";
+        table.appendChild(col2);
+	var col3 = document.createElement("td");
+        col3.innerHTML = "Rare";
+        table.appendChild(col3);
+
+	div.appendChild(table);
+	
+	//search bar
+	var search1 = document.createElement("div");
+	search1.className = "wrap";
+	var search = document.createElement("div");
+        search.className = "search";
+	var searchInp = document.createElement("INPUT");
+        searchInp.className = "searchTerm";
+	var searchbtn = document.createElement("BUTTON");
+        searchbtn.className = "searchButton";
+	searchbtn.innerHTML = "Search";
+	searchInp.appendChild(searchbtn);
+	search.appendChild(searchInp);
+	search1.appendChild(search);
+	//div.appendChild(search1);
+	document.body.appendChild(div);
+
+}
+
+function vampireView(){
+	var wrap = document.getElementById('bg-blurr');
+	wrap.style.display = 'none';
+}
+
+export default App;
+
+

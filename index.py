@@ -9,6 +9,7 @@ from flask_api import status
 import json
 import time
 import datetime
+from datetime import date
 import collections
 
 app = Flask(__name__)
@@ -25,6 +26,32 @@ def sizeOfList():
       data = json.load(f)
 
     return len(data)
+
+# read json file
+def readJson():
+    with open('data.json') as f:
+        data = json.load(f)
+
+    # make it return json object for other methods to use
+    d = json.dumps(data, indent=4)
+    print(d)
+    return d
+    # size = sizeOfList()
+    # print(size)
+
+
+#log = logging.getLogger(__name__)
+ns = api.namespace('vampire', description='Returns the blood sample data')
+@api.route('/show', methods=['GET'])
+
+class show(Resource):
+    @api.response(200, 'has data')
+    def get(self):
+        result = readJson()
+        return result , status.HTTP_200_OK
+
+
+# REQT2 - DEPOSITS
 
 #add sample to json file here
 def addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology):
@@ -48,43 +75,56 @@ def addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, patholo
         json.dump(feeds, data)
 
 
-# delete the blood sample
-def deleteBloodSample(id):
-    with open('data.json', mode='r') as data:
-        feeds = json.load(data)
 
-    for e in feeds:
-        if (e['id'] == id):
-            print(e)
-            feeds.remove(e)
+# REQT 3 - QUERIES
 
-    with open('data.json', 'w') as data:
-        feeds = json.dump(feeds, data)
+# List of donors
 
+def list_donors():
 
-# read json file
-def readJson():
+    donors = []
+
     with open('data.json') as f:
-        data = json.load(f)
 
-    # make it return json object for other methods to use
-    d = json.dumps(data, indent=4)
+      data = json.load(f)
 
-    return d
+    for i in range (0, len(data)):
+    #for key, value in data[i].items():
+        newInput = {}
+        newInput['name'] = data[i]['name']
+        newInput['contact'] = data[i]['contact']
+        newInput['blood_group'] = data[i]['blood_group']
 
+        # Make sure donors aren't listed twice
+        x = json.dumps(donors, indent=4)
+        donor_data = json.loads(x)
+        if (check_existing_donor(donor_data, data[i]['contact']) == 'false'):
+            donors.append(newInput)
 
+    return (json.dumps(donors, indent=4))
 
-#log = logging.getLogger(__name__)
-ns = api.namespace('vampire', description='Returns the blood sample data')
-@api.route('/show', methods=['GET'])
+# Check if donor exists in list
+def check_existing_donor(data, contact):
+
+    exists = 'false'
+    for i in range (0, len(data)):
+        if (data[i]['contact'] == contact):
+            exists = 'true'
+
+    return exists
+
 
 class show(Resource):
     @api.response(200, 'has data')
     def get(self):
         result = readJson()
-        
+
         return result , status.HTTP_200_OK
 
+
+s = list_donors()
+data1 = json.loads(s)
+#print(json.dumps(data1, indent=4))
 
 # bubble sort by exp date
 def sort_by_date(data):
@@ -98,14 +138,27 @@ def sort_by_date(data):
             for key, value in data[j + 1].items():
                 if(key == "use_by_date"):
                     y = time.mktime(datetime.datetime.strptime(value, "%d/%m/%y").timetuple())
-                #for key in data[j]:
-                 #   x=key['data']['use_by_date']
-                #for key in data[j+1]:
-                 #   y=key['data']['use_by_date']
+# <<<<<<< HEAD
+#                 #for key in data[j]:
+#                  #   x=key['data']['use_by_date']
+#                 #for key in data[j+1]:
+#                  #   y=key['data']['use_by_date']
+#
+#             if (x > y):
+#                 data[j], data[j + 1] = data[j + 1], data[j]
+#     return data
+# =======
 
             if (x > y):
                 data[j], data[j + 1] = data[j + 1], data[j]
-    return data
+    return (json.dumps(data, indent=4))
+
+with open('data.json', mode='r') as data:
+    d = json.load(data)
+s = sort_by_date(d)
+data1 = json.loads(s)
+#print(json.dumps(data1[0], indent=4))
+
 
 def filterByGroup(data, bgroup) :
 
@@ -141,7 +194,7 @@ def search (data, bgroup, btype,  quantity) :
         if (len(result) == quantity):
             break
 
-    return result
+    return (json.dumps(result, indent=4))
 
 with open('data.json', mode='r') as data:
     feeds = json.load(data)
@@ -154,7 +207,8 @@ filtered_data = filterByGroup (feeds, "B")
 #print (json.dumps(filtered_data, indent=4))
 
 searched = search(feeds, "B","general", 2)
-print (json.dumps(searched, indent = 4))
+#print (json.dumps(searched, indent = 4))
+
 
 
 #sort by exp date
@@ -162,7 +216,9 @@ print (json.dumps(searched, indent = 4))
 #    print(json.dumps(sorted_by_date, indent=4))
 
 
+
 # Counts the quantity of a blood group
+
 def count_quantity(blood_group):
 
     quantity = 0
@@ -223,14 +279,103 @@ def sort_blood_group_by_quantity(data):
                     if(key == 'blood_group' and value == blood_group):
                         result.append(data[i])
 
-
     return result
+# =======
+#
+#     return (json.dumps(result, indent=4))
+# >>>>>>> 35ef8dbe77c2ebe60309f4e6dc49e90c943aabc4
 
 with open('data.json', mode='r') as data:
     d = json.load(data)
 
 s = sort_blood_group_by_quantity(d)
-#print(json.dumps(s, indent=4))
+data1 = json.loads(s)
+#print(json.dumps(data1[0], indent=4))
+
+# RQT 4 - REQUESTS
+
+# requests for blood supplies by blood group, quantity
+
+def blood_requests(blood_group, requested_quantity):
+
+    if (blood_group == 'A' or blood_group == 'B' or blood_group == 'AB' or blood_group == 'O'):
+            quantity = count_quantity(blood_group)
+            if (requested_quantity > quantity):
+                message = "Not enough supplies"
+
+            else:
+                message = "Order confirmed: " + str(requested_quantity) + " blood samples of blood type " + blood_group
+    else:
+        message = "Please enter a valid blood group"
+
+    # delete blood from sample
+
+    return message
+
+#print(blood_requests('B', 1))
+
+# RQT 5  - WITHDRAWS
+
+# delete the blood sample
+def deleteBloodSample(id):
+    with open('data.json', mode='r') as data:
+        feeds = json.load(data)
+
+    for e in feeds:
+        if (e['id'] == id):
+            print(e)
+            feeds.remove(e)
+
+    with open('data.json', 'w') as data:
+        feeds = json.dump(feeds, data)
+
+
+# RQT 6  - DELIVERS
+
+# Check if blood has passed by expiry date
+
+def check_if_expired(ID):
+
+    with open('data.json') as f:
+      data = json.load(f)
+
+
+    # get timestamp of today's date
+    today = date.today()
+    date_today = today.strftime("%d/%m/%y")
+    date_today_timestamp = time.mktime(datetime.datetime.strptime(date_today, "%d/%m/%y").timetuple())
+
+    # get timestamp of blood expiry date
+    for i in range (0, len(data)):
+        for key, value in data[i].items():
+            if (key == "id" and value == ID):
+                exp_date = data[i]['use_by_date']
+                exp_date_timestamp = time.mktime(datetime.datetime.strptime(exp_date, "%d/%m/%y").timetuple())
+
+    # compare
+    if (exp_date_timestamp < date_today_timestamp):
+        return "expired"
+    else:
+        return "clear"
+
+
+#print(check_if_expired(4))
+
+# delete if expired
+def remove_if_expired():
+
+    with open('data.json') as f:
+      data = json.load(f)
+
+    for i in range (0, len(data)):
+        for key, value in data[i].items():
+            if (key == "id"):
+                if (check_if_expired(value) == 'expired'):
+                    deleteBloodSample(value)
+
+
+
+#remove_if_expired()
 
 
 

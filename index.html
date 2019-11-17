@@ -1,13 +1,197 @@
+<!DOCTYPE html>
 <html>
 <head>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
+<link rel="stylesheet" type="text/css" href="style.css" media="screen"/>
+<link href="style.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<style>
+
+.App {
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top center;
+/*    filter: blur(8px);
+    -webkit-filter: blur(8px);*/
+    background: url(medImage.png);
+    /*background-image: url('medImage.png');*/
+    
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.bg-blurr {
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,255,0.1); 
+  color: white;
+  font-weight: bold;
+  border: 3px solid #f1f1f1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 60%;
+  height: 60%;
+  padding: 20px;
+  text-align: center;
+}
+
+.header {
+  background-color:rgba(0,0,0,0);
+}
+
+.wrapper {
+  text-align: center;
+  display: inline-block;
+  position: absolute;
+  top: 45%;
+  left: 23%;
+}
+
+.btn {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 20px 80px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn1 {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 20px 80px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.btn2 {
+  position: absolute;
+  right: 5%;
+  top: 12%;
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 10px 80px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.info {
+  border-color: #2196F3;
+  color: dodgerblue;
+}
+
+.info:hover {
+  background: #2196F3;
+  color: white;
+}
+
+#table {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 90%;
+}
+
+#table td, #table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  background-color: white;
+}
+
+#table tr:nth-child(even){background-color: blue;}
+
+#table tr:hover {background-color: #ddd;}
+
+#table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: blue;
+  color: white;
+}
+
+.heading{
+  left: 4%;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  position: absolute;
+  top: 0%;
+  color: white;
+}
+
+.search {
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+.searchTerm {
+  width: 100%;
+  border: 2px solid white;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9DBFAF;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  background: #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+
+.wrap{
+  width: 15%;
+  height: 40px;
+  position: absolute;
+  top: 10%;
+  font-size: 20px;
+  right: 15%;
+  transform: translate(-50%, -30%);
+  display:inline-block;
+}
+
+
+
+</style>
+
+<body>
+
+<div class="App">
+<div class="bg-blurr" id="bg-blurr">
+  <div class="wrapper" id="wrapper">
+      <button class="btn1 info" id="hospital" onClick=hospitalView()>View as hospital</button>
+      <button class="btn info" id="vampire" onClick=vampireView()>View as vampire</button>
+  </div>
+</div>
+</body>
 
 <script>
 
-  function init(){
-    initShow();
-  }
-  function initShow(){
+function initShow(){
       fetch('http://127.0.0.1:5000/show', {
           method: 'GET',
           dataType: 'json',
@@ -21,30 +205,79 @@
       .then(function(data) {
           console.log(data);
       })
-  }
-// $.ajax({
-//     url: 'data.json', // returns "[1,2,3,4,5,6]"
-//     dataType: 'json', // jQuery will parse the response as JSON
-//     success: function (outputfromserver) {
-//         // outputfromserver is an array in this case
-//         // just access it like one
-//
-//         alert(outputfromserver[1].id); // alert the 0th value
-//
-//         // let's iterate through the returned values
-//         // for loops are good for that, $.each() is fine too
-//         // but unnecessary here
-//         for (var i = 0; i < outputfromserver.length; i++) {
-//             // outputfromserver[i] can be used to get each value
-//         }
-//     }
-// });
+}
+        
+
+function hospitalView(){
+       
+        var app = document.getElementById('App');
+        var div = document.createElement('div');
+        var wrap = document.getElementById('bg-blurr');
+        wrap.style.display = 'none';
+
+        var heading =  document.createElement('h1');
+        heading.innerHTML = "Vampire P/L";
+        heading.className = "heading";
+        div.appendChild(heading);
+
+        var requestbtn = document.createElement("BUTTON");
+        requestbtn.className = "btn2 info";
+        requestbtn.innerHTML = "Request Blood";
+        div.appendChild(requestbtn);
+
+        requestbtn.onclick = function(){
+                console.log("bjad");
+        }
+
+        //Content table
+        var table = document.createElement("table");
+        table.id = "table";
+        var column = document.createElement("tr");
+        var bloodGroup = document.createElement("th");
+        bloodGroup.innerHTML = "Blood Group";
+        var quantity = document.createElement("th");
+        quantity.innerHTML = "Use By date";
+        var bloodType = document.createElement("th");
+        bloodType.innerHTML = "Blood Type";
+        column.appendChild(bloodGroup);
+        column.appendChild(quantity);
+        column.appendChild(bloodType);
+        table.appendChild(column);
+
+        var col1 = document.createElement("td");
+        col1.innerHTML = "A";
+        table.appendChild(col1);
+        var col2 = document.createElement("td");
+        col2.innerHTML = "12-11-19";
+        table.appendChild(col2);
+        var col3 = document.createElement("td");
+        col3.innerHTML = "Rare";
+        table.appendChild(col3);
+
+        div.appendChild(table);
+
+        //search bar
+        var search1 = document.createElement("div");
+        search1.className = "wrap";
+        var search = document.createElement("div");
+        search.className = "search";
+        var searchInp = document.createElement("INPUT");
+        searchInp.className = "searchTerm";
+        var searchbtn = document.createElement("BUTTON");
+        searchbtn.className = "searchButton";
+        searchbtn.innerHTML = "Search";
+        searchInp.appendChild(searchbtn);
+        search.appendChild(searchInp);
+        search1.appendChild(search);
+        div.appendChild(search1);
+        //document.body.appendChild(div);
+
+}
+
+function vampireView(){
+        var wrap = document.getElementById('bg-blurr');
+        wrap.style.display = 'none';
+}
 
 </script>
-</head>
-
-<body onload="init()">
-  <div id="start_div"></div>
-</body>
-
 </html>
