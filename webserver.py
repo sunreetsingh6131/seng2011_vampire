@@ -48,18 +48,6 @@ while True:
 
                 fileName = response.replace('/', '')
 
-                # newsapi = NewsApiClient(api_key='84ceb92e06b44f1db554d716c0fa0a01')
-
-                # top_headlines = newsapi.get_top_headlines(q='bitcoin',
-
-                #                           sources='bbc-news,the-verge',
-
-                #                           category='business',
-
-                #                           language='en',
-
-                #                           country='us')
-
                 file = open('index.html')
 
                 output = file.read()
