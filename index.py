@@ -34,8 +34,8 @@ def readJson():
         data = json.load(f)
 
     # make it return json object for other methods to use
-    d = json.dumps(data, indent=4)
-    print(d)
+    #d = JSON.parse(data)
+    d = json.dumps(data)
     return d
     # size = sizeOfList()
     # print(size)
@@ -48,7 +48,7 @@ ns = api.namespace('vampire', description='Returns the blood sample data')
 class show(Resource):
     @api.response(200, 'has data')
     def get(self):
-        result = readJson()
+        result = readJson();
         return result , status.HTTP_200_OK
 
 
@@ -104,7 +104,7 @@ def list_donors():
 
     return (json.dumps(donors, indent=4))
 
-# Check if donor exists in list
+Check if donor exists in list
 def check_existing_donor(data, contact):
 
     exists = 'false'
@@ -123,8 +123,8 @@ class show(Resource):
         return result , status.HTTP_200_OK
 
 
-s = list_donors()
-data1 = json.loads(s)
+# s = list_donors()
+# data1 = json.loads(s)
 #print(json.dumps(data1, indent=4))
 
 # bubble sort by exp date
@@ -157,7 +157,7 @@ with open('data.json', mode='r') as data:
     d = json.load(data)
 s = sort_by_date(d)
 data1 = json.loads(s)
-#print(json.dumps(data1[0], indent=4))
+print(json.dumps(data1[0], indent=4))
 
 
 def filterByGroup(data, bgroup) :
@@ -190,7 +190,7 @@ def searchGroup(data, bgroup) :
             if (key == "blood_group" and x):
                 #j= j +1
                 result.append(data[i])
-               
+
 
     return (json.dumps(result, indent=4))
 
@@ -211,10 +211,10 @@ def searchType (data, btype) :
             y = re.search(btype, value)
             if (key == "blood_type" and y):
                 result.append(data[i])
-        
+
 
     return (json.dumps(result, indent=4))
- 
+
 
 with open('data.json', mode='r') as data:
     feeds = json.load(data)
@@ -321,7 +321,7 @@ def blood_requests(blood_group, requested_quantity):
             if (requested_quantity > quantity):
                 message = "Not enough supplies"
                 check = false
-            
+
             else:
                 message = "Order confirmed: " + str(requested_quantity) + " blood samples of blood type " + blood_group
                 check = true
@@ -332,8 +332,8 @@ def blood_requests(blood_group, requested_quantity):
     # delete blood from sample
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
-    
-    if (check == true):     
+
+    if (check == true):
         i = 0
 
         while i <= requested_quantity :
@@ -343,8 +343,8 @@ def blood_requests(blood_group, requested_quantity):
                 if (e['blood_group'] == blood_group):
                     id = e['id']
                     deleteBloodSample(id)
-                    i = i + 1      
-    
+                    i = i + 1
+
     return message
 
 #print(blood_requests('B', 1))
@@ -410,16 +410,16 @@ def remove_if_expired():
 
 
 
-#remove_if_expired()
+remove_if_expired()
 
 
 
-# sort by Quantity
+# #sort by Quantity
 # def sortListByQuantity(ArrayList<int> samples):
 #     return samples.sort(reverse = true)
-
-
-# sort by blood group
+#
+#
+# #sort by blood group
 # def sortListByGroup(ArrayList<Char> samples):
 #     return samples.sort();
 
