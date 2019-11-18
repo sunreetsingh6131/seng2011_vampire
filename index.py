@@ -279,7 +279,7 @@ def sort_blood_group_by_quantity(data):
                     if(key == 'blood_group' and value == blood_group):
                         result.append(data[i])
 
-    return result
+    return (json.dumps(result, indent=4))
 # =======
 #
 #     return (json.dumps(result, indent=4))
