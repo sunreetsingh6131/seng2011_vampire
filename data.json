@@ -10,6 +10,6 @@
 
 {"id": 5, "name": "Kristen", "contact": "krisitis@gmail.com", "blood_group": "B", "blood_type": "general", "use_by_date": "25/02/20", "arrival_date": "29/10/19", "pathology": "XYZ Pathology ltd."},
 
-{"id": 6, "name": "Mike", "contact": "mike0022@gmail.com", "blood_group": "AB", "blood_type": "general", "use_by_date": "7/4/19", "arrival_date": "13/2/19", "pathology": "XYZ Pathology ltd."}
+{"id": 6, "name": "Mike", "contact": "mike0022@gmail.com", "blood_group": "AB", "blood_type": "rare", "use_by_date": "7/4/19", "arrival_date": "13/2/19", "pathology": "XYZ Pathology ltd."}
 
 ]
