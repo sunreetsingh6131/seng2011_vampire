@@ -288,9 +288,9 @@ def sort_blood_group_by_quantity(data):
 with open('data.json', mode='r') as data:
     d = json.load(data)
 
-s = sort_blood_group_by_quantity(d)
-data1 = json.loads(s)
-#print(json.dumps(data1[0], indent=4))
+    s = sort_blood_group_by_quantity(d)
+    data1 = json.loads(s)
+    print(json.dumps(data1[0], indent=4))
 
 # RQT 4 - REQUESTS
 
@@ -438,7 +438,17 @@ def remove_if_expired():
 # <a href="/my-link/">Click me</a>
 
 
-
+#fetch('https://mywebsite.com/endpoint/', {
+#  method: 'POST',
+#  headers: {
+#    'Accept': 'application/json',
+#    'Content-Type': 'application/json',
+#  },
+#  body: JSON.stringify({
+#    firstParam: 'yourValue',
+#    secondParam: 'yourOtherValue',
+#  })
+#})
 
 
 if __name__ == '__main__':
