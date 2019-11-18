@@ -21,16 +21,16 @@ function hospital(){
 
 	var div = document.createElement('div');
 
-	var popup3 = document.createElement('div');  
-	popup3.className = "popup2"; 
-	popup3.id = 'popup3'; 
+	var popup3 = document.createElement('div');
+	popup3.className = "popup2";
+	popup3.id = 'popup3';
 	popup3.innerHTML ="<txt class='text1'>Enter the hospital's name:</txt>"
 					 +"<br><br>"
 					 +"<INPUT class='input5' id='hospitalId'></INPUT>"
 					 +"<a class='close2' id='close2'>&times;</a>"
 					 +"</br><br>"
 					 +"<br><BUTTON id='view' class='btn4 info'>View</BUTTON>";
-	
+
 	div.appendChild(popup3);
 	document.body.appendChild(div);
 
@@ -38,7 +38,7 @@ function hospital(){
 
 	var close = document.getElementById('close2');
 	popup3.appendChild(close);
-	
+
 	close.onclick = function(){
 		popup3.style.display = 'none';
 	}
@@ -58,24 +58,24 @@ function hospital(){
 
 function hospitalView(){
 	// eslint-disable-next-line
-	var div = document.createElement('div');   
-	div.id = "divMain";  
+	var div = document.createElement('div');
+	div.id = "divMain";
 	var wrap = document.getElementById('bg-blurr');
 	wrap.style.display = 'none';
-	
+
 	var heading =  document.createElement('h1');
 	heading.innerHTML = "Vampire P/L";
 	heading.className = "heading";
 	div.appendChild(heading);
-	
+
 	var requestbtn = document.createElement("BUTTON");
     requestbtn.className = "btn2 info";
 	requestbtn.innerHTML = "Request Blood";
 	requestbtn.id = "request";
 	div.appendChild(requestbtn);
 
-	var popup = document.createElement('div');  
-	popup.className = "popup";  
+	var popup = document.createElement('div');
+	popup.className = "popup";
 	popup.innerHTML = "<txt class='text'>Enter blood group:</txt>"
 					 +"<br><br>"
 					 +"<select class='select-css' id='bloodGroup'><option>Select Blood group<option><option>A<option><option>B<option><option>AB<option><option>O<option></select>"
@@ -95,7 +95,7 @@ function hospitalView(){
 					 +"<BUTTON id=requestBlood class='btn3 info'>Request</BUTTON>";
 
 	requestbtn.onclick = function(){
-		popup.style.display = 'block';		
+		popup.style.display = 'block';
 		div.appendChild(popup);
 		var close = document.getElementById('close');
 		close.onclick = function(){
@@ -124,11 +124,11 @@ function hospitalView(){
 			}
 		}
 	}
-	
+
 	//Content table
 	var table = document.createElement("table");
 	table.id = "table";
-	var column = document.createElement("tr");	
+	var column = document.createElement("tr");
 	var bloodGroup = document.createElement("th");
 	bloodGroup.innerHTML = "Blood Group";
 	var quantity = document.createElement("th");
@@ -140,24 +140,46 @@ function hospitalView(){
 	column.appendChild(bloodType);
 	table.appendChild(column);
 
-	div.appendChild(table);	
+	div.appendChild(table);
 	document.body.appendChild(div);
 }
 
+// fetch('http://35.189.54.60:5000/show', {
+//           method: 'GET',
+//           dataType: 'json',
+//           crossdomain: 'true',
+//           headers: {
+//               'Access-Control-Allow-Origin': 'http://127.0.0.1:12000',
+//               'Access-Control-Allow-Methods': 'GET',
+//               'Access-Control-Allow-Headers': 'Content-Type',
+//               'Accept': 'application/json',
+//               'Content-Type': 'application/json'
+//           }
+//       })
+//       .then((resp) => resp.json())
+//       .then(function(data) {
+//           var len = Object.keys(data).length;
+//           console.log(Object.keys(data).length);
+//           for (let i = 0; i<len; i++){
+//             markLocations(data[i], earth);
+//           }
+//       })
+//     }
+
 function vampire(){
-	
+
 	var div = document.createElement('div');
-	
-	var popup2 = document.createElement('div'); 
+
+	var popup2 = document.createElement('div');
 	popup2.id = 'popup2';
-	popup2.className = "popup1";  
+	popup2.className = "popup1";
 	popup2.innerHTML ="<txt class='text1'>Enter you Id:</txt>"
 					 +"<br><br>"
 					 +"<INPUT class='input4' id='vampireId'></INPUT>"
 					 +"<a class='close1' id='close1'>&times;</a>"
 					 +"</br><br>"
 					 +"<br><BUTTON id='login1' class='btn4 info'>Login</BUTTON>";
-	
+
 	div.appendChild(popup2);
 	document.body.appendChild(div);
 
@@ -191,7 +213,7 @@ function vampireView1(){
 
 		var wrap = document.getElementById('bg-blurr');
 		wrap.style.display = 'none';
-		
+
 		var heading =  document.createElement('h1');
 		heading.innerHTML = "Vampire P/L";
 		heading.className = "heading";
@@ -206,7 +228,7 @@ function vampireView1(){
 		var table = document.createElement("table");
 		table.id = "table";
 
-		var column = document.createElement("tr");	
+		var column = document.createElement("tr");
 		var id = document.createElement("th");
 		id.innerHTML = "Id";
 		var bloodGroup = document.createElement("th");
@@ -231,8 +253,37 @@ function vampireView1(){
 		column.appendChild(del);
 		table.appendChild(column);
 
-		var popup1 = document.createElement('div');  
-		popup1.className = "popup";  
+
+    fetch('http://127.0.0.1:5000/show', {
+        method: 'GET',
+        dataType: 'json',
+        crossdomain: 'true',
+        headers: {
+            //'Access-Control-Allow-Origin': 'http://127.0.0.1:3000',
+            'Access-Control-Allow-Methods': 'GET',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((resp) => resp.json())
+    .then(function(data) {
+        //var len = Object.keys(data).length;
+        var res = JSON.parse(data)
+        console.log(res);
+        console.log(Object.keys(res.database).length);
+        //console.log(Object.keys(data[0].database).length);
+        //for (var i = 0; i < Object.keys(data).length;)
+
+        //for (let i = 0; i<len; i++){
+        //  markLocations(data[i], earth);
+      //  }
+    })
+
+
+
+		var popup1 = document.createElement('div');
+		popup1.className = "popup";
 		popup1.innerHTML ="<txt class='text'>Enter blood group:</txt>"
 						 +"<br><br>"
 						 +"<select class='select-css' id='bloodGroupAdd'><option>Select Blood group<option><option>A<option><option>B<option><option>AB<option><option>O<option></select>"
@@ -255,19 +306,19 @@ function vampireView1(){
 						 +"<br><BUTTON id='addBlood' class='btn3 info'>Add</BUTTON>";
 
 		addBtn.onclick = function(){
-			popup1.style.display = 'block';		
-			
+			popup1.style.display = 'block';
+
 			div.appendChild(popup1);
 
 			var close = document.getElementById('close');
 			close.onclick = function(){
 				popup1.style.display = 'none';
 			}
-			
+
 			var add1 = document.getElementById('addBlood');
-			
+
 			add1.onclick = function(){
-				
+
 				popup1.style.display = 'none';
 				var bloodGroup = document.getElementById('bloodGroupAdd').value;
 				var bloodType = document.getElementById('bloodTypeAdd').value;
@@ -276,7 +327,7 @@ function vampireView1(){
 				var pathology = document.getElementById('history').value;
 				var medical = document.getElementById('path').value;
 
-				var column = document.createElement("tr");	
+				var column = document.createElement("tr");
 
 	    		var col1 = document.createElement("td");
 				col1.innerHTML = Math.floor((Math.random() * 1000) + 1);
@@ -286,14 +337,14 @@ function vampireView1(){
 				var col3 = document.createElement("td");
 				var today = new Date();
 				var dd = String(today.getDate()).padStart(2, '0');
-				var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+				var mm = String(today.getMonth() + 1).padStart(2, '0');
 				var yyyy = today.getFullYear();
 
 				col3.innerHTML = dd + '/' + mm + '/' + yyyy;
-			   
+
 				var col4 = document.createElement("td");
 				var numberOfDaysToAdd = 30;
-				today.setDate(today.getDate() + numberOfDaysToAdd); 
+				today.setDate(today.getDate() + numberOfDaysToAdd);
 
 				var dd1 = today.getDate();
 				var mm1 = today.getMonth() + 1;
@@ -315,7 +366,7 @@ function vampireView1(){
 			    	// eslint-disable-next-line
 			    	col6.innerHTML = "Name: "+nameDonor+"<br>"+"Phone: "+phone+"<br>"+"Medical history: "+medical+"<br>"+"Pathology: "+pathology+"<br>";
 			    }
-	 
+
 			    var col7 = document.createElement("td");
 			    col7.innerHTML = "<BUTTON class='btnDel'>Delete</BUTTON>";
 
@@ -343,11 +394,9 @@ function vampireView1(){
 			    	}
 			    }
 			}
-		}	
+		}
 	div.appendChild(table);
 	document.body.appendChild(div);
 }
 
 export default App;
-
-
