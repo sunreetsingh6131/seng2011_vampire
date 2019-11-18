@@ -4,7 +4,7 @@ from flask import Flask, render_template,request, Response, jsonify
 from flask_restplus import Api, Resource , fields, Namespace
 from bottle import HTTPResponse
 from flask_cors import CORS
-from flask_api import status
+#from flask_api import status
 
 import json
 import time
@@ -174,17 +174,14 @@ def filterByGroup(data, bgroup) :
 def searchGroup(data, bgroup) :
 
     result = []
-    #j = 0;
-    #sorted_data = data.sort()
-    bgroup = bgroup.lower()
-    #btype = btype.lower()
+    bgroup = "^"+ bgroup
 
     for i in range (0, len(data) - 1):
 
         #check = 0;
         for key, value in data[i].items():
             value = str(value).lower()
-            x = re.search(bgroup,value)
+            x = re.search(bgroup,value, re.IGNORECASE)
             #y = re.search(btype, value)
 
             if (key == "blood_group" and x):
@@ -197,18 +194,16 @@ def searchGroup(data, bgroup) :
 def searchType (data, btype) :
 
     result = []
-    #j = 0;
-    #sorted_data = data.sort()
-    btype = btype.lower()
+    #btype = btype.lower()
 
     for i in range (0, len(data) -1 ):
 
         check = 0;
         for key, value in data[i].items():
 
-            value = str(value).lower()
+            value = str(value)
 
-            y = re.search(btype, value)
+            y = re.search(btype, value, re.IGNORECASE)
             if (key == "blood_type" and y):
                 result.append(data[i])
         
@@ -226,10 +221,10 @@ sorted_data = sort_by_date(feeds)
 filtered_data = filterByGroup (feeds, "B")
 #print (json.dumps(filtered_data, indent=4))
 
-searched = searchGroup(feeds, "AB")
+searched = searchGroup(feeds, "B")
 #print (json.dumps(searched, indent = 4))
 
-typeSearch = searchType(feeds, "rare")
+typeSearch = searchType(feeds, "General")
 #print (json.dumps(typeSearch, indent = 4))
 
 #sort by exp date
@@ -315,25 +310,25 @@ data1 = json.loads(s)
 
 def blood_requests(blood_group, requested_quantity):
 
-    check = false
+    check = None
     if (blood_group == 'A' or blood_group == 'B' or blood_group == 'AB' or blood_group == 'O'):
             quantity = count_quantity(blood_group)
             if (requested_quantity > quantity):
                 message = "Not enough supplies"
-                check = false
+                check = False
             
             else:
                 message = "Order confirmed: " + str(requested_quantity) + " blood samples of blood type " + blood_group
-                check = true
+                check = True
     else:
         message = "Please enter a valid blood group"
-        check = false
+        check = False
 
     # delete blood from sample
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
     
-    if (check == true):     
+    if (check == True):     
         i = 0
 
         while i <= requested_quantity :
@@ -347,7 +342,6 @@ def blood_requests(blood_group, requested_quantity):
     
     return message
 
-#print(blood_requests('B', 1))
 
 # RQT 5  - WITHDRAWS
 
@@ -364,6 +358,7 @@ def deleteBloodSample(id):
     with open('data.json', 'w') as data:
         feeds = json.dump(feeds, data)
 
+print(blood_requests('O', 1))
 
 # RQT 6  - DELIVERS
 
