@@ -399,4 +399,57 @@ function vampireView1(){
 	document.body.appendChild(div);
 }
 
-export default App;
+// import requests
+// r = requests.post("http://yoururl/post", data={'foo': 'bar'})
+// # And done.
+// print(r.text) # displays the result body.
+//
+// export default App;
+// from flask import Flask, request
+// app = Flask(__name__)
+// @app.route('/', methods=['POST'])
+// def result():
+//     print(request.form['foo']) # should display 'bar'
+//     return 'Received !' # response to your request.
+
+// let response = await fetch('/article/fetch/post/user', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8'
+//   },
+//   body: JSON.stringify(user)
+// });
+//
+// let result = await response.json();
+// alert(result.message);
+//function createGist(opts) {
+//   ChromeSamples.log('Posting request to GitHub API...');
+//   fetch('https://api.github.com/gists', {
+//     method: 'post',
+//     body: JSON.stringify(opts)
+//   }).then(function(response) {
+//     return response.json();
+//   }).then(function(data) {
+//     ChromeSamples.log('Created Gist:', data.html_url);
+//   });
+// }
+//
+// function submitGist() {
+//   var content = document.querySelector('textarea').value;
+//   if (content) {
+//     createGist({
+//       description: 'Fetch API Post example',
+//       public: true,
+//       files: {
+//         'test.js': {
+//           content: content
+//         }
+//       }
+//     });
+//   } else {
+//     ChromeSamples.log('Please enter in content to POST to a new Gist.');
+//   }
+// }
+//
+// var submitBtn = document.querySelector('button');
+// submitBtn.addEventListener('click', submitGist);
