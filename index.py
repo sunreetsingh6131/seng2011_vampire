@@ -104,7 +104,7 @@ def list_donors():
 
     return (json.dumps(donors, indent=4))
 
-Check if donor exists in list
+#Check if donor exists in list
 def check_existing_donor(data, contact):
 
     exists = 'false'
@@ -157,7 +157,7 @@ with open('data.json', mode='r') as data:
     d = json.load(data)
 s = sort_by_date(d)
 data1 = json.loads(s)
-print(json.dumps(data1[0], indent=4))
+#print(json.dumps(data1[0], indent=4))
 
 
 def filterByGroup(data, bgroup) :
@@ -222,7 +222,7 @@ filtered_data = filterByGroup (feeds, "B")
 #print (json.dumps(filtered_data, indent=4))
 
 searched = searchGroup(feeds, "B")
-#print (json.dumps(searched, indent = 4))
+print (json.dumps(searched, indent = 4))
 
 typeSearch = searchType(feeds, "General")
 #print (json.dumps(typeSearch, indent = 4))
@@ -358,7 +358,7 @@ def deleteBloodSample(id):
     with open('data.json', 'w') as data:
         feeds = json.dump(feeds, data)
 
-print(blood_requests('O', 1))
+#print(blood_requests('O', 1))
 
 # RQT 6  - DELIVERS
 
