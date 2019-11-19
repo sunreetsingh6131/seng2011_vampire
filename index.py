@@ -50,7 +50,7 @@ class show(Resource):
     def get(self):
         result = readJson();
         return result , status.HTTP_200_OK
-
+ 
 
 # REQT2 - DEPOSITS
 
