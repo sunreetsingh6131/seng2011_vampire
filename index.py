@@ -109,9 +109,22 @@ def list_donors():
     database['database'] = donors
     return (json.dumps(database, indent=4))
 
+
+
+#Check if donor exists in list
+def check_existing_donor(data, contact):
+
+    exists = 'false'
+    for i in range (0, len(data)):
+        if (data[i]['contact'] == contact):
+            exists = 'true'
+
+    return exists
+
 s = list_donors()
 data1 = json.loads(s)
 #print(json.dumps(data1, indent=4))
+
 
 
 class show(Resource):
@@ -145,7 +158,11 @@ with open('data.json', mode='r') as data:
     d = json.load(data)
 s = sort_by_date(d['database'])
 data1 = json.loads(s)
+
+#print(json.dumps(data1[0], indent=4))
+
 #print(json.dumps(data1, indent=4))
+
 
 
 def filterByGroup(data, bgroup) :
@@ -217,6 +234,10 @@ with open('data.json', mode='r') as data:
 
 #searched = searchGroup(feeds['database'], "B")
 #data1 = json.loads(searched)
+
+
+searched = searchGroup(feeds, "B")
+#print (json.dumps(searched, indent = 4))
 
 
 typeSearch = searchType(feeds['database'], "General")
