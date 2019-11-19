@@ -21,18 +21,25 @@ function hospital(){
 
 	var div = document.createElement('div');
 
-	var popup3 = document.createElement('div');  
+	var popup3 = document.createElement('div');
+	popup3.id = "popup3"; 
 	popup3.className = "popup2"; 
-	popup3.id = 'popup3'; 
-	popup3.innerHTML ="<txt class='text1'>Enter the hospital's name:</txt>"
+	popup3.innerHTML ="<txt class='text1'>Enter the hospital name:</txt>"
 					 +"<br><br>"
 					 +"<INPUT class='input5' id='hospitalId'></INPUT>"
 					 +"<a class='close2' id='close2'>&times;</a>"
 					 +"</br><br>"
 					 +"<br><BUTTON id='view' class='btn4 info'>View</BUTTON>";
 	
+	div.innerHTML = "<div id='popup3'></div>";
+	
 	div.appendChild(popup3);
 	document.body.appendChild(div);
+
+	var hospital = document.getElementById('hospital');
+	hospital.onclick = function(){
+		popup3.style.display = 'none';
+	}
 
 	var view = document.getElementById('view');
 
@@ -68,6 +75,10 @@ function hospitalView(){
 	heading.className = "heading";
 	div.appendChild(heading);
 	
+	var search = document.createElement('div'); 
+	search.innerHTML = "<INPUT type='text' id='myInput' class='myInput' placeholder='Enter'><BUTTON class='btn5 info'>Search</BUTTON></INPUT>";
+	div.appendChild(search);
+
 	var requestbtn = document.createElement("BUTTON");
     requestbtn.className = "btn2 info";
 	requestbtn.innerHTML = "Request Blood";
@@ -110,7 +121,8 @@ function hospitalView(){
 			if(blood === "A" || blood === "B" || blood === "AB" || blood === "O"){
 					if(bloodQuant < 100){
 						popup.style.display = 'none';
-						alert("Blood group: "+blood+"<br>"+"Blood type: "+bloodType+"<br>"+"Quantity: "+bloodQuant+"Request Completed!");
+						// eslint-disable-next-line
+						alert("Blood group: "+blood+"Blood type: "+bloodType+"Quantity: "+bloodQuant+"Request Completed!");
 						popup.style.display = 'none';
 					}
 					else{
@@ -157,7 +169,8 @@ function vampire(){
 					 +"<a class='close1' id='close1'>&times;</a>"
 					 +"</br><br>"
 					 +"<br><BUTTON id='login1' class='btn4 info'>Login</BUTTON>";
-	
+
+	div.innerHTML = "<div id='popup2'></div>";	
 	div.appendChild(popup2);
 	document.body.appendChild(div);
 
@@ -166,6 +179,11 @@ function vampire(){
 	popup2.appendChild(close);
 
 	close.onclick = function(){
+		popup2.style.display = 'none';
+	}
+
+	var vampire = document.getElementById('vampire');
+	vampire.onclick = function(){
 		popup2.style.display = 'none';
 	}
 
@@ -191,7 +209,7 @@ function vampireView1(){
 
 		var wrap = document.getElementById('bg-blurr');
 		wrap.style.display = 'none';
-		
+
 		var heading =  document.createElement('h1');
 		heading.innerHTML = "Vampire P/L";
 		heading.className = "heading";
@@ -347,6 +365,7 @@ function vampireView1(){
 	div.appendChild(table);
 	document.body.appendChild(div);
 }
+
 
 export default App;
 
