@@ -35,35 +35,24 @@ Socket.listen(1)
 if len(sys.argv) != 2:
     print ('Usage: Invalid number of parameters')
     sys.exit();
-    
+
 while True:
     print ("Running Server")
     conn, addr = Socket.accept()
-    
+
     try:
 
                 request = conn.recv(1024)
-
                 response = request.split()[1];
-
                 fileName = response.replace('/', '')
-
                 file = open('index.html')
-
                 output = file.read()
-
                 conn.send('HTTP/1.1 200 OK\n\n')
-
                 conn.send(output)
-
-                #print top_headlines
-
                 conn.close()
 
     except IOError:
 
                 conn.send('HTTP/1.1 404 File not found\n\n')
-
                 conn.send('404 Error: File not found')
-
                 conn.close()
