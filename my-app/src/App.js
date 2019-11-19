@@ -23,8 +23,8 @@ function hospital(){
 
 	var popup3 = document.createElement('div');
 
-	// popup3.id = "popup3"; 
-	// popup3.className = "popup2"; 
+	// popup3.id = "popup3";
+	// popup3.className = "popup2";
 	// popup3.innerHTML ="<txt class='text1'>Enter the hospital name:</txt>"
 
 	popup3.className = "popup2";
@@ -35,9 +35,9 @@ function hospital(){
 					 +"<a class='close2' id='close2'>&times;</a>"
 					 +"</br><br>"
 					 +"<br><BUTTON id='view' class='btn4 info'>View</BUTTON>";
-	
+
 	//div.innerHTML = "<div id='popup3'></div>";
-	
+
 
 	div.appendChild(popup3);
 	document.body.appendChild(div);
@@ -81,8 +81,8 @@ function hospitalView(){
 	heading.className = "heading";
 	div.appendChild(heading);
 
-	
-	var search = document.createElement('div'); 
+
+	var search = document.createElement('div');
 	search.innerHTML = "<INPUT type='text' id='myInput' class='myInput' placeholder='Enter'><BUTTON class='btn5 info'>Search</BUTTON></INPUT>";
 	div.appendChild(search);
 
@@ -114,8 +114,8 @@ function hospitalView(){
 					 +"<BUTTON id=requestBlood class='btn3 info'>Request</BUTTON>";
 
 	requestbtn.onclick = function(){
-		popup.style.display = 'block';
-		div.appendChild(popup);
+		  popup.style.display = 'block';
+		  div.appendChild(popup);
 		var close = document.getElementById('close');
 		close.onclick = function(){
 			popup.style.display = 'none';
@@ -201,7 +201,7 @@ function vampire(){
 					 +"<br><BUTTON id='login1' class='btn4 info'>Login</BUTTON>";
 
 
-//	div.innerHTML = "<div id='popup2'></div>";	
+//	div.innerHTML = "<div id='popup2'></div>";
 
 	div.appendChild(popup2);
 	document.body.appendChild(div);
@@ -234,27 +234,89 @@ function vampire(){
 	}
 }
 
+/**
+ * adding entry to table
+ * @param {[type]} table [description]
+ * @param {[type]} data  [description]
+ * @param {[type]} num   [description]
+ */
+function addEntry(table, data, num){
+
+  for (var i = 0; i < num; i++){
+      var column = document.createElement("tr");
+
+      var col1 = document.createElement("td");
+      col1.innerHTML = data.database[i].id;
+
+      var col2 = document.createElement("td");
+      col2.innerHTML = data.database[i].blood_group;
+
+      var col3 = document.createElement("td");
+      col3.innerHTML = data.database[i].arrival_date;
+
+      var col4 = document.createElement("td");
+      col4.innerHTML = data.database[i].use_by_date;
+
+      var col5 = document.createElement("td");
+      col5.innerHTML = data.database[i].blood_type;
+
+      var col6 = document.createElement("td");
+      col6.innerHTML = data.database[i].name;
+      col6.className = "name";
+      col6.onclick = function(){
+          col6.innerHTML = "Name: "+data.database[i].name+"<br>"+"Email: "+data.database[i].contact+"<br>"+"Medical history: SOMETHING HERE"+"<br>"+"Pathology: "+data.database[i].pathology+"<br>";
+      }
+
+      var col7 = document.createElement("td");
+      col7.innerHTML = "<BUTTON class='btnDel'>Delete</BUTTON>";
+      col7.onclick = function(){
+          table.removeChild(column);
+      }
+
+      column.appendChild(col1);
+      column.appendChild(col2);
+      column.appendChild(col3);
+      column.appendChild(col4);
+      column.appendChild(col5);
+      column.appendChild(col6);
+      column.appendChild(col7);
+      table.appendChild(column);
+  }
+
+
+}
+
+
+/**
+ * Vampire screen
+ * @return {[type]} [description]
+ */
 function vampireView1(){
 
-		// eslint-disable-next-line
 		var div = document.createElement('div');
-
-		var wrap = document.getElementById('bg-blurr');
-		wrap.style.display = 'none';
-
-		var heading =  document.createElement('h1');
+    div.scroll(0,100);
+    var heading =  document.createElement('h1');
 		heading.innerHTML = "Vampire P/L";
 		heading.className = "heading";
 		div.appendChild(heading);
 
+    var table = document.createElement("table");
+		table.id = "table";
+
+		var wrap = document.getElementById('bg-blurr');
+		wrap.style.display = 'none';
+
 		var addBtn = document.createElement("BUTTON");
-	    addBtn.className = "btn2 info";
+	  addBtn.className = "btn2 info";
 		addBtn.innerHTML = "Add new blood";
 		addBtn.id = "Add";
 		div.appendChild(addBtn);
 
-		var table = document.createElement("table");
-		table.id = "table";
+
+    /**
+     * Table attributes
+     * @type {[type]}
+     */
 
 		var column = document.createElement("tr");
 		var id = document.createElement("th");
@@ -282,6 +344,11 @@ function vampireView1(){
 		table.appendChild(column);
 
 
+    /**
+     * fetching GET request with info
+     * @param  {[type]} http [description]
+     * @return {[type]}      [description]
+     */
     fetch('http://127.0.0.1:5000/show', {
         method: 'GET',
         dataType: 'json',
@@ -300,6 +367,8 @@ function vampireView1(){
         var res = JSON.parse(data)
         console.log(res);
         console.log(Object.keys(res.database).length);
+
+        addEntry(table, res, Object.keys(res.database).length);
         //console.log(Object.keys(data[0].database).length);
         //for (var i = 0; i < Object.keys(data).length;)
 
@@ -308,8 +377,10 @@ function vampireView1(){
       //  }
     })
 
-
-
+    /**
+     * [popup1 layout of popup for adding new blood sample]
+     * @type {[type]}
+     */
 		var popup1 = document.createElement('div');
 		popup1.className = "popup";
 		popup1.innerHTML ="<txt class='text'>Enter blood group:</txt>"
@@ -334,17 +405,19 @@ function vampireView1(){
 						 +"<br><BUTTON id='addBlood' class='btn3 info'>Add</BUTTON>";
 
 		addBtn.onclick = function(){
-			popup1.style.display = 'block';
+			   popup1.style.display = 'block';
+			   div.appendChild(popup1);
+			   var close = document.getElementById('close');
+         close.onclick = function(){
+				       popup1.style.display = 'none';
+			   }
 
-			div.appendChild(popup1);
 
-			var close = document.getElementById('close');
-			close.onclick = function(){
-				popup1.style.display = 'none';
-			}
-
-			var add1 = document.getElementById('addBlood');
-
+      /**
+       * button adding blood info
+       * @return {[type]} [description]
+       */
+      var add1 = document.getElementById('addBlood');
 			add1.onclick = function(){
 
 				popup1.style.display = 'none';
@@ -357,7 +430,7 @@ function vampireView1(){
 
 				var column = document.createElement("tr");
 
-	    		var col1 = document.createElement("td");
+	    	var col1 = document.createElement("td");
 				col1.innerHTML = Math.floor((Math.random() * 1000) + 1);
 
 				var col2 = document.createElement("td");
@@ -408,25 +481,65 @@ function vampireView1(){
 						    		col5.innerHTML = bloodType.toUpperCase();
 						    		column.appendChild(col2);
 						    		column.appendChild(col3);
-									column.appendChild(col4);
-									column.appendChild(col5);
-									column.appendChild(col6);
-									column.appendChild(col7);
-									table.appendChild(column);
-									col7.onclick = function(){
+									  column.appendChild(col4);
+                    column.appendChild(col5);
+									  column.appendChild(col6);
+									  column.appendChild(col7);
+                    //....
+                    //console.log("sdasjbdiusabjkasbdasbsabdbajssbkbd123232jas");
+                    postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical);
+									  table.appendChild(column);
+									  col7.onclick = function(){
 			    						table.removeChild(column);
-			   						}
-								}
+			   					  }
+								  }
 			    			}
 			    		}
 			    	}
 			    }
-			}
-		}
-	div.appendChild(table);
-	document.body.appendChild(div);
+        }
+		 }
+	   div.appendChild(table);
+	   document.body.appendChild(div);
 }
 
+
+function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical){
+  //console.log("sdasjbdiusabjkasbdasbsabdbajssbkbdjas");
+    var data = { database:[ {id: '1', name: 'nameDonor', contact: 'phone', blood_group: 'bloodGroup',
+                          blood_type: 'bloodType', use_by_date: '12/12/12', arrival_date: '12/12/12', pathology: 'pathology'}]};
+
+    console.log(JSON.stringify(data));
+    fetch('http://127.0.0.1:5000/show', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(data)
+    })
+    .then( (response) => {
+      const json = response.json();
+      console.log('Success:', JSON.stringify(json));
+       //do something awesome that makes the world a better place
+    });
+
+    // try {
+    //   const response = await fetch('http://127.0.0.1:5000/show', {
+    //     method: 'POST', // or 'PUT'
+    //     body: JSON.stringify(data), // data can be `string` or {object}!
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   });
+    //   const json = await response.json();
+    //   console.log('Success:', JSON.stringify(json));
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
+
+}
 
 export default App;
 
@@ -484,4 +597,3 @@ export default App;
 //
 // var submitBtn = document.querySelector('button');
 // submitBtn.addEventListener('click', submitGist);
-

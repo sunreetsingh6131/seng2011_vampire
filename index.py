@@ -1,10 +1,10 @@
 #!usr/bin/python3
 
 from flask import Flask, render_template,request, Response, jsonify
+from flask_api import status
 from flask_restplus import Api, Resource , fields, Namespace
 from bottle import HTTPResponse
 from flask_cors import CORS
-#from flask_api import status
 
 import json
 import time
@@ -42,15 +42,8 @@ def readJson():
 
 
 #log = logging.getLogger(__name__)
-ns = api.namespace('vampire', description='Returns the blood sample data')
-@api.route('/show', methods=['GET'])
 
-class show(Resource):
-    @api.response(200, 'has data')
-    def get(self):
-        result = readJson();
-        return result , status.HTTP_200_OK
- 
+
 
 # REQT2 - DEPOSITS
 
@@ -89,11 +82,11 @@ def check_existing_donor(data, contact):
             exists = 'true'
 
     return exists
-    
+
 # List of donors
 
 def list_donors():
-    
+
     database = {}
     donors = []
 
@@ -112,7 +105,7 @@ def list_donors():
         donor_data = json.loads(x)
         if (check_existing_donor(donor_data, data['database'][i]['contact']) == 'false'):
             donors.append(newInput)
-            
+
     database['database'] = donors
     return (json.dumps(database, indent=4))
 
@@ -130,7 +123,7 @@ class show(Resource):
 
 # bubble sort by exp date
 def sort_by_date(data):
-    
+
     database = {}
     for i in range (0, len(data) - 1):
         for j in range (0 , len(data) - 1 - i):
@@ -144,7 +137,7 @@ def sort_by_date(data):
 
             if (x > y):
                 data[j], data[j + 1] = data[j + 1], data[j]
-                
+
     database['database'] = data
     return (json.dumps(database, indent=4))
 
@@ -156,7 +149,7 @@ data1 = json.loads(s)
 
 
 def filterByGroup(data, bgroup) :
-    
+
     database = {}
     new = []
 
@@ -165,12 +158,12 @@ def filterByGroup(data, bgroup) :
 
             if (key == "blood_group" and value == bgroup):
                 new.append(data[i])
-    
+
     database['database'] = new
     return (json.dumps(database, indent=4))
 
 def searchGroup(data, bgroup) :
-    
+
     database = {}
     result = []
     bgroup = "^"+ bgroup
@@ -191,7 +184,7 @@ def searchGroup(data, bgroup) :
     return (json.dumps(database, indent=4))
 
 def searchType (data, btype) :
-    
+
     database = {}
     result = []
     #btype = btype.lower()
@@ -278,7 +271,7 @@ def blood_group_quantities():
 # Sort data by blood group from lowest quantity to highest quantity
 
 def sort_blood_group_by_quantity(data):
-    
+
     database = {}
     result = []
 
@@ -298,7 +291,7 @@ def sort_blood_group_by_quantity(data):
                 for key, value in data[i].items():
                     if(key == 'blood_group' and value == blood_group):
                         result.append(data[i])
-    
+
     database['database'] = result
     return (json.dumps(database, indent=4))
 
@@ -321,7 +314,7 @@ def blood_requests(blood_group, requested_quantity):
             if (requested_quantity > quantity):
                 message = "Not enough supplies"
                 check = False
-            
+
             else:
                 message = "Order confirmed: " + str(requested_quantity) + " blood samples of blood type " + blood_group
                 check = True
@@ -332,8 +325,8 @@ def blood_requests(blood_group, requested_quantity):
     # delete blood from sample
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
-    
-    if (check == True):     
+
+    if (check == True):
         i = 0
 
         while i <= requested_quantity :
@@ -485,6 +478,20 @@ def remove_if_expired():
 #  })
 #})
 
+ns = api.namespace('vampire', description='Returns the blood sample data')
+@api.route('/show', methods=['GET', 'POST'])
+
+class show(Resource):
+    @api.response(200, 'has data')
+    def get(self):
+        if request.method == 'GET':
+            result = readJson();
+            return result , status.HTTP_200_OK
+
+    def post(self):
+        if request.method == 'POST':
+             result = request.get_json();
+             return result, status.HTTP_200_OK
 
 if __name__ == '__main__':
   app.run(debug=True)
