@@ -22,6 +22,11 @@ function hospital(){
 	var div = document.createElement('div');
 
 	var popup3 = document.createElement('div');
+
+	// popup3.id = "popup3"; 
+	// popup3.className = "popup2"; 
+	// popup3.innerHTML ="<txt class='text1'>Enter the hospital name:</txt>"
+
 	popup3.className = "popup2";
 	popup3.id = 'popup3';
 	popup3.innerHTML ="<txt class='text1'>Enter the hospital's name:</txt>"
@@ -30,9 +35,17 @@ function hospital(){
 					 +"<a class='close2' id='close2'>&times;</a>"
 					 +"</br><br>"
 					 +"<br><BUTTON id='view' class='btn4 info'>View</BUTTON>";
+	
+	//div.innerHTML = "<div id='popup3'></div>";
+	
 
 	div.appendChild(popup3);
 	document.body.appendChild(div);
+
+	var hospital = document.getElementById('hospital');
+	hospital.onclick = function(){
+		popup3.style.display = 'none';
+	}
 
 	var view = document.getElementById('view');
 
@@ -67,6 +80,12 @@ function hospitalView(){
 	heading.innerHTML = "Vampire P/L";
 	heading.className = "heading";
 	div.appendChild(heading);
+
+	
+	var search = document.createElement('div'); 
+	search.innerHTML = "<INPUT type='text' id='myInput' class='myInput' placeholder='Enter'><BUTTON class='btn5 info'>Search</BUTTON></INPUT>";
+	div.appendChild(search);
+
 
 	var requestbtn = document.createElement("BUTTON");
     requestbtn.className = "btn2 info";
@@ -110,7 +129,8 @@ function hospitalView(){
 			if(blood === "A" || blood === "B" || blood === "AB" || blood === "O"){
 					if(bloodQuant < 100){
 						popup.style.display = 'none';
-						alert("Blood group: "+blood+"<br>"+"Blood type: "+bloodType+"<br>"+"Quantity: "+bloodQuant+"Request Completed!");
+						// eslint-disable-next-line
+						alert("Blood group: "+blood+"Blood type: "+bloodType+"Quantity: "+bloodQuant+"Request Completed!");
 						popup.style.display = 'none';
 					}
 					else{
@@ -180,6 +200,9 @@ function vampire(){
 					 +"</br><br>"
 					 +"<br><BUTTON id='login1' class='btn4 info'>Login</BUTTON>";
 
+
+//	div.innerHTML = "<div id='popup2'></div>";	
+
 	div.appendChild(popup2);
 	document.body.appendChild(div);
 
@@ -188,6 +211,11 @@ function vampire(){
 	popup2.appendChild(close);
 
 	close.onclick = function(){
+		popup2.style.display = 'none';
+	}
+
+	var vampire = document.getElementById('vampire');
+	vampire.onclick = function(){
 		popup2.style.display = 'none';
 	}
 
@@ -399,4 +427,61 @@ function vampireView1(){
 	document.body.appendChild(div);
 }
 
+
 export default App;
+
+// import requests
+// r = requests.post("http://yoururl/post", data={'foo': 'bar'})
+// # And done.
+// print(r.text) # displays the result body.
+//
+// export default App;
+// from flask import Flask, request
+// app = Flask(__name__)
+// @app.route('/', methods=['POST'])
+// def result():
+//     print(request.form['foo']) # should display 'bar'
+//     return 'Received !' # response to your request.
+
+// let response = await fetch('/article/fetch/post/user', {
+//   method: 'POST',
+//   headers: {
+//     'Content-Type': 'application/json;charset=utf-8'
+//   },
+//   body: JSON.stringify(user)
+// });
+//
+// let result = await response.json();
+// alert(result.message);
+//function createGist(opts) {
+//   ChromeSamples.log('Posting request to GitHub API...');
+//   fetch('https://api.github.com/gists', {
+//     method: 'post',
+//     body: JSON.stringify(opts)
+//   }).then(function(response) {
+//     return response.json();
+//   }).then(function(data) {
+//     ChromeSamples.log('Created Gist:', data.html_url);
+//   });
+// }
+//
+// function submitGist() {
+//   var content = document.querySelector('textarea').value;
+//   if (content) {
+//     createGist({
+//       description: 'Fetch API Post example',
+//       public: true,
+//       files: {
+//         'test.js': {
+//           content: content
+//         }
+//       }
+//     });
+//   } else {
+//     ChromeSamples.log('Please enter in content to POST to a new Gist.');
+//   }
+// }
+//
+// var submitBtn = document.querySelector('button');
+// submitBtn.addEventListener('click', submitGist);
+
