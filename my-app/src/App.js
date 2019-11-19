@@ -30,7 +30,6 @@ function hospital(){
 	popup3.className = "popup2";
 	popup3.id = 'popup3';
 	popup3.innerHTML ="<txt class='text1'>Enter the hospital's name:</txt>"
-
 					 +"<br><br>"
 					 +"<INPUT class='input5' id='hospitalId'></INPUT>"
 					 +"<a class='close2' id='close2'>&times;</a>"
