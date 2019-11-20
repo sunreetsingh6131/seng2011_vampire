@@ -20,8 +20,8 @@ function App() {
 function hospital(){
 
 	var div = document.createElement('div');
-
 	var popup3 = document.createElement('div');
+
 
 	popup3.className = "popup2";
 	popup3.id = 'popup3';
@@ -32,6 +32,7 @@ function hospital(){
 					 +"</br><br>"
 					 +"<br><BUTTON id='view' class='btn4 info'>View</BUTTON>";
 
+
 	div.appendChild(popup3);
 	document.body.appendChild(div);
 
@@ -41,7 +42,6 @@ function hospital(){
 	}
 
 	var view = document.getElementById('view');
-
 	var close = document.getElementById('close2');
 	popup3.appendChild(close);
 
@@ -76,6 +76,7 @@ function hospitalView(){
 	
 	var search = document.createElement('div'); 
 	search.innerHTML = "<INPUT type='text' id='myInput' class='myInput' placeholder='Enter'><BUTTON class='btn5 info'><img class='image' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMiA1MTIiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMiA1MTI7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8cGF0aCBzdHlsZT0iZmlsbDojREFFRkY2OyIgZD0iTTM0Ny4xMTksNjAuNzQ2YzI4Ljc1OS0wLjAzNSw1Mi4wOTQsMjMuMjU3LDUyLjEyOSw1Mi4wMDdjMC4wMjYsMjIuNTExLTE0LjQyMyw0Mi40ODctMzUuODE0LDQ5LjUyNSAgdi0yMy40MzFMMzM3LjM5OSw4Ni43OGwwLjYwNy0yNS4xNjZDMzQxLjAwOSw2MS4wMTUsMzQ0LjA2NCw2MC43MjgsMzQ3LjExOSw2MC43NDZ6Ii8+CjxwYXRoIHN0eWxlPSJmaWxsOiNGNUQwQzc7IiBkPSJNMzM3LjM5OSwxMjUuODMxYzAtNy4xODUtNS44MzItMTMuMDE3LTEzLjAxNy0xMy4wMTdjLTcuMTg1LDAtMTMuMDE3LDUuODMyLTEzLjAxNywxMy4wMTcgIGMwLDcuMTg1LDUuODMyLDEzLjAxNywxMy4wMTcsMTMuMDE3QzMzMS41NjgsMTM4Ljg0NywzMzcuMzk5LDEzMy4wMTYsMzM3LjM5OSwxMjUuODMxeiBNMzM3LjM5OSw4Ni43OGwyNi4wMzQsNTIuMDY4djIzLjQzMSAgYy01LjI3NiwxLjcwMS0xMC43NzgsMi41NzctMTYuMzE1LDIuNjAzYy0zLjIwMiwwLjAxNy02LjM5Ni0wLjI2OS05LjU0Ni0wLjg2OGMtMjguMjU1LTUuMzQ2LTQ2LjgyNi0zMi41ODYtNDEuNDgxLTYwLjg0MSAgYzQuMDA5LTIxLjIsMjAuNjgtMzcuNzMyLDQxLjkxNS00MS41NTlMMzM3LjM5OSw4Ni43OHoiLz4KPHBhdGggc3R5bGU9ImZpbGw6I0QzRDNEMzsiIGQ9Ik0zMjkuMTU1LDIxNi45NDljLTQuNTMsMjYuMzAzLTI1LjIxOCw0Ni44NDQtNTEuNTQ3LDUxLjJjLTMuMzUsMC41OTktNi43NTEsMC44ODUtMTAuMTUzLDAuODY4ICBoLTUwLjUwNmwxNi4zMTUtMTA0LjEzNmgxMDQuMTM2bC04LjA3LDUxLjExM0MzMjkuMjQyLDIxNi4zNDIsMzI5LjI0MiwyMTYuNjAyLDMyOS4xNTUsMjE2Ljk0OXoiLz4KPGc+Cgk8cGF0aCBzdHlsZT0iZmlsbDojRjVEMEM3OyIgZD0iTTE4Mi4yMzcsMTEyLjgxNHY1Mi4wNjhoLTguNjc4Yy0xNC4zNzksMC0yNi4wMzQtMTEuNjU1LTI2LjAzNC0yNi4wMzRzMTEuNjU1LTI2LjAzNCwyNi4wMzQtMjYuMDM0ICAgSDE4Mi4yMzd6Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojRjVEMEM3OyIgZD0iTTI1NiwxMzguODQ3YzcuMTg1LDAsMTMuMDE3LTUuODMyLDEzLjAxNy0xMy4wMTdjMC03LjE4NS01LjgzMi0xMy4wMTctMTMuMDE3LTEzLjAxNyAgIGMtNy4xODUsMC0xMy4wMTcsNS44MzItMTMuMDE3LDEzLjAxN0MyNDIuOTgzLDEzMy4wMTYsMjQ4LjgxNSwxMzguODQ3LDI1NiwxMzguODQ3eiBNMzM3LjM5OSwxNjQuODgxSDIzMy4yNjRsLTE2LjMxNSwxMDQuMTM2ICAgaDQzLjM5bC00My4zOSwzNC43MTJsLTQzLjM5LTM0LjcxMmw4LjY3OC0xMDQuMTM2Vjk1LjQ1OGMzNy45MjMtMC41OSw2OC4zNjUtMzEuNDkyLDY4LjM4Mi02OS40MjRWMCAgIGMtMC4wMzUsMjguNzE1LDIzLjIxNCw1Mi4wMzMsNTEuOTI5LDUyLjA2OGMwLjAxNywwLDAuMDM1LDAsMC4wNTIsMGgzNS42NjZsLTAuMjYsOS41NDYgICBjLTI4LjI5OSw1LjEwMy00Ny4xMDQsMzIuMTg3LTQxLjk5Myw2MC40ODVjMy44MzYsMjEuMjM1LDIwLjM1OSwzNy45MDUsNDEuNTU5LDQxLjkxNUwzMzcuMzk5LDE2NC44ODF6Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojRjVEMEM3OyIgZD0iTTQxNi41NDIsMjk1LjA1MXYxNy4zNTZoLTUyLjA2OHYtNDMuMzljMC0xNC4zNzksMTEuNjU0LTI2LjAzNCwyNi4wMzQtMjYuMDM0di00My4zOWgyNi4wMzQgICBjMTQuMzc5LDAsMjYuMDM0LDExLjY1NSwyNi4wMzQsMjYuMDM0djQzLjM5QzQ0Mi41NzYsMjgzLjM5Niw0MzAuOTIyLDI5NS4wNTEsNDE2LjU0MiwyOTUuMDUxeiIvPgo8L2c+CjxnPgoJPHBhdGggc3R5bGU9ImZpbGw6I0Y1QjA1QzsiIGQ9Ik0zMzguMjY3LDUyLjA2OGgtMzUuNjY2Yy0yOC43MTUtMC4wMDktNTEuOTktMjMuMy01MS45ODEtNTIuMDE2YzAtMC4wMTcsMC0wLjAzNSwwLTAuMDUyaDQzLjM5ICAgYzI0LjA3MywwLjAxNyw0My42ODUsMTkuMzI2LDQ0LjA4NCw0My4zOUwzMzguMjY3LDUyLjA2OHoiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiNGNUIwNUM7IiBkPSJNMjUwLjYyLDB2MjYuMDM0Yy0wLjAxNywzNy45MzEtMzAuNDYsNjguODM0LTY4LjM4Miw2OS40MjRoLTEuMDQxVjQzLjM5ICAgYzAtMjMuOTYsMTkuNDMtNDMuMzksNDMuMzktNDMuMzlIMjUwLjYyeiIvPgo8L2c+CjxnPgoJPHBvbHlnb24gc3R5bGU9ImZpbGw6IzAwNDQ4RjsiIHBvaW50cz0iMjQ1LjE1MywzMjcuMTU5IDI0Mi45ODMsMzI5Ljc2MyAyMjUuNjI3LDM0Ny4xMTkgMjE2Ljk0OSwzNTUuNzk3IDIwOC4yNzEsMzQ3LjExOSAgICAxOTAuOTE1LDMyOS43NjMgMTg4Ljc0NiwzMjcuMTU5IDIxNi45NDksMzAzLjcyOSAgIi8+Cgk8cG9seWdvbiBzdHlsZT0iZmlsbDojMDA0NDhGOyIgcG9pbnRzPSIyMjUuNjI3LDM0Ny4xMTkgMjQyLjk4Myw1MTIgMTkwLjkxNSw1MTIgMjA4LjI3MSwzNDcuMTE5IDIxNi45NDksMzU1Ljc5NyAgIi8+CjwvZz4KPGc+Cgk8cG9seWdvbiBzdHlsZT0iZmlsbDojRDNEM0QzOyIgcG9pbnRzPSIxNjQuODgxLDM5OS4xODYgMTY0Ljg4MSw1MTIgMTEyLjgxNCw0MjUuMjIgICIvPgoJPHBvbHlnb24gc3R5bGU9ImZpbGw6I0QzRDNEMzsiIHBvaW50cz0iMTY0Ljg4MSwzNDcuMTE5IDE2NC44ODEsMzk5LjE4NiAxMTIuODE0LDM3My4xNTMgMTM4Ljg0NywyNjkuMDE3IDE2NC44ODEsMjY5LjAxNyAgIi8+CjwvZz4KPGc+Cgk8cG9seWdvbiBzdHlsZT0iZmlsbDojRjNGM0YzOyIgcG9pbnRzPSIyMDguMjcxLDM0Ny4xMTkgMTkwLjkxNSw1MTIgMTY0Ljg4MSw1MTIgMTY0Ljg4MSwzOTkuMTg2IDE2NC44ODEsMzQ3LjExOSAxODguNzQ2LDMyNy4xNTkgICAgMTkwLjkxNSwzMjkuNzYzICAiLz4KCTxwb2x5Z29uIHN0eWxlPSJmaWxsOiNGM0YzRjM7IiBwb2ludHM9IjExMi44MTQsNDI1LjIyIDE2NC44ODEsNTEyIDExMi44MTQsNTEyICAiLz4KCTxwb2x5Z29uIHN0eWxlPSJmaWxsOiNGM0YzRjM7IiBwb2ludHM9IjE2NC44ODEsMzk5LjE4NiAxMTIuODE0LDQyNS4yMiAxMTIuODE0LDM3My4xNTMgICIvPgoJPHBhdGggc3R5bGU9ImZpbGw6I0YzRjNGMzsiIGQ9Ik0xMzguODQ3LDI2OS4wMTdsLTI2LjAzNCwxMDQuMTM2VjUxMmgtNDMuMzlWMzM4LjQ0MSAgIEM2OS40MjQsMzAwLjEwMSwxMDAuNTA4LDI2OS4wMTcsMTM4Ljg0NywyNjkuMDE3eiIvPgo8L2c+CjxnPgoJPHBvbHlnb24gc3R5bGU9ImZpbGw6I0QzRDNEMzsiIHBvaW50cz0iMTczLjU1OSwyNjkuMDE3IDIxNi45NDksMzAzLjcyOSAxODguNzQ2LDMyNy4xNTkgMTY0Ljg4MSwzNDcuMTE5IDE2NC44ODEsMjY5LjAxNyAgIi8+Cgk8cG9seWdvbiBzdHlsZT0iZmlsbDojRDNEM0QzOyIgcG9pbnRzPSIzMjEuMDg1LDQyNS4yMiAyNjkuMDE3LDUxMiAyNjkuMDE3LDM5OS4xODYgICIvPgo8L2c+CjxnPgoJPHBhdGggc3R5bGU9ImZpbGw6I0YzRjNGMzsiIGQ9Ik0zMDcuMjg3LDI2OS4xOTFjMzIuMTI2LDEuNzk2LDU3LjI0LDI4LjM5NCw1Ny4xODgsNjAuNTcyVjUxMmgtNDMuMzlWMzczLjE1M2wtNDMuMzktMTA0LjEzNiAgIGwtMC4wODctMC44NjhjMTEuMzA3LTEuODIyLDIxLjg3Ny02Ljc1MSwzMC41NDYtMTQuMjMyTDMwNy4yODcsMjY5LjE5MXoiLz4KCTxwb2x5Z29uIHN0eWxlPSJmaWxsOiNGM0YzRjM7IiBwb2ludHM9IjMyMS4wODUsMzczLjE1MyAzMjEuMDg1LDQyNS4yMiAyNjkuMDE3LDM5OS4xODYgICIvPgoJPHBvbHlnb24gc3R5bGU9ImZpbGw6I0YzRjNGMzsiIHBvaW50cz0iMjY5LjAxNywzOTkuMTg2IDI2OS4wMTcsNTEyIDI0Mi45ODMsNTEyIDIyNS42MjcsMzQ3LjExOSAyNDIuOTgzLDMyOS43NjMgMjQ1LjE1MywzMjcuMTU5ICAgIDI2OS4wMTcsMzQ3LjExOSAgIi8+CjwvZz4KPHBhdGggc3R5bGU9ImZpbGw6I0QzRDNEMzsiIGQ9Ik0yNjcuNDU1LDI2OS4wMTdjMy40MDIsMC4wMTcsNi44MDQtMC4yNjksMTAuMTUzLTAuODY4bDAuMDg3LDAuODY4bDQzLjM5LDEwNC4xMzZsLTUyLjA2OCwyNi4wMzQgIHYtNTIuMDY4bC0yMy44NjQtMTkuOTU5bC0yOC4yMDMtMjMuNDMxbDQzLjM5LTM0LjcxMkgyNjcuNDU1eiIvPgo8cGF0aCBzdHlsZT0iZmlsbDojRjNGM0YzOyIgZD0iTTM2NC40NzUsMzQ3LjExOXYtMzQuNzEyaDUyLjA2OHYxNDcuNTI1YzAsMjguNzU5LTIzLjMwOSw1Mi4wNjgtNTIuMDY4LDUyLjA2OGwwLDBWMzQ3LjExOXoiLz4KPGc+Cgk8Y2lyY2xlIHN0eWxlPSJmaWxsOiM0NTQ1NDU7IiBjeD0iMzI0LjM4MiIgY3k9IjEyNS44MzEiIHI9IjEzLjAxNyIvPgoJPGNpcmNsZSBzdHlsZT0iZmlsbDojNDU0NTQ1OyIgY3g9IjI1NiIgY3k9IjEyNS44MzEiIHI9IjEzLjAxNyIvPgoJPHJlY3QgeD0iMzY0LjQ3NSIgeT0iMzM4LjQ0MSIgc3R5bGU9ImZpbGw6IzQ1NDU0NTsiIHdpZHRoPSIyNi4wMzQiIGhlaWdodD0iMTcuMzU2Ii8+CjwvZz4KPGc+Cgk8cmVjdCB4PSIxMDQuMTM2IiB5PSIzNzMuMTUzIiBzdHlsZT0iZmlsbDojRTVFNUU1OyIgd2lkdGg9IjE3LjM1NiIgaGVpZ2h0PSIxMzguODQ3Ii8+Cgk8cmVjdCB4PSIzMTIuNDA3IiB5PSIzNzMuMTUzIiBzdHlsZT0iZmlsbDojRTVFNUU1OyIgd2lkdGg9IjE3LjM1NiIgaGVpZ2h0PSIxMzguODQ3Ii8+Cgk8cmVjdCB4PSIzNTUuNzk3IiB5PSIzMjkuNzYzIiBzdHlsZT0iZmlsbDojRTVFNUU1OyIgd2lkdGg9IjE3LjM1NiIgaGVpZ2h0PSIxODIuMjM3Ii8+CjwvZz4KPGc+Cgk8cGF0aCBzdHlsZT0iZmlsbDojNDU0NTQ1OyIgZD0iTTMyOS43NjMsMjI1LjYyN0gzMTQuNDljLTE1LjIzOCwwLjA5NS0yOS4xODQtOC41MjItMzUuOTI3LTIyLjE4MWwxNS41NTEtNy43MDYgICBjMy44MzYsNy43MzIsMTEuNzUsMTIuNTkyLDIwLjM3NiwxMi41MzFoMTQuNjY2TDMyOS43NjMsMjI1LjYyN3oiLz4KCQoJCTxyZWN0IHg9IjM4Ni4xNzMiIHk9IjE2MC4xNTEiIHRyYW5zZm9ybT0ibWF0cml4KC0wLjkxMDQgMC40MTM4IC0wLjQxMzggLTAuOTEwNCA4NDIuMjcxNyAyNDIuNjk4NCkiIHN0eWxlPSJmaWxsOiM0NTQ1NDU7IiB3aWR0aD0iMTcuMzU2IiBoZWlnaHQ9IjEwNC44MzMiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiM0NTQ1NDU7IiBkPSJNMzQ3LjExOSwxNzMuNTU5Yy0zLjc0OSwwLjAyNi03LjQ5OC0wLjMyMS0xMS4xODYtMS4wMjRjLTMyLjk1OS02LjI0OC01NC42MTktMzguMDM2LTQ4LjM3MS03MC45OTQgICBjNC42ODYtMjQuNjk3LDI0LjA5OS00My45NjMsNDguODQtNDguNDU4YzMuNTMyLTAuNjk0LDcuMTE2LTEuMDQxLDEwLjcxNy0xLjAxNWMzMy41NDktMC4wMTcsNjAuNzYzLDI3LjE2Miw2MC43OCw2MC43MTEgICBjMC4wMTcsMjYuMjQyLTE2LjgyNyw0OS41MzQtNDEuNzUsNTcuNzM1QzM1OS45OTcsMTcyLjUwMSwzNTMuNTg0LDE3My41MzMsMzQ3LjExOSwxNzMuNTU5eiBNMzQ3LjExOSw2OS40MjQgICBjLTIuNDczLTAuMDE3LTQuOTQ2LDAuMjA4LTcuMzc2LDAuNjg2bC0wLjI0MywwLjA1MmMtMjMuNTc4LDQuMjc4LTM5LjIyNCwyNi44NjctMzQuOTM4LDUwLjQ0NSAgIGMzLjIxMSwxNy42NjgsMTYuOTY1LDMxLjUzNiwzNC42MDgsMzQuODc3YzcuMjI5LDEuMzAyLDE0LjY1NywwLjc5OCwyMS42NDMtMS40NzVjMjIuNzU0LTcuNTI0LDM1LjA5NC0zMi4wNzQsMjcuNTctNTQuODE5ICAgQzM4Mi40OTksODEuMzk5LDM2NS44NTQsNjkuMzk4LDM0Ny4xMTksNjkuNDI0eiIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=' /></BUTTON></INPUT>";
+
 	div.appendChild(search);
 
 	var requestbtn = document.createElement("BUTTON");
@@ -142,6 +143,7 @@ function hospitalView(){
 		div.appendChild(popup);
 		var close1 = document.getElementById('close');
 		close1.onclick = function(){
+
 			popup.style.display = 'none';
 		}
 		var req = document.getElementById('requestBlood');
@@ -225,6 +227,7 @@ function vampire(){
 					 +"</br><br>"
 					 +"<br><BUTTON id='login1' class='btn4 info'>Login</BUTTON>";
 
+
 	div.appendChild(popup2);
 	document.body.appendChild(div);
 
@@ -256,21 +259,79 @@ function vampire(){
 	}
 }
 
+/**
+ * adding entry to table
+ * @param {[type]} table [description]
+ * @param {[type]} data  [description]
+ * @param {[type]} num   [description]
+ */
+function addEntry(table, data, num){
+
+  for (var i = 0; i < num; i++){
+      var column = document.createElement("tr");
+
+      var col1 = document.createElement("td");
+      col1.innerHTML = data.database[i].id;
+
+      var col2 = document.createElement("td");
+      col2.innerHTML = data.database[i].blood_group;
+
+      var col3 = document.createElement("td");
+      col3.innerHTML = data.database[i].arrival_date;
+
+      var col4 = document.createElement("td");
+      col4.innerHTML = data.database[i].use_by_date;
+
+      var col5 = document.createElement("td");
+      col5.innerHTML = data.database[i].blood_type;
+
+      var col6 = document.createElement("td");
+      col6.innerHTML = data.database[i].name;
+      col6.className = "name";
+      col6.onclick = function(){
+          col6.innerHTML = "Name: "+data.database[i].name+"<br>"+"Email: "+data.database[i].contact+"<br>"+"Medical history: SOMETHING HERE"+"<br>"+"Pathology: "+data.database[i].pathology+"<br>";
+      }
+
+      var col7 = document.createElement("td");
+      col7.innerHTML = "<BUTTON class='btnDel'>Delete</BUTTON>";
+      col7.onclick = function(){
+          table.removeChild(column);
+      }
+      column.appendChild(col1);
+      column.appendChild(col2);
+      column.appendChild(col3);
+      column.appendChild(col4);
+      column.appendChild(col5);
+      column.appendChild(col6);
+      column.appendChild(col7);
+      table.appendChild(column);
+  }
+}
+
+/**
+ * Vampire screen
+ * @return {[type]} [description]
+ */
 function vampireView1(){
 
-		// eslint-disable-next-line
-		var div = document.createElement('div');
-
+		var div = document.createElement('div');å
 		var wrap = document.getElementById('bg-blurr');
 		wrap.style.display = 'none';
 
 		var heading =  document.createElement('h1');
 		heading.innerHTML = "Vampire P/L (Vampire view)";
+
 		heading.className = "heading";
 		div.appendChild(heading);
 
+    var table = document.createElement("table");
+		table.id = "table";
+
+		var wrap = document.getElementById('bg-blurr');
+		wrap.style.display = 'none';
+
 		var addBtn = document.createElement("BUTTON");
-	    addBtn.className = "btn2 info";
+	  addBtn.className = "btn2 info";
 		addBtn.innerHTML = "Add new blood";
 		addBtn.id = "Add";
 		div.appendChild(addBtn);
@@ -320,6 +381,7 @@ function vampireView1(){
 		//main column 
 		var table = document.createElement("table");
 		table.id = "table";
+
 		var column = document.createElement("tr");
 		var id = document.createElement("th");
 		id.innerHTML = "Id";
@@ -346,6 +408,11 @@ function vampireView1(){
 		table.appendChild(column);
 
 
+    /**
+     * fetching GET request with info
+     * @param  {[type]} http [description]
+     * @return {[type]}      [description]
+     */
     fetch('http://127.0.0.1:5000/show', {
         method: 'GET',
         dataType: 'json',
@@ -364,6 +431,8 @@ function vampireView1(){
         var res = JSON.parse(data)
         console.log(res);
         console.log(Object.keys(res.database).length);
+
+        addEntry(table, res, Object.keys(res.database).length);
         //console.log(Object.keys(data[0].database).length);
         //for (var i = 0; i < Object.keys(data).length;)
 
@@ -373,7 +442,6 @@ function vampireView1(){
     })
 
 
-    	//add blood
 		var popup1 = document.createElement('div');
 		popup1.className = "popup";
 		popup1.innerHTML ="<txt class='text'>Enter blood group:</txt>"
@@ -398,17 +466,19 @@ function vampireView1(){
 						 +"<br><BUTTON id='addBlood' class='btn3 info'>Add</BUTTON>";
 
 		addBtn.onclick = function(){
-			popup1.style.display = 'block';
+			   popup1.style.display = 'block';
+			   div.appendChild(popup1);
+			   var close = document.getElementById('close');
+         close.onclick = function(){
+				       popup1.style.display = 'none';
+			   }
 
-			div.appendChild(popup1);
 
-			var close = document.getElementById('close');
-			close.onclick = function(){
-				popup1.style.display = 'none';
-			}
-
-			var add1 = document.getElementById('addBlood');
-
+      /**
+       * button adding blood info
+       * @return {[type]} [description]
+       */
+      var add1 = document.getElementById('addBlood');
 			add1.onclick = function(){
 
 				popup1.style.display = 'none';
@@ -421,7 +491,7 @@ function vampireView1(){
 
 				var column = document.createElement("tr");
 
-	    		var col1 = document.createElement("td");
+	    	var col1 = document.createElement("td");
 				col1.innerHTML = Math.floor((Math.random() * 1000) + 1);
 
 				var col2 = document.createElement("td");
@@ -431,7 +501,7 @@ function vampireView1(){
 				var dd = String(today.getDate()).padStart(2, '0');
 				var mm = String(today.getMonth() + 1).padStart(2, '0');
 				var yyyy = today.getFullYear();
-
+        var arrival = dd + '/' + mm + '/' + yyyy;
 				col3.innerHTML = dd + '/' + mm + '/' + yyyy;
 
 				var col4 = document.createElement("td");
@@ -472,12 +542,14 @@ function vampireView1(){
 						    		col5.innerHTML = bloodType.toUpperCase();
 						    		column.appendChild(col2);
 						    		column.appendChild(col3);
-									column.appendChild(col4);
-									column.appendChild(col5);
-									column.appendChild(col6);
-									column.appendChild(col7);
-									table.appendChild(column);
-									col7.onclick = function(){
+									  column.appendChild(col4);
+                    column.appendChild(col5);
+									  column.appendChild(col6);
+									  column.appendChild(col7);
+
+                    postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, arrival);
+									  table.appendChild(column);
+									  col7.onclick = function(){
 			    						table.removeChild(column);
 			   						}
 			 					}
@@ -489,6 +561,44 @@ function vampireView1(){
 		}
 		div.appendChild(table);
 		document.body.appendChild(div);
+}
+
+
+
+function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, arrival){
+    var data = {name: nameDonor, contact: phone, blood_group: bloodGroup,
+                          blood_type: bloodType, use_by_date: '12/12/12', arrival_date: arrival, pathology: pathology};
+
+    console.log(JSON.stringify(data));
+    fetch('http://127.0.0.1:5000/show', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+
+      body: JSON.stringify(data)
+    })
+    .then( (response) => {
+      const json = response.json();
+      console.log('Success:', JSON.stringify(json));
+      // reload the page
+    });
+
+    // try {
+    //   const response = await fetch('http://127.0.0.1:5000/show', {
+    //     method: 'POST', // or 'PUT'
+    //     body: JSON.stringify(data), // data can be `string` or {object}!
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   });
+    //   const json = await response.json();
+    //   console.log('Success:', JSON.stringify(json));
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
+
 }
 
 export default App;
@@ -547,4 +657,3 @@ export default App;
 //
 // var submitBtn = document.querySelector('button');
 // submitBtn.addEventListener('click', submitGist);
-
