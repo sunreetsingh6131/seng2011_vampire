@@ -17,7 +17,7 @@
     -webkit-filter: blur(8px);*/
     background: url(medImage.png);
     /*background-image: url('medImage.png');*/
-    
+
 }
 
 * {
@@ -25,8 +25,8 @@
 }
 
 .bg-blurr {
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,255,0.1); 
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,255,0.1);
   color: white;
   font-weight: bold;
   border: 3px solid #f1f1f1;
@@ -94,6 +94,7 @@
 }
 
 #table {
+  overflow:auto;
   position: absolute;
   top: 20%;
   left: 5%;
@@ -206,10 +207,10 @@ function initShow(){
           console.log(data);
       })
 }
-        
+
 
 function hospitalView(){
-       
+
         var app = document.getElementById('App');
         var div = document.createElement('div');
         var wrap = document.getElementById('bg-blurr');

@@ -26,7 +26,7 @@ def sizeOfList():
     with open('data.json') as f:
       data = json.load(f)
 
-    return len(data)
+    return len(data['database'])
 
 # read json file
 def readJson():
@@ -127,12 +127,12 @@ data1 = json.loads(s)
 
 
 
-class show(Resource):
-    @api.response(200, 'has data')
-    def get(self):
-        result = readJson()
-
-        return result , status.HTTP_200_OK
+# class show(Resource):
+#     @api.response(200, 'has data')
+#     def get(self):
+#         result = readJson()
+#
+#         return result , status.HTTP_200_OK
 
 # bubble sort by exp date
 def sort_by_date(data):
@@ -512,6 +512,17 @@ class show(Resource):
     def post(self):
         if request.method == 'POST':
              result = request.get_json();
+             print(result);
+             name = result['name'];
+             contact = result['contact'];
+             bld_grp = result['blood_group'];
+             bld_type = result['blood_type'];
+             useByDate = result['use_by_date'];
+             arrival = result['arrival_date'];
+             pathology = result['pathology'];
+             arrival = result['arrival_date'];
+             #print(arrival);
+            #addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology)
              return result, status.HTTP_200_OK
 
 if __name__ == '__main__':

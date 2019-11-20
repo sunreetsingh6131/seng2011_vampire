@@ -20,7 +20,6 @@ function App() {
 function hospital(){
 
 	var div = document.createElement('div');
-
 	var popup3 = document.createElement('div');
 
 	// popup3.id = "popup3";
@@ -48,7 +47,6 @@ function hospital(){
 	}
 
 	var view = document.getElementById('view');
-
 	var close = document.getElementById('close2');
 	popup3.appendChild(close);
 
@@ -272,7 +270,6 @@ function addEntry(table, data, num){
       col7.onclick = function(){
           table.removeChild(column);
       }
-
       column.appendChild(col1);
       column.appendChild(col2);
       column.appendChild(col3);
@@ -282,10 +279,7 @@ function addEntry(table, data, num){
       column.appendChild(col7);
       table.appendChild(column);
   }
-
-
 }
-
 
 /**
  * Vampire screen
@@ -440,7 +434,7 @@ function vampireView1(){
 				var dd = String(today.getDate()).padStart(2, '0');
 				var mm = String(today.getMonth() + 1).padStart(2, '0');
 				var yyyy = today.getFullYear();
-
+        var arrival = dd + '/' + mm + '/' + yyyy;
 				col3.innerHTML = dd + '/' + mm + '/' + yyyy;
 
 				var col4 = document.createElement("td");
@@ -485,9 +479,8 @@ function vampireView1(){
                     column.appendChild(col5);
 									  column.appendChild(col6);
 									  column.appendChild(col7);
-                    //....
-                    //console.log("sdasjbdiusabjkasbdasbsabdbajssbkbd123232jas");
-                    postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical);
+
+                    postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, arrival);
 									  table.appendChild(column);
 									  col7.onclick = function(){
 			    						table.removeChild(column);
@@ -504,10 +497,9 @@ function vampireView1(){
 }
 
 
-function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical){
-  //console.log("sdasjbdiusabjkasbdasbsabdbajssbkbdjas");
-    var data = { database:[ {id: '1', name: 'nameDonor', contact: 'phone', blood_group: 'bloodGroup',
-                          blood_type: 'bloodType', use_by_date: '12/12/12', arrival_date: '12/12/12', pathology: 'pathology'}]};
+function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, arrival){
+    var data = {name: nameDonor, contact: phone, blood_group: bloodGroup,
+                          blood_type: bloodType, use_by_date: '12/12/12', arrival_date: arrival, pathology: pathology};
 
     console.log(JSON.stringify(data));
     fetch('http://127.0.0.1:5000/show', {
@@ -522,7 +514,7 @@ function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical){
     .then( (response) => {
       const json = response.json();
       console.log('Success:', JSON.stringify(json));
-       //do something awesome that makes the world a better place
+      // reload the page
     });
 
     // try {
