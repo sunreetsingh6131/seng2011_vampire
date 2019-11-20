@@ -5,6 +5,7 @@ from flask_api import status
 from flask_restplus import Api, Resource , fields, Namespace
 from bottle import HTTPResponse
 from flask_cors import CORS
+from datetime import datetime
 
 import json
 import time
@@ -136,30 +137,15 @@ data1 = json.loads(s)
 
 # bubble sort by exp date
 def sort_by_date(data):
+    #jsonobject = {database:[]}
+    jsonobject = {}
+    sortedList = sorted(data['database'], key = lambda  x: datetime.datetime.strptime(x['use_by_date'], '%d/%m/%y'))
+    jsonobject['database'] = sortedList;
+    return jsonobject;
 
-    database = {}
-    for i in range (0, len(data) - 1):
-        for j in range (0 , len(data) - 1 - i):
-            for key, value in data[j].items():
-
-                if(key == "use_by_date"):
-                    x = time.mktime(datetime.datetime.strptime(value, "%d/%m/%y").timetuple())
-            for key, value in data[j + 1].items():
-                if(key == "use_by_date"):
-                    y = time.mktime(datetime.datetime.strptime(value, "%d/%m/%y").timetuple())
-
-            if (x > y):
-                data[j], data[j + 1] = data[j + 1], data[j]
-
-    database['database'] = data
-    return (json.dumps(database, indent=4))
-
-with open('data.json', mode='r') as data:
-    d = json.load(data)
-s = sort_by_date(d['database'])
-data1 = json.loads(s)
-
-#print(json.dumps(data1[0], indent=4))
+# with open('data.json', mode='r') as data:
+#     d = json.load(data)
+#     s = sort_by_date(d)
 
 #print(json.dumps(data1, indent=4))
 
@@ -292,10 +278,8 @@ def blood_group_quantities():
 # Sort data by blood group from lowest quantity to highest quantity
 
 def sort_blood_group_by_quantity(data):
-
     database = {}
     result = []
-
     ordered_quantity = blood_group_quantities()
     for i in range (0, len(ordered_quantity) - 1):
         for j in range (0 , len(ordered_quantity) - 1 - i):
@@ -314,13 +298,15 @@ def sort_blood_group_by_quantity(data):
                         result.append(data[i])
 
     database['database'] = result
-    return (json.dumps(database, indent=4))
 
-with open('data.json', mode='r') as data:
-    d = json.load(data)
+    return database
+    #return (json.dumps(database, indent=4))
 
-s = sort_blood_group_by_quantity(d['database'])
-data1 = json.loads(s)
+# with open('data.json', mode='r') as data:
+#     d = json.load(data)
+#
+# s = sort_blood_group_by_quantity(d['database'])
+# data1 = json.loads(s)
 #print(json.dumps(data1, indent=4))
 
 # RQT 4 - REQUESTS
@@ -498,20 +484,54 @@ def remove_if_expired():
 #    secondParam: 'yourOtherValue',
 #  })
 #})
+def make_string(words):
+    if words != None:
+        s = ""
+        for i in words:
+            s = s+ i
+        return s
 
 ns = api.namespace('vampire', description='Returns the blood sample data')
 @api.route('/show', methods=['GET', 'POST'])
+@api.doc(params={'sort': 'example: sort = quantity/ date'})
+@api.doc(params={'delete': 'example: delete = 1'})
 
 class show(Resource):
-    @api.response(200, 'has data')
+    @api.response(200, 'Success')
     def get(self):
         if request.method == 'GET':
             result = readJson();
+            sortKind = request.args.get('sort')
+            if (sortKind != None):
+                sortKindString = make_string(sortKind);
+                if (sortKindString == "date"):
+                    print("here at sort by date");
+                    temps = json.loads(result);
+                    sortd = sort_by_date(temps);
+
+                    return sortd , status.HTTP_200_OK
+                if (sortKindString == "quantity"):
+                    print("here at sort by quantity");
+                    tempq = json.loads(result);
+                    sortq = sort_blood_group_by_quantity(tempq['database']);
+
+                    return sortq , status.HTTP_200_OK
+
+            #result = readJson();
             return result , status.HTTP_200_OK
 
     def post(self):
         if request.method == 'POST':
-             result = request.get_json();
+             print("in POST")
+
+             deletereq = request.args.get('delete')
+             print(deletereq)
+             if(deletereq != None):
+                #deleteBloodSample(deletereq);
+                print("deleted");
+                return "success:{}", status.HTTP_200_OK
+
+             result = request.get_json()
              print(result);
              name = result['name'];
              contact = result['contact'];
