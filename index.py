@@ -410,6 +410,10 @@ def remove_if_expired():
 
 
 
+
+# def hospital_view():
+
+
 #remove_if_expired()
 
 
@@ -501,24 +505,31 @@ class show(Resource):
     def get(self):
         if request.method == 'GET':
             result = readJson();
+
+            #for sorting the vampire view
             sortKind = request.args.get('sort')
             if (sortKind != None):
                 sortKindString = make_string(sortKind);
                 if (sortKindString == "date"):
-                    print("here at sort by date");
                     temps = json.loads(result);
                     sortd = sort_by_date(temps);
-
                     return sortd , status.HTTP_200_OK
+
                 if (sortKindString == "quantity"):
-                    print("here at sort by quantity");
                     tempq = json.loads(result);
                     sortq = sort_blood_group_by_quantity(tempq['database']);
-
                     return sortq , status.HTTP_200_OK
 
-            #result = readJson();
-            return result , status.HTTP_200_OK
+            #for hospital view
+            checkHospital = request.args.get('hospital');
+            if (checkHospital != None):
+                if (checkHospital == "1"):
+                    return blood_group_quantities(), status.HTTP_200_OK
+
+                if(checkHospital == "2"):
+                    return result, status.HTTP_200_OK
+
+        return result , status.HTTP_200_OK
 
     def post(self):
         if request.method == 'POST':
@@ -542,7 +553,7 @@ class show(Resource):
              pathology = result['pathology'];
              arrival = result['arrival_date'];
              #print(arrival);
-            #addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology)
+             addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology)
              return result, status.HTTP_200_OK
 
 if __name__ == '__main__':
