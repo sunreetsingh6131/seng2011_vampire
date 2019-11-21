@@ -1,4 +1,4 @@
-class Blood
+/*class Blood
 {
     var typeOf: char, received: int, useby: int, checked : bool;
     
@@ -19,7 +19,7 @@ class Blood
         typeOf := this.typeOf;
     }
     
-}
+}*/
 
 /*class Date
 {
@@ -58,21 +58,21 @@ class Blood
 
 
 
-class {:autocontracts} Quack<Blood>
+class {:autocontracts} Quack<Char>
 {
-     var buf: array<Blood>;
+     var buf: array<char>;
      var m: int, n: int; // indexes in buf[]
-     ghost var shadow: seq<Blood>;
-     ghost var typeAshadow: seq<Blood>;
-     ghost var typeBshadow: seq<Blood>;
-     ghost var typeCshadow: seq<Blood>;
+     ghost var shadow: seq<char>;
+     ghost var typeAshadow: seq<char>;
+     ghost var typeBshadow: seq<char>;
+     ghost var typeCshadow: seq<char>;
      predicate Valid()
      { buf!=null && buf.Length!=0 && 0<=m<=n<=buf.Length && shadow==buf[m..n] }
      constructor(size: int)
      requires size>0;
      ensures shadow == [];
      ensures fresh(buf);
-     { buf := new Blood[size];
+     { buf := new char[size];
          m, n:= 0, 0;
          shadow:= [];
      }
@@ -83,79 +83,85 @@ class {:autocontracts} Quack<Blood>
          x := m==n; // x is true if m and n are the same
     }
 
-    method Pop() returns(x: Blood) // + Push() together make a stack
+    method Pop() returns(x: char) // + Push() together make a stack
      requires buf != null; // version 1.9.7
      requires shadow != []
+     requires typeAshadow != []
+     requires typeBshadow != []
+     requires typeCshadow != []
      ensures x == old(shadow)[|old(shadow)|-1] // this is the tail element
      ensures shadow == old(shadow)[..|old(shadow)|-1] // this is the new shadow
      {
          x, n:= buf[n-1], n-1; // get tail, remove from buf
          shadow:= shadow[..|shadow|-1]; // chop the tail off shadow
-         if x.getType() == 'A'
+         if x == 'A'
          {
             typeAshadow := typeAshadow[..|typeAshadow|-1];
          }
-         if x.getType() == 'B'
+         if x == 'B'
          {
             typeBshadow := typeBshadow[..|typeBshadow|-1];
          }
-         if x.getType() == 'C'
+         if x == 'C'
          {
             typeCshadow := typeCshadow[..|typeCshadow|-1];
          }
      }
 
-     method Qop() returns(x: Blood) // + Push() works as a queue
+     method Qop() returns(x: char) // + Push() works as a queue
      requires buf != null; // version 1.9.7
      requires shadow != [];
+     requires typeAshadow != []
+     requires typeBshadow != []
+     requires typeCshadow != []
      ensures x == old(shadow)[0] // this is the head
      ensures shadow == old(shadow)[1..] // this is the new shadow
      {
          x, m := buf[m], m+1; // get head and remove from buf
          shadow:= shadow[1..]; // chop the head off shadow
-         if x.getType() == 'A'
+         if x == 'A'
          {
             typeAshadow := typeAshadow[1..];
          }
-         if x.getType() == 'B'
+         if x == 'B'
          {
             typeBshadow := typeBshadow[1..];
          }
-         if x.getType() == 'C'
+         if x == 'C'
          {
             typeCshadow := typeCshadow[1..];
          }
      }
 
 
-     method Push(x: Blood) // same as before
+     method Push(x: char) // same as before
      requires buf != null; // version 1.9.7
      ensures shadow == old(shadow) + [x]; // same as before
      {
          if n==buf.Length
          {
-             var b:= new Blood[buf.Length]; // temporary buffer, same size
-             if m==0 { b:= new Blood[2*buf.Length]; } // double size of temporary
+             var b:= new char[buf.Length]; // temporary buffer, same size
+             if m==0 { b:= new char[2*buf.Length]; } // double size of temporary
              forall (i | 0<=i<n-m) { b[i]:= buf[m+i]; } // copy m..n to 0..n-m
              buf, m, n:= b, 0, n-m; // temporary is now buf, reset m and n
          }
          buf[n], n:= x, n+1; // now we definitely have room in the array
          shadow:= shadow + [x]; // same as before
-         if x.getType() == 'A'
+         if x == 'A'
          {
             typeAshadow := typeAshadow + [x];
          }
-         if x.getType() == 'B'
+         if x == 'B'
          {
             typeBshadow := typeBshadow + [x];
          }
-         if x.getType() == 'C'
+         if x == 'C'
          {
             typeCshadow := typeCshadow + [x];
          }
      }
   
-     method SearchByType(typeOf : char) returns (resultSeq: seq<Blood>) // need to add shadow for seqs of groups of blood
+     method SearchByType(typeOf : char) returns (resultSeq: seq<char>) // need to add shadow for seqs of groups of blood
      requires buf != null;
      requires shadow != [];
      ensures buf == old(buf)
@@ -169,18 +175,19 @@ class {:autocontracts} Quack<Blood>
         ghost var newTypeBshadow: seq<char> := ;
         ghost var newTypeCshadow: seq<char>;*/
         
-        var newQ := new Quack<Blood>(buf.Length);
-        var currBlood : Blood;
+        var newQ := new Quack<char>(buf.Length);
+        var currBlood : char;
         var k : int;
         k := 0;
+        
         while m < n
             invariant buf != null
        {
             currBlood := this.Qop();
             newQ.Push(currBlood);
-            if currBlood.getType() == typeOf
+            if currBlood == typeOf
             {
-                resultSeq[k] := currBlood;
+                resultSeq := resultSeq + [currBlood];
                 k := k + 1;
             }
         
