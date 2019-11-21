@@ -46,7 +46,7 @@ function sortDateShow(div, table){
 
       // var tabledate = document.createElement('table');
       // tabledate.id = 'tabledate';
-      var column = document.createElement("tr");
+        var column = document.createElement("tr");
   		var id = document.createElement("th");
   		id.innerHTML = "Id";
   		var bloodGroup = document.createElement("th");
@@ -70,7 +70,7 @@ function sortDateShow(div, table){
       column.appendChild(donor);
       column.appendChild(del);
 
-
+      // eslint-disable-next-line
       var num = document.getElementById('table').childElementCount;
 
       while (table.firstChild) {
@@ -129,7 +129,7 @@ function sortQuantityShow(div, table){
       column.appendChild(donor);
       column.appendChild(del);
 
-
+      // eslint-disable-next-line
       var num = document.getElementById('table').childElementCount;
 
       while (table.firstChild) {
@@ -172,7 +172,7 @@ function hospital(){
 
 	popup3.className = "popup2";
 	popup3.id = 'popup3';
-	popup3.innerHTML ="<txt class='text1'>Enter the hospital's name:</txt>"
+	popup3.innerHTML ="<txt class='text1'>Enter the hospital's Id:</txt>"
 					 +"<br><br>"
 					 +"<INPUT class='input5' id='hospitalId'></INPUT>"
 					 +"<a class='close2' id='close2'>&times;</a>"
@@ -252,6 +252,9 @@ function hospitalView(){
 						    +"<txt class='text2'>B</txt><input type='checkbox' class='check2' id='groupB'></input>"
 						    +"<txt class='text2'>AB</txt><input type='checkbox' class='check2' id='groupAB'></input>"
 						    +"<txt class='text2'>O</txt><input type='checkbox' class='check2' id='groupO'></input>"
+						    +"<txt class='text2'>AB+</txt><input type='checkbox' class='check2' id='groupAB+'></input>"
+						    +"<txt class='text2'>O+</txt><input type='checkbox' class='check2' id='groupO+'></input>"
+						    +"<txt class='text2'>O-</txt><input type='checkbox' class='check2' id='groupO-'></input>"
 						    +"<br><br>"
 						    +"<txt class='text2'>Blood type</txt>"
 						    +"<br><br>"
@@ -267,7 +270,7 @@ function hospitalView(){
 	popup.id = 'popup';
 	popup.innerHTML = "<txt class='text'>Enter blood group:</txt>"
 					 +"<br><br>"
-					 +"<select class='select-css' id='bloodGroup'><option>Select Blood group<option>A<option>B<option>AB<option>O</option></select>"
+					 +"<select class='select-css' id='bloodGroup'><option>Select Blood group<option>A<option>B<option>AB<option>O</option><option>O+</option><option>A-</option><option>AB+</option></select>"
 				     +"<br>"
 				     +"<txt class='text'>Enter blood type:</txt>"
 				     +"<br><br>"
@@ -306,21 +309,15 @@ function hospitalView(){
 			var blood = document.getElementById('bloodGroup').value;
 			var bloodType = document.getElementById('bloodType').value;
 			var bloodQuant = document.getElementById('quantity').value;
-			if(blood === "A" || blood === "B" || blood === "AB" || blood === "O"){
-					if(bloodQuant < 100){
-						popup.style.display = 'none';
-						// eslint-disable-next-line
-						alert("Blood group: "+blood+"Blood type: "+bloodType+"Quantity: "+bloodQuant+"Request Completed!");
-						popup.style.display = 'none';
-					}
-					else{
-						alert("Enter quantity less than 100!");
-						popup.style.display = 'block';
-					}
+			if(bloodQuant < 100){
+				popup.style.display = 'none';
+				// eslint-disable-next-line
+				alert("Blood group: "+blood+"Blood type: "+bloodType+"Quantity: "+bloodQuant+"Request Completed!");
+					popup.style.display = 'none';
 			}
 			else{
-				alert("Invalid Blood group!");
-				popup.style.display = 'block';
+					alert("Enter quantity less than 100!");
+					popup.style.display = 'block';
 			}
 		}
 	}
@@ -328,7 +325,6 @@ function hospitalView(){
 	//Content table
 	var table = document.createElement("table");
 	table.id = "tableQuantityHospital";
-	table.style.overflow = "scroll";
 	var column = document.createElement("tr");
 	var bloodGroup = document.createElement("th");
 	bloodGroup.innerHTML = "Blood Group";
@@ -376,7 +372,7 @@ function vampire(){
 	var popup2 = document.createElement('div');
 	popup2.id = 'popup2';
 	popup2.className = "popup1";
-	popup2.innerHTML ="<txt class='text1'>Enter you Id:</txt>"
+	popup2.innerHTML ="<txt class='text1'>Enter your vampire Id:</txt>"
 					 +"<br><br>"
 					 +"<INPUT class='input4' id='vampireId'></INPUT>"
 					 +"<a class='close1' id='close1'>&times;</a>"
@@ -530,8 +526,8 @@ function vampireView1(){
 		sortbtn.innerHTML = "<div class='dropDown info'><button class='dropDownbtn info'>"
 						  +"<img class='image1' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNTEgNTgiIHdpZHRoPSI1MTJweCI+PGcgaWQ9IlBhZ2UtMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZyBpZD0iMDEwLS0tRGlyZWN0aW9uYWwtVHJhZmZpYy1BcnJvdyIgZmlsbC1ydWxlPSJub256ZXJvIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIC0xKSI+PHBhdGggaWQ9IlNoYXBlIiBkPSJtMzEuOTk3IDUzdi0zM2gtNmMtLjM3MDgzOTguMDAyNjg5LS43MTE4NjQyLS4yMDI4MDYyLS44ODI3NTczLS41MzE5MzM3cy0uMTQyNzg1Ny0uNzI2Mjg3My4wNzI3NTczLTEuMDI4MDY2M2wxLjk4LTIuOCA2LjkzLTkuODEgMy4xMi00LjQyYy4xODg0NTU1LS4yNTkxNzMyNy40ODk1NTMxLS40MTI1MTU5Mi44MS0uNDEyNTE1OTJzLjYyMTU0NDUuMTUzMzQyNjUuODEuNDEyNTE1OTJsMTEuOTcgMTcuMDNjLjIxNTU0My4zMDE3NzkuMjQzNjUwNC42OTg5Mzg4LjA3Mjc1NzMgMS4wMjgwNjYzcy0uNTExOTE3NS41MzQ2MjI3LS44ODI3NTczLjUzMTkzMzdoLTZ2MzNjMCAuNTUyMjg0Ny0uNDQ3NzE1MyAxLTEgMWgtMTBjLS41NTIyODQ3IDAtMS0uNDQ3NzE1My0xLTF6IiBmaWxsPSIjMjg1NjgwIi8+PHBhdGggaWQ9IlNoYXBlIiBkPSJtNy4wMDMgN3YzMi45OTc1aC02Yy0uMzcwODM5NzYtLjAwMjY4OS0uNzExODY0MTcuMjAyODA2Mi0uODgyNzU3MjguNTMxOTMzNy0uMTcwODkzMTIuMzI5MTI3NS0uMTQyNzg1NzIuNzI2Mjg3My4wNzI3NTcyOCAxLjAyODA2NjNsMS45OCAyLjggNi45MyA5LjgxIDMuMTIgNC40MmMuMTg4NDI5Ni4yNTkyMTI1LjQ4OTUzNjYuNDEyNTg2LjgxLjQxMjU4NnMuNjIxNTcwNC0uMTUzMzczNS44MS0uNDEyNTg2bDExLjk3LTE3LjAzYy4yMTU1NDMtLjMwMTc3OS4yNDM2NTA0LS42OTg5Mzg4LjA3Mjc1NzMtMS4wMjgwNjYzcy0uNTExOTE3NS0uNTM0NjIyNy0uODgyNzU3My0uNTMxOTMzN2gtNnYtMzIuOTk3NWMwLS41NTIyODQ3NS0uNDQ3NzE1My0xLTEtMWgtMTBjLS4yNjUyMTY0OSAwLS41MTk1NzA0LjEwNTM1Njg0LS43MDcxMDY3OC4yOTI4OTMyMnMtLjI5Mjg5MzIyLjQ0MTg5MDI5LS4yOTI4OTMyMi43MDcxMDY3OHoiIGZpbGw9IiM0NDgyYzMiLz48L2c+PC9nPjwvc3ZnPgo=' />"
 						  +"</button>"
-						  +"<div class='dropDown-content'><BUTTON class='btn6 info' id='sortBydate'>Use By Date</BUTTON>"
-						  +"<BUTTON class='btn7 info' id='sortByQuantity'>Quantity</BUTTON></div></div>";
+						  +"<div class='dropDown-content'><BUTTON class='btn6 info' id='sortDate'>Use By Date</BUTTON>"
+						  +"<BUTTON class='btn7 info' id='sortQuantity'>Quantity</BUTTON></div></div>";
 		div.appendChild(sortbtn);
 
 
@@ -542,17 +538,20 @@ function vampireView1(){
 		popupFilterVampire.innerHTML = "<txt class='text2'>Blood group</txt>"
 							+"<br><br>"
 							+"<img class='image2' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQxMC4yOTQgNDEwLjI5NCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDEwLjI5NCA0MTAuMjk0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8ZyBpZD0iR3VpZGVzX0Zvcl9BcnRib2FyZF80MF8iPgoJPC9nPgoJPGcgaWQ9IkFydHdvcmtfMzlfIj4KCTwvZz4KCTxnIGlkPSJMYXllcl8yXzM5XyI+CgkJPGc+CgkJCTxwYXRoIHN0eWxlPSJmaWxsOiM2MkE1QTI7IiBkPSJNMTM3Ljc4NSwzNDIuOTMyYzAsMzcuMjAzLDMwLjE1OSw2Ny4zNjIsNjcuMzYyLDY3LjM2MnM2Ny4zNi0zMC4xNTksNjcuMzYtNjcuMzYyVjMzLjQ0NkgxMzcuNzg1ICAgICBWMzQyLjkzMnogTTE1Ny43ODYsMjAzLjgxN2g5NC43MjJ2MTM2LjcwOGMwLDI2LjE1Ni0yMS4yMDMsNDcuMzYtNDcuMzYsNDcuMzZjLTI2LjE1NywwLTQ3LjM2MS0yMS4yMDQtNDcuMzYxLTQ3LjM2VjIwMy44MTcgICAgIEgxNTcuNzg2eiIvPgoJCQk8cGF0aCBzdHlsZT0iZmlsbDojNUE5Nzk0OyIgZD0iTTI3Ni4zMzYsMEgxMzMuOTU4Yy04LjQ1NSwwLTE1LjMxLDYuODU0LTE1LjMxLDE1LjMxdjMuODI3YzAsOC40NTYsNi44NTQsMTUuMzEsMTUuMzEsMTUuMzEgICAgIGgzLjgyN2gxMzQuNzIzaDMuODI4YzguNDU1LDAsMTUuMzA5LTYuODU0LDE1LjMwOS0xNS4zMVYxNS4zMUMyOTEuNjQ1LDYuODU0LDI4NC43OTIsMCwyNzYuMzM2LDB6Ii8+CgkJCTxwYXRoIHN0eWxlPSJmaWxsOiNGN0YxRTY7IiBkPSJNMjA1LjE0NywzODcuODg1YzI2LjE1NywwLDQ3LjM2LTIxLjIwNCw0Ny4zNi00Ny4zNlYyMDMuODE3aC05NC43MjJ2MTM2LjcwOCAgICAgQzE1Ny43ODYsMzY2LjY4MSwxNzguOTkxLDM4Ny44ODUsMjA1LjE0NywzODcuODg1eiIvPgoJCTwvZz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'/>"
-							+"<txt class='text2'>A</txt><input type='checkbox' class='check2' id=groupA></input>"
-						    +"<txt class='text2'>B</txt><input type='checkbox' class='check2' id='groupB'></input>"
-						    +"<txt class='text2'>AB</txt><input type='checkbox' class='check2' id='groupAB'></input>"
-						    +"<txt class='text2'>O</txt><input type='checkbox' class='check2' id='groupO'></input>"
+							+"<input type='checkbox' class='check2' id=groupA></input><txt class='text2'>A</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupB'></input><txt class='text2'>B</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupAB'></input><txt class='text2'>AB</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupO'></input><txt class='text2'>O</txt><br>"
+						    +"<input type='checkbox' class='check2' id=groupAB+></input><txt class='text2'>AB+</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupO+'></input><txt class='text2'>O+</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupO-'></input><txt class='text2'>O-</txt>"
 						    +"<br><br>"
 						    +"<txt class='text2'>Blood type</txt>"
 						    +"<br><br>"
 						    +"<img class='image3' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBpZD0iQ2FwYV8xIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA1MTIgNTEyIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgd2lkdGg9IjUxMnB4Ij48Zz48Zz48cGF0aCBkPSJtMzUwLjk1MSAxMjFoLTk0Ljk1MS05MGMtOC4yOTEgMC0xNSA2LjcwOS0xNSAxNXM2LjcwOSAxNSAxNSAxNWg5MCA5NC45NTFjOC4yOTEgMCAxNS02LjcwOSAxNS0xNXMtNi43MDktMTUtMTUtMTV6IiBmaWxsPSIjOTdkZTNkIi8+PGcgZmlsbD0iI2ZkYmYwMCI+PHBhdGggZD0ibTMxNiAxODFoLTYwLTYwYy04LjI5MSAwLTE1IDYuNzA5LTE1IDE1czYuNzA5IDE1IDE1IDE1aDYwIDYwYzguMjkxIDAgMTUtNi43MDkgMTUtMTVzLTYuNzA5LTE1LTE1LTE1eiIvPjxwYXRoIGQ9Im0zNjkuOTM2IDYxaC0xMTMuOTM2LTExMy45MzZjLTguMjkxIDAtMTUgNi43MDktMTUgMTVzNi43MDkgMTUgMTUgMTVoMTEzLjkzNiAxMTMuOTM2YzguMjkxIDAgMTUtNi43MDkgMTUtMTVzLTYuNzA5LTE1LTE1LTE1eiIvPjwvZz48L2c+PHBhdGggZD0ibTM2NS45NTEgMTM2YzAtOC4yOTEtNi43MDktMTUtMTUtMTVoLTk0Ljk1MXYzMGg5NC45NTFjOC4yOTEgMCAxNS02LjcwOSAxNS0xNXoiIGZpbGw9IiNmZjkxMDAiLz48cGF0aCBkPSJtMzMxIDE5NmMwLTguMjkxLTYuNzA5LTE1LTE1LTE1aC02MHYzMGg2MGM4LjI5MSAwIDE1LTYuNzA5IDE1LTE1eiIgZmlsbD0iIzU5YzM2YSIvPjxwYXRoIGQ9Im0zODQuOTM2IDc2YzAtOC4yOTEtNi43MDktMTUtMTUtMTVoLTExMy45MzZ2MzBoMTEzLjkzNmM4LjI5MSAwIDE1LTYuNzA5IDE1LTE1eiIgZmlsbD0iIzU5YzM2YSIvPjxwYXRoIGQ9Im0zNDYgMzYxaDEyMXYzMGgtMTIxeiIgZmlsbD0iIzY2MzMyNSIvPjxnPjxwYXRoIGQ9Im0xOTYgMzMxaDYwIDYwYzguMjkxIDAgMTUtNi43MDkgMTUtMTVzLTYuNzA5LTE1LTE1LTE1aC02MC02MGMtOC4yOTEgMC0xNSA2LjcwOS0xNSAxNXM2LjcwOSAxNSAxNSAxNXoiIGZpbGw9IiNmZGJmMDAiLz48cGF0aCBkPSJtMTYxLjA0OSAzOTFoOTQuOTUxIDkwYzguMjkxIDAgMTUtNi43MDkgMTUtMTVzLTYuNzA5LTE1LTE1LTE1aC05MC05NC45NTFjLTguMjkxIDAtMTUgNi43MDktMTUgMTVzNi43MDkgMTUgMTUgMTV6IiBmaWxsPSIjOTdkZTNkIi8+PHBhdGggZD0ibTM2OS45MzYgNDIxaC0xMTMuOTM2LTExMy45MzZjLTguMjkxIDAtMTUgNi43MDktMTUgMTVzNi43MDkgMTUgMTUgMTVoMTEzLjkzNiAxMTMuOTM2YzguMjkxIDAgMTUtNi43MDkgMTUtMTVzLTYuNzA5LTE1LTE1LTE1eiIgZmlsbD0iI2ZkYmYwMCIvPjwvZz48cGF0aCBkPSJtMzMxIDMxNmMwLTguMjkxLTYuNzA5LTE1LTE1LTE1aC02MHYzMGg2MGM4LjI5MSAwIDE1LTYuNzA5IDE1LTE1eiIgZmlsbD0iIzU5YzM2YSIvPjxwYXRoIGQ9Im0zNjEgMzc2YzAtOC4yOTEtNi43MDktMTUtMTUtMTVoLTkwdjMwaDkwYzguMjkxIDAgMTUtNi43MDkgMTUtMTV6IiBmaWxsPSIjZmY5MTAwIi8+PHBhdGggZD0ibTM4NC45MzYgNDM2YzAtOC4yOTEtNi43MDktMTUtMTUtMTVoLTExMy45MzZ2MzBoMTEzLjkzNmM4LjI5MSAwIDE1LTYuNzA5IDE1LTE1eiIgZmlsbD0iIzU5YzM2YSIvPjxwYXRoIGQ9Im00NSAxMjFoMTIxdjMwaC0xMjF6IiBmaWxsPSIjOGM0YTM3Ii8+PHBhdGggZD0ibTI2NC45OTQgMjQ0LjAwM2MtMy4xNi0yLjM3MS01Ljk0Ny01LjEyNy04Ljk5NC03LjYxOS02NS43Ni01My43OTgtMTA1LTEzNi4xMS0xMDUtMjIxLjM4NCAwLTguMjkxLTYuNzA5LTE1LTE1LTE1cy0xNSA2LjcwOS0xNSAxNWMwIDk4LjYxMyA0Ny4xMDkgMTkzLjgxNyAxMjYuMDA2IDI1Mi45OTcgMy4xNiAyLjM3MSA1Ljk0NyA1LjEyNyA4Ljk5NCA3LjYxOSA2NS43NiA1My43OTggMTA1IDEzNi4xMSAxMDUgMjIxLjM4NCAwIDguMjkxIDYuNzA5IDE1IDE1IDE1czE1LTYuNzA5IDE1LTE1YzAtOTguNjEzLTQ3LjEwOS0xOTMuODE3LTEyNi4wMDYtMjUyLjk5N3oiIGZpbGw9IiNmZTg1OTgiLz48cGF0aCBkPSJtMzYxIDQ5N2MwIDguMjkxIDYuNzA5IDE1IDE1IDE1czE1LTYuNzA5IDE1LTE1YzAtOTguNjEzLTQ3LjEwOS0xOTMuODE3LTEyNi4wMDYtMjUyLjk5Ny0zLjE2LTIuMzcxLTUuOTQ3LTUuMTI3LTguOTk0LTcuNjE5djM5LjIzMmM2NS43NiA1My43OTggMTA1IDEzNi4xMSAxMDUgMjIxLjM4NHoiIGZpbGw9IiNmZTU1NzAiLz48cGF0aCBkPSJtNDUgMTgxYy0yNC44MTQgMC00NS0yMC4xODYtNDUtNDVzMjAuMTg2LTQ1IDQ1LTQ1IDQ1IDIwLjE4NiA0NSA0NS0yMC4xODYgNDUtNDUgNDV6IiBmaWxsPSIjOWVkMGZmIi8+PHBhdGggZD0ibTQ2NyA0MjFjLTI0LjgxNCAwLTQ1LTIwLjE4Ni00NS00NXMyMC4xODYtNDUgNDUtNDUgNDUgMjAuMTg2IDQ1IDQ1LTIwLjE4NiA0NS00NSA0NXoiIGZpbGw9IiM3M2JjZmYiLz48cGF0aCBkPSJtMzc2IDBjLTguMjkxIDAtMTUgNi43MDktMTUgMTUgMCA4NS4yNzQtMzkuMjQgMTY3LjU4Ni0xMDUgMjIxLjM4NC0zLjA0NyAyLjQ5Mi01LjgzNCA1LjI0OC04Ljk5NCA3LjYxOS03OC44OTcgNTkuMTgtMTI2LjAwNiAxNTQuMzg0LTEyNi4wMDYgMjUyLjk5NyAwIDguMjkxIDYuNzA5IDE1IDE1IDE1czE1LTYuNzA5IDE1LTE1YzAtODUuMjc0IDM5LjI0LTE2Ny41ODYgMTA1LTIyMS4zODQgMy4wNDctMi40OTIgNS44MzQtNS4yNDggOC45OTQtNy42MTkgNzguODk3LTU5LjE4IDEyNi4wMDYtMTU0LjM4NCAxMjYuMDA2LTI1Mi45OTcgMC04LjI5MS02LjcwOS0xNS0xNS0xNXoiIGZpbGw9IiM5ZWQwZmYiLz48cGF0aCBkPSJtMzkxIDE1YzAtOC4yOTEtNi43MDktMTUtMTUtMTVzLTE1IDYuNzA5LTE1IDE1YzAgODUuMjc0LTM5LjI0IDE2Ny41ODYtMTA1IDIyMS4zODR2MzkuMjMyYzMuMDQ3LTIuNDkyIDUuODM0LTUuMjQ4IDguOTk0LTcuNjE5IDc4Ljg5Ny01OS4xOCAxMjYuMDA2LTE1NC4zODQgMTI2LjAwNi0yNTIuOTk3eiIgZmlsbD0iIzczYmNmZiIvPjwvZz48L3N2Zz4K' />"
-						    +"<txt class='text2'>Rare</txt><input type='checkbox' class='check2' id='groupRare'></input>"
-						    +"<txt class='text2'>General</txt><input type='checkbox' class='check2' id='groupGeneral'></input>"
-						    +"<txt class='text2'>Exotic</txt><input type='checkbox' class='check2' id='groupExotic'></input>"
+						    +"<input type='checkbox' class='check2' id='groupRare'></input><txt class='text2'>Rare</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupGeneral'></input><txt class='text2'>General</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupExotic'></input><txt class='text2'>Exotic</txt><br>"
 						    +"<a class='close' id='close2'>&times;</a>"
 						    +"<button class='btn3 info'>Done</button>";
 
@@ -565,10 +564,67 @@ function vampireView1(){
 			}
 		}
 
-		//main column
+		var table1 = document.createElement("table");
+		table1.id = "table";
+		table1.style.left = '2%';
+		table1.style.width = '700px';
+		var column1 = document.createElement("tr");
+		column1.style.width = '500px';
+		var column2 = document.createElement("tr");
+		column2.style.width = '500px';
+		var column3 = document.createElement("tr");
+		column3.style.width = '500px';
+		var bloodGroup1 = document.createElement("th");
+		bloodGroup1.innerHTML = "Blood Group";
+		var bloodType1 = document.createElement("th");
+		bloodType1.innerHTML = "Blood Type";
+		var quantity  = document.createElement("th");
+		quantity.innerHTML = "Quantity";
+		var levels  = document.createElement("th");
+		levels.innerHTML = "Level";
 
-		var table = document.createElement("table");
+		var col1 = document.createElement("td");
+		col1.innerHTML = "A";
+		var col2 = document.createElement("td");
+		col2.innerHTML = "GENERAL";
+		var col3 = document.createElement("td");
+		col3.innerHTML = "10";
+		col3.value =  parseInt("10");
+		var col4 = document.createElement("td");
+		col4.innerHTML = "<progress value='10' max='100'>sadfd</progress>";
+		col4.value =  parseInt("10");
+
+		column1.appendChild(bloodGroup1);
+		column1.appendChild(bloodType1);
+		column1.appendChild(quantity);
+		column1.appendChild(levels);
+		column2.appendChild(col1);
+		column2.appendChild(col2);
+		column2.appendChild(col3);
+		column2.appendChild(col4);
+		table1.appendChild(column1);
+		table1.appendChild(column2);
+		div.appendChild(table1);
+
+		if(col3.value < "40"){
+			console.log("here");
+			col3.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+			col1.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+			col2.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+			col4.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+		}
+		if(col3.value > 40){
+			column2.style.backgroundColor = "orange";
+		}
+		if(col3.value == 40){
+			column2.style.backgroundColor = "green";
+		}
+
+		//main column
+    	var table = document.createElement("table");
 		table.id = "table";
+		table.style.left = '47%';
+		table.style.width = '800px';
 		var column = document.createElement("tr");
 		var id = document.createElement("th");
 		id.innerHTML = "Id";
@@ -629,7 +685,7 @@ function vampireView1(){
 		popup1.className = "popup";
 		popup1.innerHTML ="<txt class='text'>Enter blood group:</txt>"
 						 +"<br><br>"
-						 +"<select class='select-css' id='bloodGroupAdd'><option>Select Blood group<option>A<option>B<option>AB<option>O</option></select>"
+						 +"<select class='select-css' id='bloodGroupAdd'><option>Select Blood group<option>A<option>B<option>AB<option>O</option><option>O+</option><option>A-</option><option>AB+</option></select>"
 						 +"<br>"
 						 +"<txt class='text'>Enter blood type:</txt>"
 						 +"<br><br>"
@@ -638,7 +694,7 @@ function vampireView1(){
 						 +"<br><txt class='text'>Enter Use By Date:</txt>"
 						 +"<br><br>"
 						 +"<input type='date' name='useByDate' id='useByDate' min='2019-11-22' data-date-format='DD MMMM YYYY'><br><br>"
-						 +"<br><txt class='text'>Enter Donor's name:</txt>"
+						 +"<txt class='text'>Enter Donor's name:</txt>"
 						 +"<br><br>"
 						 +"<INPUT class='input1' id='donorName' required></INPUT><br><br>"
 						 +"<main><input id='toggle' class='input' onclick='showQuantity()' type='checkbox'><label for='toggle'>Extra information</label>"
@@ -727,13 +783,14 @@ function vampireView1(){
 				    }
 				}
 			}
-		div.appendChild(table);
-		document.body.appendChild(div);
-    var sbd = document.getElementById('sortBydate');
+	div.appendChild(table);
+	document.body.appendChild(div);
+
+    var sbd = document.getElementById('sortDate');
     sbd.onclick = function(){
       sortDateShow(div, table);
     }
-    var sbq = document.getElementById('sortByQuantity');
+    var sbq = document.getElementById('sortQuantity');
     sbq.onclick = function(){
       sortQuantityShow(div, table);
     }

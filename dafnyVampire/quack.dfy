@@ -1,9 +1,10 @@
 class Blood
 {
-    var typeOf: char, received: Date, useby: Date, checked : bool;
+    var typeOf: char, received: int, useby: int, checked : bool;
     
-    constructor (typeOfin: char, receivedin: Date, usebyin: Date, checkedin : bool)
+    constructor (typeOfin: char, receivedin: int, usebyin: int, checkedin : bool)
     modifies this;
+    requires typeOfin == 'A' || typeOfin == 'B' || typeOfin == 'C';
     { typeOf := typeOfin; received := receivedin; useby := usebyin; checked := checkedin;}
     
     method Check() returns (checked: bool)
@@ -13,32 +14,46 @@ class Blood
     checked := true;
     }
     
-
+    method GetType() returns (typeOf: char)
+    {
+        typeOf := this.typeOf;
+    }
+    
 }
 
-class Date
+/*class Date
 {
     var day: int, month: int, year: int
     
     constructor (dayin: int, monthin: int, yearin:int)
+    requires (dayin != null && monthin != null && yearin != null); 
     modifies this;
     {day := dayin; month := monthin; year := yearin;}
     
     static method First (date1: Date, date2: Date) returns (first: Date, second: Date)
+    requires (date1 != null && date2 != null);
+    ensures (first != null && second != null);
     {
-    if (date1.year < date2.year) { first:= date1; second := date2;}
-    if (date2.year < date1.year) { first:= date2; second := date1;}
-    else{
-        if (date1.month < date2.month) { first:= date1; second := date2;}
-        if (date2.month < date1.month) { first:= date2; second := date1;}
-        else{
-            if (date1.day < date2.day) { first:= date1; second := date2;}
-            if (date2.day < date1.day) { first:= date2; second := date1;}
-        }
+        first:= date1; second := date2;
+        if (date1 != null && date2 != null){
+            if (date1.year < date2.year) { first:= date1; second := date2;}
+            if (date2.year < date1.year) { first:= date2; second := date1;}
+            else{
+                if (date1.month < date2.month) { first:= date1; second := date2;}
+                if (date2.month < date1.month) { first:= date2; second := date1;}
+                else{
+                    if (date1.day < date2.day) { first:= date1; second := date2;}
+                    if (date2.day < date1.day) { first:= date2; second := date1;}
+                    else{
+                        first:= date1; second := date2;
+                    }
+                }
+            }
+        
         }
     }
 
-}
+}*/
 
 
 
@@ -48,6 +63,9 @@ class {:autocontracts} Quack<Blood>
      var buf: array<Blood>;
      var m: int, n: int; // indexes in buf[]
      ghost var shadow: seq<Blood>;
+     ghost var typeAshadow: seq<Blood>;
+     ghost var typeBshadow: seq<Blood>;
+     ghost var typeCshadow: seq<Blood>;
      predicate Valid()
      { buf!=null && buf.Length!=0 && 0<=m<=n<=buf.Length && shadow==buf[m..n] }
      constructor(size: int)
@@ -73,6 +91,18 @@ class {:autocontracts} Quack<Blood>
      {
          x, n:= buf[n-1], n-1; // get tail, remove from buf
          shadow:= shadow[..|shadow|-1]; // chop the tail off shadow
+         if x.getType() == 'A'
+         {
+            typeAshadow := typeAshadow[..|typeAshadow|-1];
+         }
+         if x.getType() == 'B'
+         {
+            typeBshadow := typeBshadow[..|typeBshadow|-1];
+         }
+         if x.getType() == 'C'
+         {
+            typeCshadow := typeCshadow[..|typeCshadow|-1];
+         }
      }
 
      method Qop() returns(x: Blood) // + Push() works as a queue
@@ -83,15 +113,20 @@ class {:autocontracts} Quack<Blood>
      {
          x, m := buf[m], m+1; // get head and remove from buf
          shadow:= shadow[1..]; // chop the head off shadow
+         if x.getType() == 'A'
+         {
+            typeAshadow := typeAshadow[1..];
+         }
+         if x.getType() == 'B'
+         {
+            typeBshadow := typeBshadow[1..];
+         }
+         if x.getType() == 'C'
+         {
+            typeCshadow := typeCshadow[1..];
+         }
      }
 
-// method Push(x: Blood)
-// requires buf != null; // version 1.9.7
-// ensures shadow == old(shadow) + [x] // easy to prove, you would think
-// {
-//  a[n], n := x, n+1; // add new Blood to the array
-//  shadow := shadow + [x]; // add new Blood to shadow
-// }
 
      method Push(x: Blood) // same as before
      requires buf != null; // version 1.9.7
@@ -106,24 +141,106 @@ class {:autocontracts} Quack<Blood>
          }
          buf[n], n:= x, n+1; // now we definitely have room in the array
          shadow:= shadow + [x]; // same as before
+         if x.getType() == 'A'
+         {
+            typeAshadow := typeAshadow + [x];
+         }
+         if x.getType() == 'B'
+         {
+            typeBshadow := typeBshadow + [x];
+         }
+         if x.getType() == 'C'
+         {
+            typeCshadow := typeCshadow + [x];
+         }
      }
-     method SearchByType(typeOf : char) returns (resultSeq: seq<Blood>)
-     requires this.Valid()
+  
+     method SearchByType(typeOf : char) returns (resultSeq: seq<Blood>) // need to add shadow for seqs of groups of blood
+     requires buf != null;
+     requires shadow != [];
+     ensures buf == old(buf)
+     modifies this;
      {
-        var newQuack := new Quack<Blood>(1000);
-        var empty:bool := this.Empty();
-        while(empty == false)
-        invariant this.Valid()
-        //add more invariants?
-        {
-            var qoppedBlood:Blood := this.Qop();
-            if (resultSeq == []) {}
-            else{
-                
-            
+        /*var newBuf: array<Blood> := buf;
+        var newM: int, newN: int;
+        newM := m; newN := n;
+        ghost var newShadow: seq<Blood> := shadow;
+        ghost var newTypeAshadow: seq<char> := typeAshadow;
+        ghost var newTypeBshadow: seq<char> := ;
+        ghost var newTypeCshadow: seq<char>;*/
+        
+        var newQ := new Quack<Blood>(buf.Length);
+        var currBlood : Blood;
+        var k : int;
+        k := 0;
+        while m < n
+            invariant buf != null
+       {
+            currBlood := this.Qop();
+            newQ.Push(currBlood);
+            if currBlood.getType() == typeOf
+            {
+                resultSeq[k] := currBlood;
+                k := k + 1;
             }
-            empty := this.Empty();
-        }
+        
+       }
+       this.buf := newQ.buf;
+       this.m := newQ.m;
+       this.n := newQ.n;
+       this.shadow := newQ.shadow;
+       this.typeAshadow := newQ.typeAshadow;
+       this.typeBshadow := newQ.typeBshadow;
+       this.typeCshadow := newQ.typeCshadow;
      }
- 
+
+     /*method Qush(x:Blood) DOES NOT WORK
+     requires buf != null;
+     ensures shadow == [x] + old(shadow);
+     {
+
+         if m > 0
+         {
+             buf[m], m:= x, m-1; // now we definitely have room in the array
+             shadow:= [x] + shadow; // same as before
+         }
+         else
+         {
+            var k : int := 1;
+             while k < buf.Length
+                invariant  0 < k <= buf.Length
+             {
+                buf[k] := buf[k-1];
+                k := k+1;
+             }
+             buf[0] := x;
+             n := n + 1;
+         }
+     }*/
 }
+ 
+
+
+method Main() {
+    /*var date1, date2,date3,date4,date5 : Date;
+    date1 := new Date(12,6,1990);
+    date2 := new Date(15,2,1995);
+    date3 := new Date(30,11,1998);
+    date4,date5 := Date.First(date2,date1);
+    assert(date1.day == 12 && date1.month == 6 && date1.year == 1990);
+    assert (date5 != null);
+    assert (date4 != null);
+    assert (date4.year == 1995 || date4.year == 1990);
+    assert (date1.year == date4.year && 
+                date1.month == date4.month &&
+                date1.day == date4.day);
+    assert (date2.year == date5.year && 
+                date2.month == date5.month &&
+                date2.day == date5.day);*/
+                
+    
+                
+    
+}
+
+
