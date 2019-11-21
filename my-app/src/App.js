@@ -243,9 +243,6 @@ function hospitalView(){
 						    +"<txt class='text2'>B</txt><input type='checkbox' class='check2' id='groupB'></input>"
 						    +"<txt class='text2'>AB</txt><input type='checkbox' class='check2' id='groupAB'></input>"
 						    +"<txt class='text2'>O</txt><input type='checkbox' class='check2' id='groupO'></input>"
-						    +"<txt class='text2'>AB+</txt><input type='checkbox' class='check2' id='groupAB+'></input>"
-						    +"<txt class='text2'>O+</txt><input type='checkbox' class='check2' id='groupO+'></input>"
-						    +"<txt class='text2'>O-</txt><input type='checkbox' class='check2' id='groupO-'></input>"
 						    +"<br><br>"
 						    +"<txt class='text2'>Blood type</txt>"
 						    +"<br><br>"
@@ -518,22 +515,20 @@ function addQuantityTableVampire(div){
   })
   .then((resp) => resp.json())
   .then(function(data) {
+
       var x, y;
       for (x in data){
-        for(y in data[x]){
-          //addEntryHospitalQuantity(table, y, "HARD CODED - general", data[x][y]);
-          //
           var column2 = document.createElement("tr");
           column2.style.width = '500px';
           var col1 = document.createElement("td");
-          col1.innerHTML = y;
+          col1.innerHTML = data[x].group;
           var col2 = document.createElement("td");
-          col2.innerHTML = "HARD CODED GENERAL";
+          col2.innerHTML = data[x].type;
           var col3 = document.createElement("td");
-          col3.innerHTML = data[x][y];
-          col3.value = parseInt(data[x][y]);
+          col3.innerHTML = data[x].quantity;
+          col3.value = parseInt(data[x].quantity);
           var col4 = document.createElement("td");
-          var num = parseInt(data[x][y]);
+          var num = parseInt(data[x].quantity);
           col4.innerHTML = "<progress value=" +num+ " max='20'></progress>";
 
           column2.appendChild(col1);
@@ -541,6 +536,7 @@ function addQuantityTableVampire(div){
           column2.appendChild(col3);
           column2.appendChild(col4);
           table1.appendChild(column2);
+
           if(col3.value < "5"){ 
             col3.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
             col1.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
@@ -553,28 +549,10 @@ function addQuantityTableVampire(div){
             col2.style.background = 'linear-gradient(to bottom, #FFA500 100%, #ff3300 10%)';
             col4.style.background = 'linear-gradient(to bottom, #FFA500 100%, #ff3300 10%)';
           }
-        }
       }
+      
   })
-  //div.appendChild(table);
-
-  // var col1 = document.createElement("td");
-  // col1.innerHTML = "A";
-  // var col2 = document.createElement("td");
-  // col2.innerHTML = "GENERAL";
-  // var col3 = document.createElement("td");
-  // col3.innerHTML = "10";
-  // col3.value =  parseInt("10");
-  // var col4 = document.createElement("td");
-  // col4.innerHTML = "<progress value='10' max='100'>sadfd</progress>";
-  // col4.value =  parseInt("10");
-  //
-  // column2.appendChild(col1);
-  // column2.appendChild(col2);
-  // column2.appendChild(col3);
-  // column2.appendChild(col4);
-
-  // table1.appendChild(column2);
+  
   div.appendChild(table1);
 
 
@@ -631,9 +609,6 @@ function vampireView1(){
 						    +"<input type='checkbox' class='check2' id='groupB'></input><txt class='text2'>B</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupAB'></input><txt class='text2'>AB</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupO'></input><txt class='text2'>O</txt><br>"
-						    +"<input type='checkbox' class='check2' id='groupAB+''></input><txt class='text2'>AB+</txt><br>"
-						    +"<input type='checkbox' class='check2' id='groupO+'></input><txt class='text2'>O+</txt><br>"
-						    +"<input type='checkbox' class='check2' id='groupO-'></input><txt class='text2'>O-</txt>"
 						    +"<br><br>"
 						    +"<txt class='text2'>Blood type</txt>"
 						    +"<br><br>"
@@ -869,7 +844,7 @@ function vampireView1(){
 
 				popup1.style.display = 'none';
 				var bloodGroup = document.getElementById('bloodGroupAdd').value;
-				var bloodType = document.getElementById('bloodTypeAdd').value;
+				var bloodType = document.getElementById('bloodTypeAdd').value.toUpperCase();
 				var useByDate = document.getElementById('useByDate').value;
 				var nameDonor = document.getElementById('donorName').value;
 				var phone = document.getElementById('phone').value;
@@ -923,7 +898,8 @@ function vampireView1(){
 							table.appendChild(column);
 							col7.onclick = function(){
 				    			table.removeChild(column);
-				   			}
+				   		}
+              //addQuantityTableVampire(div);
 				 		}
 				    }
 				}
@@ -960,79 +936,7 @@ function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, a
     .then( (response) => {
       const json = response.json();
       console.log('Success:', JSON.stringify(json));
-      // reload the page
     });
 }
 
 export default App;
-
-    // try {
-    //   const response = await fetch('http://127.0.0.1:5000/show', {
-    //     method: 'POST', // or 'PUT'
-    //     body: JSON.stringify(data), // data can be `string` or {object}!
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   });
-    //   const json = await response.json();
-    //   console.log('Success:', JSON.stringify(json));
-    // } catch (error) {
-    //   console.error('Error:', error);
-    // }
-
-
-
-// import requests
-// r = requests.post("http://yoururl/post", data={'foo': 'bar'})
-// # And done.
-// print(r.text) # displays the result body.
-//
-// export default App;
-// from flask import Flask, request
-// app = Flask(__name__)
-// @app.route('/', methods=['POST'])
-// def result():
-//     print(request.form['foo']) # should display 'bar'
-//     return 'Received !' # response to your request.
-
-// let response = await fetch('/article/fetch/post/user', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json;charset=utf-8'
-//   },
-//   body: JSON.stringify(user)
-// });
-//
-// let result = await response.json();
-// alert(result.message);
-//function createGist(opts) {
-//   ChromeSamples.log('Posting request to GitHub API...');
-//   fetch('https://api.github.com/gists', {
-//     method: 'post',
-//     body: JSON.stringify(opts)
-//   }).then(function(response) {
-//     return response.json();
-//   }).then(function(data) {
-//     ChromeSamples.log('Created Gist:', data.html_url);
-//   });
-// }
-//
-// function submitGist() {
-//   var content = document.querySelector('textarea').value;
-//   if (content) {
-//     createGist({
-//       description: 'Fetch API Post example',
-//       public: true,
-//       files: {
-//         'test.js': {
-//           content: content
-//         }
-//       }
-//     });
-//   } else {
-//     ChromeSamples.log('Please enter in content to POST to a new Gist.');
-//   }
-// }
-//
-// var submitBtn = document.querySelector('button');
-// submitBtn.addEventListener('click', submitGist);

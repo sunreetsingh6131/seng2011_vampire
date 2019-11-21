@@ -52,6 +52,7 @@ def readJson():
 def addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology):
     newInput ={}
     #data = {}
+    newInput['id'] = (sizeOfList() + 1)
     newInput['name'] = ""+name
     newInput['contact'] = ""+contact
     newInput['blood_group'] = ""+bld_grp
@@ -59,9 +60,6 @@ def addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, patholo
     newInput['use_by_date'] = ""+usebydate
     newInput['arrival_date'] = ""+arrival
     newInput['pathology'] = ""+pathology
-
-    newInput['id'] = (sizeOfList() + 1)
-    #newInput['data'] = data
 
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
@@ -238,7 +236,7 @@ data1 = json.loads(typeSearch)
 
 # Counts the quantity of a blood group
 
-def count_quantity(blood_group):
+def count_quantity(blood_group, blood_type):
 
     quantity = 0
     #i = 0
@@ -246,9 +244,16 @@ def count_quantity(blood_group):
         d = json.load(data)
 
     for i in range (0, len(d['database'])):
-        for key, value in d['database'][i].items():
-            if(key == "blood_group" and value == blood_group):
-                quantity = quantity +1
+        v = d['database'][i]
+        grp = v['blood_group']
+        tye = v['blood_type']
+        if (grp == blood_group and tye == blood_type):
+            quantity = quantity +1
+            
+        #for key, value in d['database'][i].items():
+            #if(key == "blood_group" and value == blood_group):
+                # if(key == "blood_type" and value == blood_group):
+            #quantity = quantity +1
 
     return quantity
 
@@ -263,15 +268,69 @@ def blood_group_quantities():
     AB = {}
     O = {}
 
-    A["A"] = count_quantity("A")
-    B["B"] = count_quantity("B")
-    AB["AB"] = count_quantity("AB")
-    O["O"] = count_quantity("O")
+    a1types = {}
+    b1types = {}
+    ab1types = {}
+    o1types = {}
+    a2types = {}
+    b2types = {}
+    ab2types = {}
+    o2types = {}
 
-    blood_group_quantities.append(A)
-    blood_group_quantities.append(B)
-    blood_group_quantities.append(AB)
-    blood_group_quantities.append(O)
+    a1types['group'] = "A"
+    a1types['type'] = "RARE"
+    a1types['quantity'] = count_quantity("A", "RARE")
+
+    a2types['group'] = "A"
+    a2types['type'] = "GENERAL"
+    a2types['quantity'] = count_quantity("A", "GENERAL")
+
+
+    b1types['group'] = "B"
+    b1types['type'] = "RARE"
+    b1types['quantity'] = count_quantity("B", "RARE")
+
+    b2types['group'] = "B"
+    b2types['type'] = "GENERAL"
+    b2types['quantity'] = count_quantity("B", "GENERAL")
+
+    ab1types['group'] = "AB"
+    ab1types['type'] = "RARE"
+    ab1types['quantity'] = count_quantity("AB", "RARE")
+
+    ab2types['group'] = "AB"
+    ab2types['type'] = "GENERAL"
+    ab2types['quantity'] = count_quantity("AB", "GENERAL")
+
+    o1types['group'] = "O"
+    o1types['type'] = "RARE"
+    o1types['quantity'] = count_quantity("O", "RARE")
+
+    o2types['group'] = "O"
+    o2types['type'] = "GENERAL"
+    o2types['quantity'] = count_quantity("O", "GENERAL")
+
+    # blood_group_quantities["A"] = atypes
+    # blood_group_quantities["B"] = btypes
+    # blood_group_quantities["AB"] = btypes
+    # blood_group_quantities["O"] = btypes
+    # A["A"] = atypes
+    # B["B"] = btypes
+    # AB["AB"] = abtypes
+    # O["O"] = otypes
+
+    blood_group_quantities.append(a1types)
+    blood_group_quantities.append(a2types)
+    blood_group_quantities.append(b1types)
+    blood_group_quantities.append(b2types)
+    blood_group_quantities.append(ab1types)
+    blood_group_quantities.append(ab2types)
+    blood_group_quantities.append(o1types)
+    blood_group_quantities.append(o2types)
+    # blood_group_quantities.append(A)
+    # blood_group_quantities.append(B)
+    # blood_group_quantities.append(AB)
+    # blood_group_quantities.append(O)
 
     return (blood_group_quantities)
 
@@ -352,12 +411,13 @@ def blood_requests(blood_group, requested_quantity):
 
 # delete the blood sample
 def deleteBloodSample(id):
+
     with open('data.json', mode='r') as data:
         feeds = json.load(data)
 
     for e in feeds['database']:
-        if (e['id'] == id):
-            print(e)
+        if (e['id'] == int(id)):
+            print("here")
             feeds['database'].remove(e)
 
     with open('data.json', 'w') as data:
@@ -538,7 +598,8 @@ class show(Resource):
              deletereq = request.args.get('delete')
              print(deletereq)
              if(deletereq != None):
-                #deleteBloodSample(deletereq);
+                print(deletereq);
+                deleteBloodSample(deletereq);
                 print("deleted");
                 return "success:{}", status.HTTP_200_OK
 
