@@ -4,7 +4,7 @@
       "name": "John",
       "contact": "0400400810",
       "blood_group": "AB",
-      "blood_type": "general",
+      "blood_type": "GENERAL",
       "use_by_date": "12/12/19",
       "arrival_date": "28/10/19",
       "pathology": "ABC Pathology ltd."
@@ -14,7 +14,7 @@
       "name": "Kristen",
       "contact": "0400400809",
       "blood_group": "B",
-      "blood_type": "general",
+      "blood_type": "GENERAL",
       "use_by_date": "10/12/19",
       "arrival_date": "29/5/19",
       "pathology": "XYZ Pathology ltd."
@@ -24,7 +24,7 @@
       "name": "Mike",
       "contact": "0400411899",
       "blood_group": "O",
-      "blood_type":"general",
+      "blood_type":"GENERAL",
       "use_by_date": "1/1/20",
       "arrival_date": "19/10/19",
       "pathology": "XYZ Pathology ltd."
@@ -34,7 +34,7 @@
       "name": "Hailey",
       "contact": "0422422899",
       "blood_group": "B",
-      "blood_type":"general",
+      "blood_type":"GENERAL",
       "use_by_date": "25/11/19",
       "arrival_date": "19/10/19",
       "pathology": "XYZ Pathology ltd."
@@ -44,7 +44,7 @@
       "name": "Kristen",
       "contact": "0465478899",
       "blood_group": "B",
-      "blood_type": "general",
+      "blood_type": "GENERAL",
       "use_by_date": "25/02/20",
       "arrival_date": "29/10/19",
       "pathology": "XYZ Pathology ltd."
@@ -54,7 +54,7 @@
       "name": "Mike",
       "contact": "0400400899",
       "blood_group": "AB",
-      "blood_type": "rare",
+      "blood_type": "RARE",
       "use_by_date": "7/4/19",
       "arrival_date": "13/2/19",
       "pathology": "XYZ Pathology ltd."
