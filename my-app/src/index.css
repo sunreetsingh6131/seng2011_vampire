@@ -109,8 +109,8 @@ code {
 
 .btn5 {
   position: absolute;
-  right: 22%;
-  top:17.25%;
+  right: 5%;
+  top:17%;
   height: 46px;
   border: 2px solid black;
   background-color: white;
@@ -530,9 +530,9 @@ label::before {
   color: dodgerblue;
   color: black;
   position: absolute;
-  right: 24.5%;
+  right: 8%;
   top: 17%;
-  width: 12%;
+  width: 11%;
   padding: 12px 10px 12px 30px;
   font-size: 15px;
   margin-bottom: 12px;
@@ -634,7 +634,7 @@ label::before {
 
 .image3 {
   position: absolute;
-  top: 47%;
+  top: 36%;
   left: 2%; 
   width: 30px !important;
   height: 38px !important;

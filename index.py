@@ -137,7 +137,7 @@ data1 = json.loads(s)
 def sort_by_date(data):
     #jsonobject = {database:[]}
     jsonobject = {}
-    sortedList = sorted(data['database'], key = lambda  x: datetime.datetime.strptime(x['use_by_date'], '%d/%m/%y'))
+    sortedList = sorted(data['database'], key = lambda  x: datetime.datetime.strptime(x['use_by_date'], '%d/%m/%Y'))
     jsonobject['database'] = sortedList;
     return jsonobject;
 
@@ -310,14 +310,6 @@ def blood_group_quantities():
     o2types['type'] = "GENERAL"
     o2types['quantity'] = count_quantity("O", "GENERAL")
 
-    # blood_group_quantities["A"] = atypes
-    # blood_group_quantities["B"] = btypes
-    # blood_group_quantities["AB"] = btypes
-    # blood_group_quantities["O"] = btypes
-    # A["A"] = atypes
-    # B["B"] = btypes
-    # AB["AB"] = abtypes
-    # O["O"] = otypes
 
     blood_group_quantities.append(a1types)
     blood_group_quantities.append(a2types)
@@ -327,10 +319,6 @@ def blood_group_quantities():
     blood_group_quantities.append(ab2types)
     blood_group_quantities.append(o1types)
     blood_group_quantities.append(o2types)
-    # blood_group_quantities.append(A)
-    # blood_group_quantities.append(B)
-    # blood_group_quantities.append(AB)
-    # blood_group_quantities.append(O)
 
     return (blood_group_quantities)
 
@@ -372,17 +360,17 @@ def sort_blood_group_by_quantity(data):
 
 # requests for blood supplies by blood group, quantity
 
-def blood_requests(blood_group, requested_quantity):
+def blood_requests(blood_group, blood_type, requested_quantity):
 
     check = None
     if (blood_group == 'A' or blood_group == 'B' or blood_group == 'AB' or blood_group == 'O'):
-            quantity = count_quantity(blood_group)
+            quantity = count_quantity(blood_group, blood_type)
             if (requested_quantity > quantity):
                 message = "Not enough supplies"
                 check = False
 
             else:
-                message = "Order confirmed: " + str(requested_quantity) + " blood samples of blood type " + blood_group
+                message = "ORDER CONFIRMED: " + str(requested_quantity) + " blood samples of blood group: " + blood_group + " type: "+blood_type
                 check = True
     else:
         message = "Please enter a valid blood group"
@@ -395,14 +383,21 @@ def blood_requests(blood_group, requested_quantity):
     if (check == True):
         i = 0
 
-        while i <= requested_quantity :
+        newFeeds = sort_by_date(feeds)
 
-            for e in feeds['database'] :
+        # while i <= requested_quantity :
 
-                if (e['blood_group'] == blood_group):
-                    id = e['id']
-                    deleteBloodSample(id)
-                    i = i + 1
+        for e in newFeeds['database'] :
+            #print(e)
+            if (e['blood_group'] == blood_group and e['blood_type'] == blood_type):
+                #print("found")
+                id = e['id']
+                #print(id)
+                deleteBloodSample(id)
+                i = i + 1
+                if (i == requested_quantity):
+                    print(i)
+                    return message
 
     return message
 
@@ -559,6 +554,9 @@ ns = api.namespace('vampire', description='Returns the blood sample data')
 @api.route('/show', methods=['GET', 'POST'])
 @api.doc(params={'sort': 'example: sort = quantity/ date'})
 @api.doc(params={'delete': 'example: delete = 1'})
+@api.doc(params={'deleteGrp': 'example: delete = A'})
+@api.doc(params={'deleteType': 'example: delete = RARE'})
+@api.doc(params={'deleteQuantity': 'example: delete = 5'})
 
 class show(Resource):
     @api.response(200, 'Success')
@@ -593,15 +591,22 @@ class show(Resource):
 
     def post(self):
         if request.method == 'POST':
-             print("in POST")
-
              deletereq = request.args.get('delete')
-             print(deletereq)
+             delGrp = request.args.get('deleteGrp')
+             delType = request.args.get('deleteType')
+             delQuantity = request.args.get('deleteQuantity')
+            
              if(deletereq != None):
-                print(deletereq);
                 deleteBloodSample(deletereq);
-                print("deleted");
                 return "success:{}", status.HTTP_200_OK
+            
+             if(delGrp != None and delType != None and delQuantity != None):
+                print("group = "+delGrp)
+                print("type = "+delType)
+                print("quantity = "+delQuantity)
+                message = blood_requests(delGrp, delType, int(delQuantity))
+                print(message)
+                return message, status.HTTP_200_OK
 
              result = request.get_json()
              print(result);
