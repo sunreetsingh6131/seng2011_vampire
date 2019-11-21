@@ -35,17 +35,8 @@ function sortDateShow(div, table){
   })
   .then((resp) => resp.json())
   .then(function(data) {
-      //var len = Object.keys(data).length;
-      // var data1 = JSON.stringify(datares);
-      // var data = JSON.parse(data1);
+
       console.log(data);
-      //var div = document.createElement('div');
-      //
-
-
-
-      // var tabledate = document.createElement('table');
-      // tabledate.id = 'tabledate';
         var column = document.createElement("tr");
   		var id = document.createElement("th");
   		id.innerHTML = "Id";
@@ -81,7 +72,7 @@ function sortDateShow(div, table){
       div.appendChild(table);
       var res = data;
       for (var i = 0; i < Object.keys(res.database).length; i++){
-        addEntry(table, res.database[i], Object.keys(res.database).length);
+        addEntry(table, res.database[i]);
       }
 
   })
@@ -140,7 +131,7 @@ function sortQuantityShow(div, table){
       div.appendChild(table);
       var res = data;
       for (var i = 0; i < Object.keys(res.database).length; i++){
-        addEntry(table, res.database[i], Object.keys(res.database).length);
+        addEntry(table, res.database[i]);
       }
 
   })
@@ -490,6 +481,105 @@ function addEntry(table, data){
 
   //}
 
+function addQuantityTableVampire(div){
+
+  var table1 = document.createElement("table");
+  table1.id = "table1";
+  table1.style.left = '2%';
+  table1.style.width = '700px';
+  var column1 = document.createElement("tr");
+  column1.style.width = '500px';
+
+  var bloodGroup1 = document.createElement("th");
+  bloodGroup1.innerHTML = "Blood Group";
+  var bloodType1 = document.createElement("th");
+  bloodType1.innerHTML = "Blood Type";
+  var quantity  = document.createElement("th");
+  quantity.innerHTML = "Quantity";
+  var levels  = document.createElement("th");
+  levels.innerHTML = "Level";
+
+  column1.appendChild(bloodGroup1);
+  column1.appendChild(bloodType1);
+  column1.appendChild(quantity);
+  column1.appendChild(levels);
+  table1.appendChild(column1);
+
+  fetch("http://127.0.0.1:5000/show?hospital=1", {
+      method: 'GET',
+      dataType: 'json',
+      crossdomain: 'true',
+      headers: {
+          'Access-Control-Allow-Methods': 'GET',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      }
+  })
+  .then((resp) => resp.json())
+  .then(function(data) {
+      var x, y;
+      for (x in data){
+        for(y in data[x]){
+          //addEntryHospitalQuantity(table, y, "HARD CODED - general", data[x][y]);
+          //
+          var column2 = document.createElement("tr");
+          column2.style.width = '500px';
+          var col1 = document.createElement("td");
+          col1.innerHTML = y;
+          var col2 = document.createElement("td");
+          col2.innerHTML = "HARD CODED GENERAL";
+          var col3 = document.createElement("td");
+          col3.innerHTML = data[x][y];
+          col3.value = parseInt(data[x][y]);
+          var col4 = document.createElement("td");
+          var num = parseInt(data[x][y]);
+          col4.innerHTML = "<progress value=" +num+ " max='20'></progress>";
+
+          column2.appendChild(col1);
+          column2.appendChild(col2);
+          column2.appendChild(col3);
+          column2.appendChild(col4);
+          table1.appendChild(column2);
+          if(col3.value < "5"){ 
+            col3.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+            col1.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+            col2.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+            col4.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
+          }
+          if(col3.value >= "5" && col3.value < "10"){
+            col3.style.background = 'linear-gradient(to bottom, #FFA500 100%, #ff3300 10%)';
+            col1.style.background = 'linear-gradient(to bottom, #FFA500 100%, #ff3300 10%)';
+            col2.style.background = 'linear-gradient(to bottom, #FFA500 100%, #ff3300 10%)';
+            col4.style.background = 'linear-gradient(to bottom, #FFA500 100%, #ff3300 10%)';
+          }
+        }
+      }
+  })
+  //div.appendChild(table);
+
+  // var col1 = document.createElement("td");
+  // col1.innerHTML = "A";
+  // var col2 = document.createElement("td");
+  // col2.innerHTML = "GENERAL";
+  // var col3 = document.createElement("td");
+  // col3.innerHTML = "10";
+  // col3.value =  parseInt("10");
+  // var col4 = document.createElement("td");
+  // col4.innerHTML = "<progress value='10' max='100'>sadfd</progress>";
+  // col4.value =  parseInt("10");
+  //
+  // column2.appendChild(col1);
+  // column2.appendChild(col2);
+  // column2.appendChild(col3);
+  // column2.appendChild(col4);
+
+  // table1.appendChild(column2);
+  div.appendChild(table1);
+
+
+}
+
 /**
  * Vampire screen
  * @return {[type]} [description]
@@ -520,7 +610,7 @@ function vampireView1(){
 		filterbtn.innerHTML = "<button class='dropbtn1 info'>Filter</button>";
 		div.appendChild(filterbtn);
 
-		//sort
+		//sort vampire
 		var sortbtn = document.createElement("div");
 		sortbtn.innerHTML = "<div class='dropDown info'><button class='dropDownbtn info'>"
 						  +"<img class='image1' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNTEgNTgiIHdpZHRoPSI1MTJweCI+PGcgaWQ9IlBhZ2UtMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZyBpZD0iMDEwLS0tRGlyZWN0aW9uYWwtVHJhZmZpYy1BcnJvdyIgZmlsbC1ydWxlPSJub256ZXJvIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIC0xKSI+PHBhdGggaWQ9IlNoYXBlIiBkPSJtMzEuOTk3IDUzdi0zM2gtNmMtLjM3MDgzOTguMDAyNjg5LS43MTE4NjQyLS4yMDI4MDYyLS44ODI3NTczLS41MzE5MzM3cy0uMTQyNzg1Ny0uNzI2Mjg3My4wNzI3NTczLTEuMDI4MDY2M2wxLjk4LTIuOCA2LjkzLTkuODEgMy4xMi00LjQyYy4xODg0NTU1LS4yNTkxNzMyNy40ODk1NTMxLS40MTI1MTU5Mi44MS0uNDEyNTE1OTJzLjYyMTU0NDUuMTUzMzQyNjUuODEuNDEyNTE1OTJsMTEuOTcgMTcuMDNjLjIxNTU0My4zMDE3NzkuMjQzNjUwNC42OTg5Mzg4LjA3Mjc1NzMgMS4wMjgwNjYzcy0uNTExOTE3NS41MzQ2MjI3LS44ODI3NTczLjUzMTkzMzdoLTZ2MzNjMCAuNTUyMjg0Ny0uNDQ3NzE1MyAxLTEgMWgtMTBjLS41NTIyODQ3IDAtMS0uNDQ3NzE1My0xLTF6IiBmaWxsPSIjMjg1NjgwIi8+PHBhdGggaWQ9IlNoYXBlIiBkPSJtNy4wMDMgN3YzMi45OTc1aC02Yy0uMzcwODM5NzYtLjAwMjY4OS0uNzExODY0MTcuMjAyODA2Mi0uODgyNzU3MjguNTMxOTMzNy0uMTcwODkzMTIuMzI5MTI3NS0uMTQyNzg1NzIuNzI2Mjg3My4wNzI3NTcyOCAxLjAyODA2NjNsMS45OCAyLjggNi45MyA5LjgxIDMuMTIgNC40MmMuMTg4NDI5Ni4yNTkyMTI1LjQ4OTUzNjYuNDEyNTg2LjgxLjQxMjU4NnMuNjIxNTcwNC0uMTUzMzczNS44MS0uNDEyNTg2bDExLjk3LTE3LjAzYy4yMTU1NDMtLjMwMTc3OS4yNDM2NTA0LS42OTg5Mzg4LjA3Mjc1NzMtMS4wMjgwNjYzcy0uNTExOTE3NS0uNTM0NjIyNy0uODgyNzU3My0uNTMxOTMzN2gtNnYtMzIuOTk3NWMwLS41NTIyODQ3NS0uNDQ3NzE1My0xLTEtMWgtMTBjLS4yNjUyMTY0OSAwLS41MTk1NzA0LjEwNTM1Njg0LS43MDcxMDY3OC4yOTI4OTMyMnMtLjI5Mjg5MzIyLjQ0MTg5MDI5LS4yOTI4OTMyMi43MDcxMDY3OHoiIGZpbGw9IiM0NDgyYzMiLz48L2c+PC9nPjwvc3ZnPgo=' />"
@@ -530,18 +620,18 @@ function vampireView1(){
 		div.appendChild(sortbtn);
 
 
-		//filter
+		//filter vampire
 		var popupFilterVampire = document.createElement('div');
 		popupFilterVampire.className = "popup";
 		popupFilterVampire.id = 'popupFilter';
 		popupFilterVampire.innerHTML = "<txt class='text2'>Blood group</txt>"
 							+"<br><br>"
 							+"<img class='image2' src='data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQxMC4yOTQgNDEwLjI5NCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDEwLjI5NCA0MTAuMjk0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8ZyBpZD0iR3VpZGVzX0Zvcl9BcnRib2FyZF80MF8iPgoJPC9nPgoJPGcgaWQ9IkFydHdvcmtfMzlfIj4KCTwvZz4KCTxnIGlkPSJMYXllcl8yXzM5XyI+CgkJPGc+CgkJCTxwYXRoIHN0eWxlPSJmaWxsOiM2MkE1QTI7IiBkPSJNMTM3Ljc4NSwzNDIuOTMyYzAsMzcuMjAzLDMwLjE1OSw2Ny4zNjIsNjcuMzYyLDY3LjM2MnM2Ny4zNi0zMC4xNTksNjcuMzYtNjcuMzYyVjMzLjQ0NkgxMzcuNzg1ICAgICBWMzQyLjkzMnogTTE1Ny43ODYsMjAzLjgxN2g5NC43MjJ2MTM2LjcwOGMwLDI2LjE1Ni0yMS4yMDMsNDcuMzYtNDcuMzYsNDcuMzZjLTI2LjE1NywwLTQ3LjM2MS0yMS4yMDQtNDcuMzYxLTQ3LjM2VjIwMy44MTcgICAgIEgxNTcuNzg2eiIvPgoJCQk8cGF0aCBzdHlsZT0iZmlsbDojNUE5Nzk0OyIgZD0iTTI3Ni4zMzYsMEgxMzMuOTU4Yy04LjQ1NSwwLTE1LjMxLDYuODU0LTE1LjMxLDE1LjMxdjMuODI3YzAsOC40NTYsNi44NTQsMTUuMzEsMTUuMzEsMTUuMzEgICAgIGgzLjgyN2gxMzQuNzIzaDMuODI4YzguNDU1LDAsMTUuMzA5LTYuODU0LDE1LjMwOS0xNS4zMVYxNS4zMUMyOTEuNjQ1LDYuODU0LDI4NC43OTIsMCwyNzYuMzM2LDB6Ii8+CgkJCTxwYXRoIHN0eWxlPSJmaWxsOiNGN0YxRTY7IiBkPSJNMjA1LjE0NywzODcuODg1YzI2LjE1NywwLDQ3LjM2LTIxLjIwNCw0Ny4zNi00Ny4zNlYyMDMuODE3aC05NC43MjJ2MTM2LjcwOCAgICAgQzE1Ny43ODYsMzY2LjY4MSwxNzguOTkxLDM4Ny44ODUsMjA1LjE0NywzODcuODg1eiIvPgoJCTwvZz4KCTwvZz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K'/>"
-							+"<input type='checkbox' class='check2' id=groupA></input><txt class='text2'>A</txt><br>"
+							+"<input type='checkbox' class='check2' id='groupA'></input><txt class='text2'>A</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupB'></input><txt class='text2'>B</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupAB'></input><txt class='text2'>AB</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupO'></input><txt class='text2'>O</txt><br>"
-						    +"<input type='checkbox' class='check2' id=groupAB+></input><txt class='text2'>AB+</txt><br>"
+						    +"<input type='checkbox' class='check2' id='groupAB+''></input><txt class='text2'>AB+</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupO+'></input><txt class='text2'>O+</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupO-'></input><txt class='text2'>O-</txt>"
 						    +"<br><br>"
@@ -551,8 +641,14 @@ function vampireView1(){
 						    +"<input type='checkbox' class='check2' id='groupRare'></input><txt class='text2'>Rare</txt><br>"
 						    +"<input type='checkbox' class='check2' id='groupGeneral'></input><txt class='text2'>General</txt><br>"
 						    +"<a class='close' id='close2'>&times;</a>"
-						    +"<button class='btn3 info'>Done</button>";
+						    +"<button class='btn3 info' id='filterDone' >Done</button>";
 
+      // popupFilterVampire.style.display = 'block';
+      // div.appendChild(popupFilterVampire);
+      // var close1 = document.getElementById('close2');
+      // close1.onclick = function(){
+      //   popupFilterVampire.style.display = 'none';
+      // }
 		filterbtn.onclick = function(){
 			popupFilterVampire.style.display = 'block';
 			div.appendChild(popupFilterVampire);
@@ -560,65 +656,116 @@ function vampireView1(){
 			close1.onclick = function(){
 				popupFilterVampire.style.display = 'none';
 			}
+      var dne = document.getElementById('filterDone');
+      dne.onclick = function(){
+        popupFilterVampire.style.display = 'none';
+        fetch('http://127.0.0.1:5000/show', {
+            method: 'GET',
+            dataType: 'json',
+            crossdomain: 'true',
+            headers: {
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((resp) => resp.json())
+        .then(function(data) {
+            var res = JSON.parse(data)
+            var gA = document.getElementById('groupA').checked;
+            var gB = document.getElementById('groupB').checked;
+            var gAB = document.getElementById('groupAB').checked;
+            var gO = document.getElementById('groupO').checked;
+            var gRare = document.getElementById('groupRare').checked;
+            var gGeneral = document.getElementById('groupGeneral').checked;
+
+            var t = document.getElementById('table');
+            if (gA||gO||gAB||gB||gGeneral||gRare){
+
+                var column = document.createElement("tr");
+                var id = document.createElement("th");
+                id.innerHTML = "Id";
+                var bloodGroup = document.createElement("th");
+                bloodGroup.innerHTML = "Blood Group";
+                var useByDate = document.createElement("th");
+                useByDate.innerHTML = "Use By date";
+                var arrivalDate = document.createElement("th");
+                arrivalDate.innerHTML = "Arrival Date";
+                var bloodType = document.createElement("th");
+                bloodType.innerHTML = "Blood Type";
+                var donor  = document.createElement("th");
+                donor.innerHTML = "Pathology";
+                var del = document.createElement("th");
+                del.innerHTML = "Edit";
+
+                column.appendChild(id);
+                column.appendChild(bloodGroup);
+                column.appendChild(arrivalDate);
+                column.appendChild(useByDate);
+                column.appendChild(bloodType);
+                column.appendChild(donor);
+                column.appendChild(del);
+                while (t.firstChild) {
+                  t.removeChild(t.firstChild);
+                }
+                t.appendChild(column);
+                div.appendChild(t);
+            }else{
+              return;
+            }
+
+            for (var i = 0; i < Object.keys(res.database).length; i++){
+              console.log("in loop");
+
+              if (gRare == true && res.database[i].blood_type == "RARE"){
+                //console.log("in rare");
+                if(gA == true && res.database[i].blood_group == "A"){
+                  addEntry(t, res.database[i]);
+                }
+                if (gAB == true && res.database[i].blood_group == "AB"){
+                  addEntry(t, res.database[i]);
+                }
+                if (gB == true && res.database[i].blood_group == "B"){
+                  addEntry(t, res.database[i]);
+                }
+                if (gO == true && res.database[i].blood_group == "O"){
+                  console.log("in OOOOOOO");
+                  addEntry(t, res.database[i]);
+                }
+                if(gA == false && gB == false &&gAB == false &&gO == false){
+                   addEntry(t, res.database[i]);
+                }
+              }
+              if (gGeneral == true && res.database[i].blood_type == "GENERAL"){
+                console.log("in General *************");
+                if(gA == true && res.database[i].blood_group == "A"){
+                  addEntry(t, res.database[i]);
+                }
+                if (gAB == true && res.database[i].blood_group == "AB"){
+                  addEntry(t, res.database[i]);
+                }
+                if (gB == true && res.database[i].blood_group == "B"){
+                  addEntry(t, res.database[i]);
+                }
+                if (gO == true && res.database[i].blood_group == "O"){
+                  console.log("in OOOOOOO");
+                  addEntry(t, res.database[i]);
+                }
+                if(gA == false && gB == false && gAB == false && gO == false){
+                   addEntry(t, res.database[i]);
+                }
+              }
+          }
+        })
+      }
+
 		}
 
-		var table1 = document.createElement("table");
-		table1.id = "table";
-		table1.style.left = '2%';
-		table1.style.width = '700px';
-		var column1 = document.createElement("tr");
-		column1.style.width = '500px';
-		var column2 = document.createElement("tr");
-		column2.style.width = '500px';
-		var column3 = document.createElement("tr");
-		column3.style.width = '500px';
-		var bloodGroup1 = document.createElement("th");
-		bloodGroup1.innerHTML = "Blood Group";
-		var bloodType1 = document.createElement("th");
-		bloodType1.innerHTML = "Blood Type";
-		var quantity  = document.createElement("th");
-		quantity.innerHTML = "Quantity";
-		var levels  = document.createElement("th");
-		levels.innerHTML = "Level";
+    //Quantity TABLE
+    addQuantityTableVampire(div);
 
-		var col1 = document.createElement("td");
-		col1.innerHTML = "A";
-		var col2 = document.createElement("td");
-		col2.innerHTML = "GENERAL";
-		var col3 = document.createElement("td");
-		col3.innerHTML = "10";
-		col3.value =  parseInt("10");
-		var col4 = document.createElement("td");
-		col4.innerHTML = "<progress value='10' max='100'>sadfd</progress>";
-		col4.value =  parseInt("10");
-
-		column1.appendChild(bloodGroup1);
-		column1.appendChild(bloodType1);
-		column1.appendChild(quantity);
-		column1.appendChild(levels);
-		column2.appendChild(col1);
-		column2.appendChild(col2);
-		column2.appendChild(col3);
-		column2.appendChild(col4);
-		table1.appendChild(column1);
-		table1.appendChild(column2);
-		div.appendChild(table1);
-
-		if(col3.value < "40"){
-			console.log("here");
-			col3.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
-			col1.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
-			col2.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
-			col4.style.background = 'linear-gradient(to bottom, #33ccff -100%, #ff3300 100%)';
-		}
-		if(col3.value > 40){
-			column2.style.backgroundColor = "orange";
-		}
-		if(col3.value == 40){
-			column2.style.backgroundColor = "green";
-		}
-
-		//main column
+		//main column MAIN TABLE
     	var table = document.createElement("table");
 		table.id = "table";
 		table.style.left = '47%';
@@ -792,6 +939,7 @@ function vampireView1(){
     sbq.onclick = function(){
       sortQuantityShow(div, table);
     }
+
 }
 
 
@@ -815,6 +963,9 @@ function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, a
       // reload the page
     });
 }
+
+export default App;
+
     // try {
     //   const response = await fetch('http://127.0.0.1:5000/show', {
     //     method: 'POST', // or 'PUT'
@@ -829,7 +980,7 @@ function postData(bloodGroup, bloodType, nameDonor, phone, pathology, medical, a
     //   console.error('Error:', error);
     // }
 
-export default App;
+
 
 // import requests
 // r = requests.post("http://yoururl/post", data={'foo': 'bar'})
