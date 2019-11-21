@@ -542,7 +542,7 @@ class show(Resource):
              pathology = result['pathology'];
              arrival = result['arrival_date'];
              #print(arrival);
-            #addBloodSample(name, contact, bld_grp, bld_type, usebydate, arrival, pathology)
+             addBloodSample(name, contact, bld_grp, bld_type, useByDate, arrival, pathology)
              return result, status.HTTP_200_OK
 
 if __name__ == '__main__':
