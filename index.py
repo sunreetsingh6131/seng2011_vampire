@@ -464,6 +464,22 @@ def remove_if_expired():
                     deleteBloodSample(value)
 
 
+def checkPhoneNumber(data):
+    with open('data.json') as f:
+      backData = json.load(f)
+
+    #print(data['contact']);
+    for i in range (0, len(backData['database'])): 
+        item = backData['database'][i];
+        # print("---------------------")
+        # print(item)
+        # print("--> contact"+ item['contact'])
+        if (data['contact'] == item['contact']):
+            if (data['blood_group'] != item['blood_group']):
+                print("SAME NUMBER")
+                return False
+
+    return True
 
 
 # def hospital_view():
@@ -609,6 +625,9 @@ class show(Resource):
                 return message, status.HTTP_200_OK
 
              result = request.get_json()
+
+             if(checkPhoneNumber(result) == False): return "Error: Entry with different blood group exists.", status.HTTP_400_BAD_REQUEST
+
              print(result);
              name = result['name'];
              contact = result['contact'];
