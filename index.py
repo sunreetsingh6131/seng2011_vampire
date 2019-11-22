@@ -34,18 +34,9 @@ def readJson():
     with open('data.json') as f:
         data = json.load(f)
 
-    # make it return json object for other methods to use
-    #d = JSON.parse(data)
     d = json.dumps(data)
     return d
-    # size = sizeOfList()
-    # print(size)
-
-
-#log = logging.getLogger(__name__)
-
-
-
+   
 # REQT2 - DEPOSITS
 
 #add sample to json file here
@@ -93,7 +84,6 @@ def list_donors():
       data = json.load(f)
 
     for i in range (0, len(data['database'])):
-    #for key, value in data[i].items():
         newInput = {}
         newInput['name'] = data['database'][i]['name']
         newInput['contact'] = data['database'][i]['contact']
@@ -122,38 +112,18 @@ def check_existing_donor(data, contact):
 
 s = list_donors()
 data1 = json.loads(s)
-#print(json.dumps(data1, indent=4))
 
-
-
-# class show(Resource):
-#     @api.response(200, 'has data')
-#     def get(self):
-#         result = readJson()
-#
-#         return result , status.HTTP_200_OK
-
-# bubble sort by exp date
+# sort by exp date
 def sort_by_date(data):
-    #jsonobject = {database:[]}
     jsonobject = {}
     sortedList = sorted(data['database'], key = lambda  x: datetime.datetime.strptime(x['use_by_date'], '%d/%m/%Y'))
     jsonobject['database'] = sortedList;
     return jsonobject;
 
-# with open('data.json', mode='r') as data:
-#     d = json.load(data)
-#     s = sort_by_date(d)
-
-#print(json.dumps(data1, indent=4))
-
-
 
 def filterByGroup(data, bgroup) :
-
     database = {}
     new = []
-
     for i in range (0, len(data)):
         for key, value in data[i].items():
 
@@ -163,22 +133,18 @@ def filterByGroup(data, bgroup) :
     database['database'] = new
     return (json.dumps(database, indent=4))
 
-def searchGroup(data, bgroup) :
 
+def searchGroup(data, bgroup) :
     database = {}
     result = []
     bgroup = "^"+ bgroup
 
     for i in range (0, len(data) - 1):
 
-        #check = 0;
         for key, value in data[i].items():
             value = str(value).lower()
             x = re.search(bgroup,value, re.IGNORECASE)
-            #y = re.search(btype, value)
-
             if (key == "blood_group" and x):
-                #j= j +1
                 result.append(data[i])
 
     database['database'] = result
@@ -188,15 +154,11 @@ def searchType (data, btype) :
 
     database = {}
     result = []
-    #btype = btype.lower()
 
     for i in range (0, len(data) -1 ):
-
         check = 0;
         for key, value in data[i].items():
-
             value = str(value)
-
             y = re.search(btype, value, re.IGNORECASE)
             if (key == "blood_type" and y):
                 result.append(data[i])
@@ -208,38 +170,14 @@ def searchType (data, btype) :
 with open('data.json', mode='r') as data:
    feeds = json.load(data)
 
-#sorted_data = sort_by_date(feeds)
-
-#print(json.dumps(sorted_data, indent=4))
-
-#filtered_data = filterByGroup (feeds['database'], "B")
-#data1 = json.loads(filtered_data)
-#print (json.dumps(data1, indent=4))
-
-#searched = searchGroup(feeds['database'], "B")
-#data1 = json.loads(searched)
-
 
 searched = searchGroup(feeds, "B")
-#print (json.dumps(searched, indent = 4))
-
-
 typeSearch = searchType(feeds['database'], "General")
 data1 = json.loads(typeSearch)
-#print (json.dumps(data1, indent = 4))
-
-#sort by exp date
-#    sorted_by_date = sorted(feeds, key=lambda x: datetime.strptime(x['data']['use_by_date'], '%d/%m/%y'))
-#    print(json.dumps(sorted_by_date, indent=4))
-
-
 
 # Counts the quantity of a blood group
-
 def count_quantity(blood_group, blood_type):
-
     quantity = 0
-    #i = 0
     with open('data.json', mode='r') as data:
         d = json.load(data)
 
@@ -249,16 +187,9 @@ def count_quantity(blood_group, blood_type):
         tye = v['blood_type']
         if (grp == blood_group and tye == blood_type):
             quantity = quantity +1
-            
-        #for key, value in d['database'][i].items():
-            #if(key == "blood_group" and value == blood_group):
-                # if(key == "blood_type" and value == blood_group):
-            #quantity = quantity +1
-
     return quantity
 
 # Arrange the blood groups to their corresponding quantities
-
 def blood_group_quantities():
 
     blood_group_quantities = []
@@ -323,7 +254,6 @@ def blood_group_quantities():
     return (blood_group_quantities)
 
 # Sort data by blood group from lowest quantity to highest quantity
-
 def sort_blood_group_by_quantity(data):
     database = {}
     result = []
@@ -347,15 +277,7 @@ def sort_blood_group_by_quantity(data):
     database['database'] = result
 
     return database
-    #return (json.dumps(database, indent=4))
-
-# with open('data.json', mode='r') as data:
-#     d = json.load(data)
-#
-# s = sort_blood_group_by_quantity(d['database'])
-# data1 = json.loads(s)
-#print(json.dumps(data1, indent=4))
-
+   
 # RQT 4 - REQUESTS
 
 # requests for blood supplies by blood group, quantity
@@ -385,14 +307,10 @@ def blood_requests(blood_group, blood_type, requested_quantity):
 
         newFeeds = sort_by_date(feeds)
 
-        # while i <= requested_quantity :
-
         for e in newFeeds['database'] :
             #print(e)
             if (e['blood_group'] == blood_group and e['blood_type'] == blood_type):
-                #print("found")
                 id = e['id']
-                #print(id)
                 deleteBloodSample(id)
                 i = i + 1
                 if (i == requested_quantity):
@@ -418,17 +336,14 @@ def deleteBloodSample(id):
     with open('data.json', 'w') as data:
         feeds = json.dump(feeds, data)
 
-#print(blood_requests('O', 1))
 
 # RQT 6  - DELIVERS
 
 # Check if blood has passed by expiry date
 
 def check_if_expired(ID):
-
     with open('data.json') as f:
       data = json.load(f)
-
 
     # get timestamp of today's date
     today = date.today()
@@ -468,12 +383,8 @@ def checkPhoneNumber(data):
     with open('data.json') as f:
       backData = json.load(f)
 
-    #print(data['contact']);
     for i in range (0, len(backData['database'])): 
         item = backData['database'][i];
-        # print("---------------------")
-        # print(item)
-        # print("--> contact"+ item['contact'])
         if (data['contact'] == item['contact']):
             if (data['blood_group'] != item['blood_group']):
                 print("SAME NUMBER")
@@ -481,84 +392,6 @@ def checkPhoneNumber(data):
 
     return True
 
-
-# def hospital_view():
-
-
-#remove_if_expired()
-
-
-
-# #sort by Quantity
-# def sortListByQuantity(ArrayList<int> samples):
-#     return samples.sort(reverse = true)
-#
-#
-# #sort by blood group
-# def sortListByGroup(ArrayList<Char> samples):
-#     return samples.sort();
-
-
-
-
-
-# for sorting attributes of sample
-# json_obj = {
-#   "text": "hello world",
-#   "predictions":
-#    [
-#      {"class": "Class 1", "percentage": 4.63},
-#      {"class": "Class 2", "percentage": 74.68},
-#      {"class": "Class 3", "percentage": 9.38},
-#      {"class": "Class 4", "percentage": 5.78},
-#      {"class": "Class 5", "percentage": 5.53}
-#    ]
-# }
-#
-# sorted_obj = dict(json_obj)
-# sorted_obj['predictions'] = sorted(json_obj['predictions'], key=lambda x : x['percentage'], reverse=True)
-
-
-# try...except to handle the KeyError, then use this as the key argument
-# def extract_time(json):
-#     try:
-#         return int(json['page']['update_time'])
-#     except KeyError:
-#         return 0
-#
-# # lines.sort() is more efficient than lines = lines.sorted()
-# lines.sort(key=extract_time, reverse=True)
-
-
-
-
-# @bookings.route( '/get_customer', methods=[ 'POST' ] )
-# @app.route('/', methods=[ 'POST' ] )
-# def index():
-#   return render_template('template.html')
-
-
-#
-# HTML for flask
-#
-#  <!doctype html>
-# <title>Test</title>
-# <meta charset=utf-8>
-#
-# <a href="/my-link/">Click me</a>
-
-
-#fetch('https://mywebsite.com/endpoint/', {
-#  method: 'POST',
-#  headers: {
-#    'Accept': 'application/json',
-#    'Content-Type': 'application/json',
-#  },
-#  body: JSON.stringify({
-#    firstParam: 'yourValue',
-#    secondParam: 'yourOtherValue',
-#  })
-#})
 def make_string(words):
     if words != None:
         s = ""
