@@ -3,16 +3,30 @@ Seng2011 Project
 
 download python libraries:
 
-$ pip3 install "libary name here"
-flask_restplus, flask_cors, json, request, Response, bottle 
+--------------------------------
+Python libraries installation.
+--------------------------------
+$ pip3 install "libary name here" 
+(flask_restplus, flask_cors, json, request, Response, bottle)
 
+--------------------------------
+React Library installation
+--------------------------------
+$ npm install
 
+--------------------------------
+Starting the back-end (API)
+--------------------------------
 $ python3 index.py      -- for backend (API) server
-$ python webserver.py   -- for frontend (WEBSITE) server
 
-open chrome.
-right click, open inspect.
+--------------------------------
+Starting the front-end
+--------------------------------
+$ cd my-app/src         -- for frontend (WEBSITE) server
+$ npm start             
 
-The fetched data will be there.
-The data is provided to web server and hence will be used by frontend.
-
+--------------------------------
+For using the Website
+--------------------------------
+login ID for Vampire View = 123
+login ID for Hospital View = 234
